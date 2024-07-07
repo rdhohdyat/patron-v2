@@ -12,7 +12,7 @@ export default function Search({ auth, data }) {
             </div>
             <div>
                 {products.map(product => (
-                    <div key={product.id}>{product.category}</div>
+                    <div key={product.id}>{product.name}</div>
                 ))}
             </div>
             <div>

@@ -50,7 +50,7 @@ export default function AddProduct({ auth }) {
         "Buah",
         "Daging",
         "Ikan",
-        "Bumbu",
+        "Bumbu Dapur",
         "Beras",
         "Telur",
         "Minuman",

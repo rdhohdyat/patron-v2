@@ -57,19 +57,31 @@ export default function ProductDetail({
                         />
                     </div>
                     <div className="mt-2 sm:w-[300px]">
-                        <h1 className="text-lg  flex-wrap">
+                        <p className="uppercase font-semibold text-gray-500 mt-2">
+                            {product.category}
+                        </p>
+                        <h1 className="text-2xl font-bold text-gray-600  flex-wrap">
                             {product.name}
                         </h1>
-                        <p className="font-bold text-3xl mt-2">
-                            {formatRupiah(product.price)}
-                        </p>
-                        <p className="uppercase mt-2">{product.category}</p>
+                        <div>
+                            <h1>Penjual</h1>
+                        </div>
                         <p className="mt-3">Deskripsi : </p>
-                        <p className="flex-wrap text-sm">{product.description}</p>
+                        <p className="flex-wrap text-sm">
+                            {product.description}
+                        </p>
                     </div>
                 </div>
-                <div className="fixed sm:static bottom-0 z-10 bg-white left-0 border right-0">
-                    <div className="sm:block flex gap-2 p-5">
+                <div className="fixed sm:static bottom-0 z-10 bg-white left-0 border right-0 p-5">
+                    <div className="flex justify-between items-center">
+                        <p className="font-bold text-3xl">
+                            {formatRupiah(product.price)}
+                        </p>
+                        <div className="text-xl font-bold">
+                            1KG
+                        </div>
+                    </div>
+                    <div className="sm:block flex gap-2">
                         <Button
                             className="w-full mt-3 sm:w-[300px] block"
                             onClick={() => handleAddToCart(product)}
@@ -82,6 +94,7 @@ export default function ProductDetail({
                     </div>
                 </div>
             </div>
+            <ProductList data={products}></ProductList>
             <ProductList data={products}></ProductList>
             {/* <StoreList data={store}></StoreList> */}
         </ShopLayout>

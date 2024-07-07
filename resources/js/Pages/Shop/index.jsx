@@ -41,7 +41,7 @@ export default function index({ auth, data }) {
         { name: "Buah", icon: <Apple /> },
         { name: "Daging", icon: <Beef /> },
         { name: "Ikan", icon: <Fish /> },
-        { name: "Bumbu ", icon: <ChefHat /> },
+        { name: "Bumbu Dapur ", icon: <ChefHat /> },
         { name: "Beras", icon: <Wheat /> },
         { name: "Telur", icon: <Egg /> },
         { name: "Minuman", icon: <Coffee /> },
@@ -97,7 +97,15 @@ export default function index({ auth, data }) {
                     </div>
                 </div>
                 {/* categori */}
-                <div className="mt-6">
+                <div className="flex justify-between items-center mt-3">
+                    <h1 className="font-bold text-lg sm:text-xl text-gray-600">
+                        Kategori
+                    </h1>
+                    <Button variant="link" className="sm:text-md text-emerald-500">
+                        Lihat semua
+                    </Button>
+                </div>
+                <div>
                     <Carousel>
                         <CarouselContent>
                             {category.map((item, index) => (
@@ -106,7 +114,11 @@ export default function index({ auth, data }) {
                                     key={index}
                                 >
                                     <Link
-                                        href={route("shop.category", item.name.toLocaleLowerCase())}
+                                        href={route(
+                                            "shop.category",
+                                            item.name.toLocaleLowerCase()
+                                        )}
+                                        className="text-center"
                                     >
                                         <div className="bg-white shadow border rounded-xl flex items-center justify-center p-2 gap-2">
                                             <div className="text-emerald-500">
@@ -116,6 +128,9 @@ export default function index({ auth, data }) {
                                                 {item.name}
                                             </div>
                                         </div>
+                                        <h1 className="mx-auto sm:hidden w-10 truncate ...">
+                                            {item.name}
+                                        </h1>
                                     </Link>
                                 </CarouselItem>
                             ))}
@@ -124,10 +139,10 @@ export default function index({ auth, data }) {
                 </div>
 
                 <div className="flex justify-between items-center mt-3">
-                    <h1 className="font-bold text-xl sm:text-2xl">
-                        Product terlaris
+                    <h1 className="font-bold text-lg sm:text-xl text-gray-600">
+                        Produk terlaris
                     </h1>
-                    <Button variant="link" className="sm:text-lg text-emerald-500">
+                    <Button variant="link" className="sm:text-md text-emerald-500">
                         Lihat semua
                     </Button>
                 </div>
@@ -177,8 +192,10 @@ export default function index({ auth, data }) {
                 </div>
 
                 <div className="flex justify-between items-center mt-8 mb-2">
-                    <h1 className="font-bold text-xl sm:text-2xl">Pasar terdekat</h1>
-                    <Button variant="link" className="sm:text-lg text-emerald-500">
+                    <h1 className="font-bold text-lg sm:text-xl text-gray-600">
+                        Pasar terdekat
+                    </h1>
+                    <Button variant="link" className="sm:text-md text-emerald-500">
                         Lihat semua
                     </Button>
                 </div>

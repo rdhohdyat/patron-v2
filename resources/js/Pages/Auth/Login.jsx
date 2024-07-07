@@ -8,8 +8,10 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { Button } from "@/Components/ui/button";
+import { useToast } from "@/Components/ui/use-toast";
 
 export default function Login({ status, canResetPassword }) {
+    const { toast } = useToast();
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
@@ -24,8 +26,20 @@ export default function Login({ status, canResetPassword }) {
 
     const submit = (e) => {
         e.preventDefault();
-
-        post(route("login"));
+        post(route("login"), {
+            onSuccess: () => {
+                toast({
+                    title: "Berhasil login ke akun anda",
+                    variant: "default",
+                });
+            },
+            onError: () => {
+                toast({
+                    title: "Gagal login ke akun anda",
+                    variant: "alert",
+                });
+            },
+        });
     };
 
     return (
@@ -118,7 +132,10 @@ export default function Login({ status, canResetPassword }) {
                         </div> */}
 
                         <div className="flex flex-col gap-4 items-center mt-4">
-                            <Button className="w-full bg-emerald-500" type="submit">
+                            <Button
+                                className="w-full bg-emerald-500"
+                                type="submit"
+                            >
                                 Masuk
                             </Button>
                             <Button variant="outline" className="w-full">
