@@ -82,8 +82,8 @@ export default function index({ auth, data }) {
                 </Dialog>
 
                 <div
-                    className="sm:p-12 p-6 z-10 sm:bg-none bg-cover bg-center rounded-xl mt-6 bg"
-                    style={{ backgroundImage: "url(/market.jpg)" }}
+                    className="sm:p-12 p-6 z-10 sm:bg-none bg-cover  bg-center rounded-xl mt-6 bg"
+                    style={{ backgroundImage: "url(/sayur.jpg)" }}
                 >
                     <div>
                         <h1 className="font-semibold text-lg sm:text-2xl  text-white sm:w-[600px]">

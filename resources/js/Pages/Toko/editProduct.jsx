@@ -1,18 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import {
-    ChevronLeft,
-    Home,
-    LineChart,
-    Package,
-    Package2,
-    PanelLeft,
-    PlusCircle,
-    Search,
-    Settings,
-    ShoppingCart,
-    Upload,
-    Users2,
-} from "lucide-react";
+import { ChevronLeft, Upload } from "lucide-react";
 
 import { Badge } from "@/Components/ui/badge";
 import { Button } from "@/Components/ui/button";
@@ -20,7 +7,6 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/Components/ui/card";
@@ -33,15 +19,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select";
-import { Sheet, SheetContent, SheetTrigger } from "@/Components/ui/sheet";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/Components/ui/table";
 import { Textarea } from "@/Components/ui/textarea";
 import { Link, useForm } from "@inertiajs/react";
 
@@ -77,19 +54,21 @@ export default function EditProduct({ auth, product }) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <form action="">
+            <form onSubmit={onSubmit}>
                 <div className="flex flex-col gap-4 py-4 sm:pl-14">
                     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                         <div className="mx-auto grid flex-1 auto-rows-max gap-4 w-full sm:max-w-6xl">
                             <div className="flex items-center gap-4">
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    className="h-7 w-7"
-                                >
-                                    <ChevronLeft className="h-4 w-4" />
-                                    <span className="sr-only">Back</span>
-                                </Button>
+                                <Link href={route("product")}>
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        className="h-7 w-7"
+                                    >
+                                        <ChevronLeft className="h-4 w-4" />
+                                        <span className="sr-only">Back</span>
+                                    </Button>
+                                </Link>
                                 <h1 className="flex-1 text-xl font-semibold tracking-tight">
                                     Edit Produk
                                 </h1>
@@ -99,9 +78,9 @@ export default function EditProduct({ auth, product }) {
                                 >
                                     In stock
                                 </Badge>
-                                <div className="hidden items-center gap-2 md:flex">
+                                <div className="hidden items-center gap-2 sm:flex">
                                     <Button variant="outline">Batal</Button>
-                                    <Button>Simpan Produk</Button>
+                                    <Button type="submit">Simpan Produk</Button>
                                 </div>
                             </div>
                             <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
@@ -155,15 +134,19 @@ export default function EditProduct({ auth, product }) {
                                                     <Label htmlFor="category">
                                                         Kategori
                                                     </Label>
-                                                    <Select value={product.data.category}>
+                                                    <Select
+                                                        value={
+                                                            product.data
+                                                                .category
+                                                        }
+                                                    >
                                                         <SelectTrigger
                                                             id="category"
                                                             aria-label="Select category"
                                                         >
                                                             <SelectValue placeholder="Pilih Kategori Produk" />
-                                                            
                                                         </SelectTrigger>
-                                                        <SelectContent> 
+                                                        <SelectContent>
                                                             {category.map(
                                                                 (
                                                                     item,
@@ -219,8 +202,7 @@ export default function EditProduct({ auth, product }) {
                                                         type="number"
                                                         className="w-full"
                                                         value={
-                                                            product.data
-                                                                .stock
+                                                            product.data.stock
                                                         }
                                                     />
                                                 </div>
@@ -249,7 +231,10 @@ export default function EditProduct({ auth, product }) {
                                                         </span>
                                                     </Button>
                                                 </div>
-                                                <img src={product.data.image} alt="" />
+                                                <img
+                                                    src={product.data.image}
+                                                    alt=""
+                                                />
                                             </div>
                                         </CardContent>
                                     </Card>

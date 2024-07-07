@@ -6,6 +6,9 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
+use Illuminate\Support\Str;
+
 
 class ProductController extends Controller
 {
@@ -15,6 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         $query = Product::query();
+        $query->latest();
         $products = $query->paginate(10);
         return inertia("Toko/InventoryProduct", [
             "data" => ProductResource::collection($products),
@@ -34,7 +38,16 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        if (isset($data['image'])) {
+            $data['image'] = $data['image']->store('product/' . Str::random(), 'public');
+        } else {
+            $data['image'] = null; // Pastikan kolom image bisa bernilai null
+        }
+
+        Product::create($data);
+        return to_route('product');
     }
 
     /**
@@ -68,6 +81,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return to_route('product');
     }
 }

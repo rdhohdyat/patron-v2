@@ -21,8 +21,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get("/product", [ProductController::class, 'index'])->name('product');
     Route::get("/product/tambah", [ProductController::class, 'create'])->name("product.tambah");
     Route::get("/product/edit/{product}", [ProductController::class, 'edit'])->name("product.edit");
+    Route::post("/product", [ProductController::class, 'store'])->name('product.store');
+    Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
 });
-
 
 
 Route::middleware('auth')->group(function () {

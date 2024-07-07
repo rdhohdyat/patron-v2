@@ -21,9 +21,6 @@ export default function ProductDetail({
     const { toast } = useToast();
 
     const product = data.data;
-
-    console.log(product);
-
     const { addToCart, calculateTotal } = useCartStore();
 
     const handleAddToCart = (product) => {
@@ -60,7 +57,7 @@ export default function ProductDetail({
                         />
                     </div>
                     <div className="mt-2 sm:w-[300px]">
-                        <h1 className="text-xl sm:text-lg uppercase flex-wrap">
+                        <h1 className="text-lg  flex-wrap">
                             {product.name}
                         </h1>
                         <p className="font-bold text-3xl mt-2">

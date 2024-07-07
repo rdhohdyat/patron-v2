@@ -74,6 +74,7 @@ export default function ShopLayout({ user, header, children }) {
         removeFromCart(productId);
         toast({
             title: "Produk dihapus dari keranjang",
+            variant: "alert",
         });
         calculateTotal();
     };
@@ -268,7 +269,11 @@ export default function ShopLayout({ user, header, children }) {
                                             Profil
                                         </DropdownMenuItem>
                                     </Link>
-                                    <DropdownMenuItem>Toko</DropdownMenuItem>
+                                    <Link href={route("store")}>
+                                        <DropdownMenuItem>
+                                            Toko
+                                        </DropdownMenuItem>
+                                    </Link>
                                     <DropdownMenuSeparator />
                                     <AlertDialogTrigger className="w-full">
                                         <DropdownMenuItem>

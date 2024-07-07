@@ -13,32 +13,25 @@ import { Input } from "@/Components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/Components/ui/sheet";
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
-    AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
 import {
-    Activity,
-    ArrowUpRight,
-    CircleUser,
-    CreditCard,
-    DollarSign,
     Menu,
-    Package2,
     Search,
-    Users,
 } from "lucide-react";
 import {Link} from "@inertiajs/react";
+import { Toaster } from "@/Components/ui/toaster";
 
 export default function Authenticated({ user, children }) {
     return (
         <div className="min-h-screen bg-gray-100">
-            <header className="sticky top-0 flex h-16  items-center gap-4 border-b bg-background px-4 md:px-6 bg-white z-20">
+            <Toaster></Toaster>
+            <header className="sticky top-0 flex h-16  items-center gap-4 border-b bg-background px-4 md:px-6 bg-white z-10">
                 <nav className="hidden flex-col gap-6 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6 ">
                     <Link
                         href="#"
@@ -96,23 +89,26 @@ export default function Authenticated({ user, children }) {
                                     PATRON
                                 </div>
                             </Link>
-                            <Link href="#" className="hover:text-foreground">
+                            <Link
+                                href={route("store")}
+                                className="hover:text-foreground"
+                            >
                                 Dashboard
                             </Link>
                             <Link
-                                href={route('store')}
+                                // href={route("")}
                                 className="text-muted-foreground hover:text-foreground"
                             >
                                 Pemesanan
                             </Link>
                             <Link
-                                href={route('product')}
+                                href={route("product")}
                                 className="text-muted-foreground hover:text-foreground"
                             >
                                 Produk
                             </Link>
                             <Link
-                                href="#"
+                                href=""
                                 className="text-muted-foreground hover:text-foreground"
                             >
                                 Pengaturan

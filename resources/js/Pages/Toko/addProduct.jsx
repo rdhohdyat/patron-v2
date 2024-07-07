@@ -1,28 +1,12 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import {
-    ChevronLeft,
-    Home,
-    LineChart,
-    Package,
-    Package2,
-    PanelLeft,
-    PlusCircle,
-    Search,
-    Settings,
-    ShoppingCart,
-    Upload,
-    Users2,
-} from "lucide-react";
-
-import { Badge } from "@/Components/ui/badge";
+import { ChevronLeft, Upload } from "lucide-react";
 import { Button } from "@/Components/ui/button";
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
+    CardDescription,
 } from "@/Components/ui/card";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
@@ -34,9 +18,33 @@ import {
     SelectValue,
 } from "@/Components/ui/select";
 import { Textarea } from "@/Components/ui/textarea";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
+import { useToast } from "@/Components/ui/use-toast";
 
 export default function AddProduct({ auth }) {
+    const { toast } = useToast();
+
+    const { data, setData, post, processing, errors } = useForm({
+        name: "",
+        description: "",
+        price: "",
+        category: "",
+        stock: "",
+        image: null,
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post(route("product.store"), {
+            onSuccess: () => {
+                toast({
+                    title: "Berhasil menambahkan produk",
+                    variant: "default",
+                });
+            },
+        });
+    };
+
     const category = [
         "Sayur",
         "Buah",
@@ -54,7 +62,7 @@ export default function AddProduct({ auth }) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <form action="">
+            <form onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-4 py-4 sm:pl-14">
                     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                         <div className="mx-auto grid flex-1 auto-rows-max gap-4 w-full sm:max-w-6xl">
@@ -76,7 +84,9 @@ export default function AddProduct({ auth }) {
                                     <Link href={route("product")}>
                                         <Button variant="outline">Batal</Button>
                                     </Link>
-                                    <Button>Simpan Produk</Button>
+                                    <Button type="submit" disabled={processing}>
+                                        Simpan Produk
+                                    </Button>
                                 </div>
                             </div>
                             <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
@@ -96,8 +106,20 @@ export default function AddProduct({ auth }) {
                                                     <Input
                                                         id="name"
                                                         type="text"
+                                                        value={data.name}
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                "name",
+                                                                e.target.value
+                                                            )
+                                                        }
                                                         className="w-full"
                                                     />
+                                                    {errors.name && (
+                                                        <p className="text-red-500 text-sm mt-1">
+                                                            {errors.name}
+                                                        </p>
+                                                    )}
                                                 </div>
                                                 <div className="grid gap-3">
                                                     <Label htmlFor="description">
@@ -105,8 +127,20 @@ export default function AddProduct({ auth }) {
                                                     </Label>
                                                     <Textarea
                                                         id="description"
+                                                        value={data.description}
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                "description",
+                                                                e.target.value
+                                                            )
+                                                        }
                                                         className="min-h-32"
                                                     />
+                                                    {errors.description && (
+                                                        <p className="text-red-500 text-sm mt-1">
+                                                            {errors.description}
+                                                        </p>
+                                                    )}
                                                 </div>
                                             </div>
                                         </CardContent>
@@ -123,7 +157,17 @@ export default function AddProduct({ auth }) {
                                                     <Label htmlFor="category">
                                                         Kategori
                                                     </Label>
-                                                    <Select>
+                                                    <Select
+                                                        value={data.category}
+                                                        onValueChange={(
+                                                            value
+                                                        ) =>
+                                                            setData(
+                                                                "category",
+                                                                value
+                                                            )
+                                                        }
+                                                    >
                                                         <SelectTrigger
                                                             id="category"
                                                             aria-label="Select category"
@@ -150,6 +194,11 @@ export default function AddProduct({ auth }) {
                                                             )}
                                                         </SelectContent>
                                                     </Select>
+                                                    {errors.category && (
+                                                        <p className="text-red-500 text-sm mt-1">
+                                                            {errors.category}
+                                                        </p>
+                                                    )}
                                                 </div>
                                             </div>
                                         </CardContent>
@@ -171,8 +220,20 @@ export default function AddProduct({ auth }) {
                                                     <Input
                                                         id="price"
                                                         type="text"
+                                                        value={data.price}
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                "price",
+                                                                e.target.value
+                                                            )
+                                                        }
                                                         className="w-full"
                                                     />
+                                                    {errors.price && (
+                                                        <p className="text-red-500 text-sm mt-1">
+                                                            {errors.price}
+                                                        </p>
+                                                    )}
                                                 </div>
                                                 <div className="grid gap-3">
                                                     <Label htmlFor="stock">
@@ -181,8 +242,20 @@ export default function AddProduct({ auth }) {
                                                     <Input
                                                         id="stock"
                                                         type="number"
+                                                        value={data.stock}
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                "stock",
+                                                                e.target.value
+                                                            )
+                                                        }
                                                         className="w-full"
                                                     />
+                                                    {errors.stock && (
+                                                        <p className="text-red-500 text-sm mt-1">
+                                                            {errors.stock}
+                                                        </p>
+                                                    )}
                                                 </div>
                                             </div>
                                         </CardContent>
@@ -196,18 +269,26 @@ export default function AddProduct({ auth }) {
                                             </CardDescription>
                                         </CardHeader>
                                         <CardContent>
-                                            <div className="grid gap-2">
-                                                <div className="grid grid-cols-3 gap-2">
-                                                    <Button
-                                                        variant="outline"
-                                                        size="full"
-                                                        className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
-                                                    >
+                                            <div className="grid grid-cols-2 gap-2">
+                                                <div className="grid grid-cols-2 gap-2">
+                                                    <div>
                                                         <Upload className="h-4 w-4 text-muted-foreground" />
-                                                        <span className="sr-only">
-                                                            Upload
-                                                        </span>
-                                                    </Button>
+                                                        <Input
+                                                            type="file"
+                                                            onChange={(e) =>
+                                                                setData(
+                                                                    "image",
+                                                                    e.target
+                                                                        .files[0]
+                                                                )
+                                                            }
+                                                        />
+                                                        {errors.image && (
+                                                            <p className="text-red-500 text-sm mt-1">
+                                                                {errors.image}
+                                                            </p>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </CardContent>
@@ -216,7 +297,9 @@ export default function AddProduct({ auth }) {
                             </div>
                             <div className="flex items-center justify-center gap-2 md:hidden">
                                 <Button variant="outline">Batal</Button>
-                                <Button type="submit">Simpan Produk</Button>
+                                <Button type="submit" disabled={processing}>
+                                    Simpan Produk
+                                </Button>
                             </div>
                         </div>
                     </main>

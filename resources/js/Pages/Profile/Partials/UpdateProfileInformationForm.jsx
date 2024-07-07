@@ -5,6 +5,7 @@ import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { Input } from '@/Components/ui/input';
+import { Button } from '@/Components/ui/button';
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
     const user = usePage().props.auth.user;
@@ -86,7 +87,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 )}
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton className='bg-emerald-500' disabled={processing}>Simpan</PrimaryButton>
+                    <Button>Simpan</Button>
 
                     <Transition
                         show={recentlySuccessful}

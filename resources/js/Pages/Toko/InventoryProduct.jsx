@@ -29,14 +29,18 @@ import {
     TableRow,
 } from "@/Components/ui/table";
 import { Link } from "@inertiajs/react";
+import { formatRupiah } from "@/lib/convert";
+import { useToast } from "@/Components/ui/use-toast";
 
 export default function InventoryProduct({ auth, data }) {
     const products = data.data;
 
+    const { toast } = useToast();
+
     const renderProducts = () => {
         return products.map((product) => (
-            <TableRow>
-                <TableCell className="hidden sm:table-cell">
+            <TableRow key={product.id}>
+                <TableCell className="">
                     <img
                         alt="Product img"
                         className="aspect-square rounded-md object-cover"
@@ -46,13 +50,10 @@ export default function InventoryProduct({ auth, data }) {
                     />
                 </TableCell>
                 <TableCell className="font-medium">{product.name}</TableCell>
-                <TableCell>{product.category}</TableCell>
-                <TableCell>{product.price}</TableCell>
+                <TableCell className="hidden sm:table-cell">{formatRupiah(product.price)}</TableCell>
+                <TableCell className="hidden sm:table-cell">{product.category}</TableCell>
                 <TableCell className="hidden md:table-cell">
                     {product.stock}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                    {product.created_at}
                 </TableCell>
                 <TableCell>
                     <DropdownMenu>
@@ -70,7 +71,18 @@ export default function InventoryProduct({ auth, data }) {
                             <Link href={route("product.edit", product.id)}>
                                 <DropdownMenuItem>Edit</DropdownMenuItem>
                             </Link>
-                            <DropdownMenuItem>Hapus</DropdownMenuItem>
+                            <Link
+                                method="delete"
+                                href={route("product.destroy", product.id)}
+                                onSuccess={() =>
+                                    toast({
+                                        title: "Berhasil menghapus",
+                                        variant: "alert",
+                                    })
+                                }
+                            >
+                                <DropdownMenuItem>Hapus</DropdownMenuItem>
+                            </Link>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </TableCell>
@@ -82,7 +94,7 @@ export default function InventoryProduct({ auth, data }) {
         <AuthenticatedLayout user={auth.user}>
             <div className="flex flex-col gap-2 mt-3">
                 <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-                    <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+                    <main className="grid flex-1 items-start gap-4 p-4 sm:px-6  sm:py-0 md:gap-8">
                         <div className="flex items-center">
                             <h1 className="font-bold text-xl">
                                 Inventaris Produk
@@ -107,25 +119,26 @@ export default function InventoryProduct({ auth, data }) {
 
                         <Card x-chunk="dashboard-06-chunk-0">
                             <CardHeader>
-                                <CardTitle>Daftar Produk anda</CardTitle>
+                                <CardTitle>Daftar Produk Anda</CardTitle>
                                 <CardDescription>
-                                    Kelola produk yang ingin anda jual
+                                    Kelola produk yang ingin Anda jual
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead className="hidden w-[100px] sm:table-cell">
-                                                <span className="sr-only">
-                                                    img
-                                                </span>
+                                            <TableHead className="w-[100px]">
+                                                Gambar Produk
                                             </TableHead>
                                             <TableHead>Nama Produk</TableHead>
-                                            <TableHead>Kategori</TableHead>
-                                            <TableHead>Harga</TableHead>
+                                            <TableHead className="hidden sm:table-cell">Harga</TableHead>
+                                            <TableHead className="hidden md:table-cell">Kategori</TableHead>
                                             <TableHead className="hidden md:table-cell">
                                                 Stock
+                                            </TableHead>
+                                            <TableHead>
+                                                Action
                                             </TableHead>
                                             <TableHead>
                                                 <span className="sr-only">
