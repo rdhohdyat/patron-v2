@@ -37,7 +37,7 @@ export default function Authenticated({ user, children }) {
                         href="#"
                         className="flex items-center gap-2 text-lg font-semibold md:text-base"
                     >
-                        <div className="logo font-bold text-xl text-emerald-500">
+                        <div className="logo font-bold text-xl text-green-600">
                             PATRON
                         </div>
                     </Link>

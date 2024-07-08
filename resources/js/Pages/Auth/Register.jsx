@@ -39,14 +39,14 @@ export default function Register() {
                 </div>
                 <form onSubmit={submit}>
                     <div>
-                        <InputLabel htmlFor="name" value="Name" />
+                        <InputLabel htmlFor="nama" value="Nama" />
 
                         <Input
                             id="name"
                             name="name"
                             value={data.name}
                             className="mt-1 block w-full"
-                            placeholder="Masukan nama anda"
+                            placeholder="Masukan nama lengkap anda"
                             onChange={(e) => setData("name", e.target.value)}
                             required
                         />
@@ -63,7 +63,7 @@ export default function Register() {
                             name="email"
                             value={data.email}
                             className="mt-1 block w-full"
-                            placeholder="Masukan email anda"
+                            placeholder="Masukan email"
                             onChange={(e) => setData("email", e.target.value)}
                             required
                         />
@@ -80,7 +80,7 @@ export default function Register() {
                             name="password"
                             value={data.password}
                             className="mt-1 block w-full"
-                            placeholder="******"
+                            placeholder="Password"
                             onChange={(e) =>
                                 setData("password", e.target.value)
                             }
@@ -119,7 +119,7 @@ export default function Register() {
                     </div>
 
                     <div className="flex flex-col gap-4 items-center mt-4">
-                        <Button className="w-full bg-emerald-500" type="submit">
+                        <Button className="w-full" type="submit">
                             Buat Akun
                         </Button>
                         <Button variant="outline" className="w-full">

@@ -91,7 +91,7 @@ export default function Login({ status, canResetPassword }) {
                                 {canResetPassword && (
                                     <Link
                                         href={route("password.request")}
-                                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                     >
                                         Lupa password anda?
                                     </Link>
@@ -116,24 +116,9 @@ export default function Login({ status, canResetPassword }) {
                             />
                         </div>
 
-                        {/* <div className="block mt-4">
-                            <label className="flex items-center">
-                                <Checkbox
-                                    name="remember"
-                                    checked={data.remember}
-                                    onChange={(e) =>
-                                        setData("remember", e.target.checked)
-                                    }
-                                />
-                                <span className="ms-2 text-sm text-gray-600">
-                                    Remember me
-                                </span>
-                            </label>
-                        </div> */}
-
                         <div className="flex flex-col gap-4 items-center mt-4">
                             <Button
-                                className="w-full bg-emerald-500"
+                                className="w-full"
                                 type="submit"
                             >
                                 Masuk

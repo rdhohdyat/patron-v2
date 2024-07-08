@@ -101,7 +101,7 @@ export default function index({ auth, data }) {
                     <h1 className="font-bold text-lg sm:text-xl text-gray-600">
                         Kategori
                     </h1>
-                    <Button variant="link" className="sm:text-md text-emerald-500">
+                    <Button variant="link" className="sm:text-md text-green-500">
                         Lihat semua
                     </Button>
                 </div>
@@ -121,14 +121,14 @@ export default function index({ auth, data }) {
                                         className="text-center"
                                     >
                                         <div className="bg-white shadow border rounded-xl flex items-center justify-center p-2 gap-2">
-                                            <div className="text-emerald-500">
+                                            <div className="text-green-600">
                                                 {item.icon}
                                             </div>
-                                            <div className="hidden sm:block text-gray-500 font-medium truncate ...">
+                                            <div className="hidden sm:block text-gray-500 font-semibold truncate ...">
                                                 {item.name}
                                             </div>
                                         </div>
-                                        <h1 className="mx-auto sm:hidden w-10 truncate ...">
+                                        <h1 className="mx-auto sm:hidden w-10 font-semibold text-gray-500 truncate ...">
                                             {item.name}
                                         </h1>
                                     </Link>
@@ -142,7 +142,7 @@ export default function index({ auth, data }) {
                     <h1 className="font-bold text-lg sm:text-xl text-gray-600">
                         Produk terlaris
                     </h1>
-                    <Button variant="link" className="sm:text-md text-emerald-500">
+                    <Button variant="link" className="sm:text-md text-green-500">
                         Lihat semua
                     </Button>
                 </div>
@@ -195,7 +195,7 @@ export default function index({ auth, data }) {
                     <h1 className="font-bold text-lg sm:text-xl text-gray-600">
                         Pasar terdekat
                     </h1>
-                    <Button variant="link" className="sm:text-md text-emerald-500">
+                    <Button variant="link" className="sm:text-md text-green-500">
                         Lihat semua
                     </Button>
                 </div>

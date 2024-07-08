@@ -94,7 +94,7 @@ export default function InventoryProduct({ auth, data }) {
         <AuthenticatedLayout user={auth.user}>
             <div className="flex flex-col gap-2 mt-3">
                 <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-                    <main className="grid flex-1 items-start gap-4 p-4 sm:px-6  sm:py-0 md:gap-8">
+                    <main className="grid flex-1 items-start gap-4 p-4 sm:px-6  sm:py-0 ">
                         <div className="flex items-center">
                             <h1 className="font-bold text-xl">
                                 Inventaris Produk
@@ -120,26 +120,28 @@ export default function InventoryProduct({ auth, data }) {
                         <Card x-chunk="dashboard-06-chunk-0">
                             <CardHeader>
                                 <CardTitle>Daftar Produk Anda</CardTitle>
-                                <CardDescription>
-                                    Kelola produk yang ingin Anda jual
-                                </CardDescription>
+                                <p className="text-sm text-gray-600">
+                                    Kelola produk yang ada di toko anda
+                                </p>
                             </CardHeader>
                             <CardContent>
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
                                             <TableHead className="w-[100px]">
-                                                Gambar Produk
+                                               Foto
                                             </TableHead>
                                             <TableHead>Nama Produk</TableHead>
-                                            <TableHead className="hidden sm:table-cell">Harga</TableHead>
-                                            <TableHead className="hidden md:table-cell">Kategori</TableHead>
+                                            <TableHead className="hidden sm:table-cell">
+                                                Harga
+                                            </TableHead>
+                                            <TableHead className="hidden md:table-cell">
+                                                Kategori
+                                            </TableHead>
                                             <TableHead className="hidden md:table-cell">
                                                 Stock
                                             </TableHead>
-                                            <TableHead>
-                                                Action
-                                            </TableHead>
+                                            <TableHead>Action</TableHead>
                                             <TableHead>
                                                 <span className="sr-only">
                                                     Actions
@@ -151,10 +153,10 @@ export default function InventoryProduct({ auth, data }) {
                                 </Table>
                             </CardContent>
                             <CardFooter>
-                                <div className="text-xs text-muted-foreground">
+                                {/* <div className="text-xs text-muted-foreground">
                                     Showing <strong>1-10</strong> of{" "}
                                     <strong>32</strong> products
-                                </div>
+                                </div> */}
                             </CardFooter>
                         </Card>
                     </main>

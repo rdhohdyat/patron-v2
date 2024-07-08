@@ -65,7 +65,7 @@ export default function AddProduct({ auth }) {
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-4 py-4 sm:pl-14">
                     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-                        <div className="mx-auto grid flex-1 auto-rows-max gap-4 w-full sm:max-w-6xl">
+                        <div className="mx-auto grid flex-1 auto-rows-max gap-4 w-full sm:max-w-7xl">
                             <div className="flex items-center gap-4">
                                 <Link href={route("product")}>
                                     <Button
@@ -96,6 +96,10 @@ export default function AddProduct({ auth }) {
                                             <CardTitle>
                                                 Informasi Produk
                                             </CardTitle>
+                                            <p className="text-sm text-gray-600">
+                                                Isi informasi produk yang akan
+                                                anda jual
+                                            </p>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid gap-6">
@@ -150,6 +154,10 @@ export default function AddProduct({ auth }) {
                                             <CardTitle>
                                                 Kategori Produk
                                             </CardTitle>
+                                            <p className="text-sm text-gray-600">
+                                                Isi kategori produk yang akan
+                                                dijual
+                                            </p>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid gap-6 sm:grid-cols-3">
@@ -210,6 +218,9 @@ export default function AddProduct({ auth }) {
                                             <CardTitle>
                                                 Harga dan Stok
                                             </CardTitle>
+                                            <p className="text-sm text-gray-600">
+                                                Atur harga dan stok awal produk
+                                            </p>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid gap-6">
@@ -262,11 +273,10 @@ export default function AddProduct({ auth }) {
                                     </Card>
                                     <Card className="overflow-hidden">
                                         <CardHeader>
-                                            <CardTitle>Gambar Produk</CardTitle>
-                                            <CardDescription>
-                                                Format foto harus .jpg .jpeg
-                                                .png
-                                            </CardDescription>
+                                            <CardTitle>Foto  Produk</CardTitle>
+                                            <p className="text-sm text-gray-600">
+                                                Format foto harus JPG, JPEG dan PNG
+                                            </p>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid grid-cols-2 gap-2">

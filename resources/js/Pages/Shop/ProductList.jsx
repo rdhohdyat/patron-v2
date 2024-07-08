@@ -15,10 +15,10 @@ const ProductList = ({ data }) => {
     return (
         <div>
             <div className="flex justify-between items-center mt-6">
-                <h1 className="font-bold sm:text-2xl">
+                <h1 className="font-bold text-lg sm:text-xl text-gray-600">
                     Lainnya di toko ini
                 </h1>
-                <Button variant="link" className="sm:text-lg text-emerald-500">
+                <Button variant="link" className="text-md sm:text-lg text-green-500">
                     Lihat semua
                 </Button>
             </div>
