@@ -15,8 +15,10 @@ const StoreList = ({ data }) => {
     return (
         <div>
             <div className="flex justify-between items-center mt-6">
-                <h1 className="font-bold sm:text-2xl">Lainnya di toko ini</h1>
-                <Button variant="link" className="sm:text-lg text-emerald-500">
+                <h1 className="font-bold text-lg sm:text-xl text-gray-600">
+                    Lihat toko lain
+                </h1>
+                <Button variant="link" className="text-md sm:text-lg text-green-500">
                     Lihat semua
                 </Button>
             </div>
@@ -34,7 +36,6 @@ const StoreList = ({ data }) => {
                                         <img
                                             src={product.image}
                                             className="rounded-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
-                                            alt={product.name}
                                         />
                                         <div className="mt-1">
                                             <h1 className="w-[180px] truncate ...">

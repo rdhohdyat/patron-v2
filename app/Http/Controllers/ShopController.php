@@ -40,8 +40,9 @@ class ShopController extends Controller
     public function category($key)
     {
         $products = Product::where('category', 'like', '%' . $key . '%')->paginate(10);
-        return inertia("Shop/Search", [
+        return inertia("Shop/CategoryList", [
             "data" => ProductResource::collection($products),
+            "category" => $key
         ]);
     }
 }

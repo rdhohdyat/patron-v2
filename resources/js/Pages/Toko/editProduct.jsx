@@ -21,16 +21,19 @@ import {
 } from "@/Components/ui/select";
 import { Textarea } from "@/Components/ui/textarea";
 import { Link, useForm } from "@inertiajs/react";
+import { useToast } from "@/Components/ui/use-toast";
 
 export default function EditProduct({ auth, product }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: product.name || "",
-        category: product.category || "",
-        price: product.price || "",
-        stock: product.stock || "",
-        description: product.description || "",
-        image: "",
+    const { data, setData, put, processing, errors, reset } = useForm({
+        name: product.data.name || "",
+        category: product.data.category || "",
+        price: product.data.price || "",
+        stock: product.data.stock || "",
+        description: product.data.description || "",
+        image: product.data.image || "",
     });
+
+    const {toast} = useToast();
 
     const category = [
         "Sayur",
@@ -47,14 +50,26 @@ export default function EditProduct({ auth, product }) {
         "Roti dan kue",
     ];
 
-    const onSubmit = (event) => {
-        event.preventDefault();
-        put(route("product.update", product.id));
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        put(route("product.update", { product: product.data.id }), {
+            onSuccess: () => {
+                toast({
+                    title: "Berhasil edit produk",
+                    variant: "default",
+                });
+            },
+            onError: () => {
+                toast({
+                    title : "gagal edit produk"
+                })
+            }
+        });
     };
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-4 py-4 sm:pl-14">
                     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                         <div className="mx-auto grid flex-1 auto-rows-max gap-4 w-full sm:max-w-7xl">
@@ -104,9 +119,16 @@ export default function EditProduct({ auth, product }) {
                                                     <Input
                                                         id="name"
                                                         type="text"
+                                                        name="name"
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                "name",
+                                                                e.target.value
+                                                            )
+                                                        }
                                                         className="w-full"
                                                         value={
-                                                            product.data.name
+                                                            data.name
                                                         }
                                                     />
                                                 </div>
@@ -118,8 +140,15 @@ export default function EditProduct({ auth, product }) {
                                                         id="description"
                                                         className="min-h-32"
                                                         value={
-                                                            product.data
+                                                            data
                                                                 .description
+                                                        }
+                                                        name="description"
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                "description",
+                                                                e.target.value
+                                                            )
                                                         }
                                                     />
                                                 </div>
@@ -143,34 +172,21 @@ export default function EditProduct({ auth, product }) {
                                                     </Label>
                                                     <Select
                                                         value={
-                                                            product.data
+                                                            data
                                                                 .category
                                                         }
                                                     >
                                                         <SelectTrigger
                                                             id="category"
                                                             aria-label="Select category"
+                                                            
                                                         >
                                                             <SelectValue placeholder="Pilih Kategori Produk" />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            {category.map(
-                                                                (
-                                                                    item,
-                                                                    index
-                                                                ) => (
-                                                                    <SelectItem
-                                                                        value={
-                                                                            item
-                                                                        }
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                    >
-                                                                        {item}
-                                                                    </SelectItem>
-                                                                )
-                                                            )}
+                                                           {category.map((item, index) => (
+                                                            <SelectItem value={item} key={index}>{item}</SelectItem>
+                                                           ))}
                                                         </SelectContent>
                                                     </Select>
                                                 </div>
@@ -199,7 +215,14 @@ export default function EditProduct({ auth, product }) {
                                                         type="text"
                                                         className="w-full"
                                                         value={
-                                                            product.data.price
+                                                            data.price
+                                                        }
+                                                        name="price"
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                "price",
+                                                                e.target.value
+                                                            )
                                                         }
                                                     />
                                                 </div>
@@ -212,7 +235,14 @@ export default function EditProduct({ auth, product }) {
                                                         type="number"
                                                         className="w-full"
                                                         value={
-                                                            product.data.stock
+                                                            data.stock
+                                                        }
+                                                        name="stock"
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                "stock",
+                                                                e.target.value
+                                                            )
                                                         }
                                                     />
                                                 </div>
@@ -242,7 +272,7 @@ export default function EditProduct({ auth, product }) {
                                                     </Button>
                                                 </div>
                                                 <img
-                                                    src={product.data.image}
+                                                    src={data.image}
                                                     alt=""
                                                 />
                                             </div>

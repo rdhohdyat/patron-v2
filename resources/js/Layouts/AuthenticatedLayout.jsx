@@ -91,7 +91,7 @@ export default function Authenticated({ user, children }) {
                             </Link>
                             <Link
                                 href={route("store")}
-                                className="hover:text-foreground"
+                                className="hover:text-foreground "
                             >
                                 Dashboard
                             </Link>

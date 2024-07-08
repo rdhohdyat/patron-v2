@@ -1,6 +1,7 @@
 import ShopLayout from "@/Layouts/ShopLayout";
 import { Button } from "@/Components/ui/button";
 import { Store } from "lucide-react";
+import StoreList from "./StoreList";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -105,8 +106,7 @@ export default function ProductDetail({
                 </div>
             </div>
             <ProductList data={products}></ProductList>
-            <ProductList data={products}></ProductList>
-            {/* <StoreList data={store}></StoreList> */}
+            <StoreList data={products}></StoreList>
         </ShopLayout>
     );
 }

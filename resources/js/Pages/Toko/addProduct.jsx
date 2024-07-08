@@ -188,10 +188,7 @@ export default function AddProduct({ auth }) {
                                                                     item,
                                                                     index
                                                                 ) => (
-                                                                    <SelectItem
-                                                                        value={
-                                                                            item
-                                                                        }
+                                                                    <SelectItem value={item}
                                                                         key={
                                                                             index
                                                                         }

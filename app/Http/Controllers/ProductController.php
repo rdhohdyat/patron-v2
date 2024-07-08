@@ -73,7 +73,11 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        
+        $data = $request->validated();
+        // dd($data);
+        $product->update($data);
+        return to_route('product');
     }
 
     /**
