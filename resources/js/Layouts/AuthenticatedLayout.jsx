@@ -20,11 +20,8 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
-import {
-    Menu,
-    Search,
-} from "lucide-react";
-import {Link} from "@inertiajs/react";
+import { Menu, Search } from "lucide-react";
+import { Link } from "@inertiajs/react";
 import { Toaster } from "@/Components/ui/toaster";
 
 export default function Authenticated({ user, children }) {
@@ -42,7 +39,7 @@ export default function Authenticated({ user, children }) {
                         </div>
                     </Link>
                     <Link
-                        href={route("store")}
+                        // href={route("store")}
                         className="text-foreground  transition-colors hover:text-foreground"
                     >
                         Dashboard
@@ -54,7 +51,7 @@ export default function Authenticated({ user, children }) {
                         Pemesanan
                     </Link>
                     <Link
-                        href={route("product")}
+                        href={route("product.index")}
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
                         Produk
@@ -85,13 +82,13 @@ export default function Authenticated({ user, children }) {
                                 href="#"
                                 className="flex items-center gap-2 text-lg font-semibold"
                             >
-                                <div className="logo font-bold text-xl text-emerald-500">
+                                <div className="logo font-bold text-xl text-green-600">
                                     PATRON
                                 </div>
                             </Link>
                             <Link
-                                href={route("store")}
-                                className="hover:text-foreground "
+                                // href={route("store.index")}
+                                className="hover:text-foreground text-md"
                             >
                                 Dashboard
                             </Link>
@@ -102,7 +99,7 @@ export default function Authenticated({ user, children }) {
                                 Pemesanan
                             </Link>
                             <Link
-                                href={route("product")}
+                                href={route("product.index")}
                                 className="text-muted-foreground hover:text-foreground"
                             >
                                 Produk
@@ -143,17 +140,17 @@ export default function Authenticated({ user, children }) {
                                     {user.name}
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem>
-                                    <Link href={route("profile.edit")}>
-                                        Profil
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <Link route={"toko"}>Toko</Link>
-                                </DropdownMenuItem>
+                                <Link href={route("profile.edit")}>
+                                    <DropdownMenuItem>Profil</DropdownMenuItem>
+                                </Link>
+                                <Link href={route("shop")}>
+                                    <DropdownMenuItem>Belanja</DropdownMenuItem>
+                                </Link>
                                 <DropdownMenuSeparator />
                                 <AlertDialogTrigger className="w-full">
-                                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                                    <DropdownMenuItem className="text-red-500 hover:!bg-red-100 active:!bg-red-300 hover:!text-red-600 ">
+                                        Keluar
+                                    </DropdownMenuItem>
                                 </AlertDialogTrigger>
                             </DropdownMenuContent>
                         </DropdownMenu>

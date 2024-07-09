@@ -6,9 +6,8 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -19,7 +18,7 @@ class ProductController extends Controller
     {
         $query = Product::query();
         $query->latest();
-        $products = $query->paginate(10);
+        $products = $query->paginate(5);
         return inertia("Toko/InventoryProduct", [
             "data" => ProductResource::collection($products),
         ]);
@@ -40,14 +39,10 @@ class ProductController extends Controller
     {
         $data = $request->validated();
 
-        if (isset($data['image'])) {
-            $data['image'] = $data['image']->store('product/' . Str::random(), 'public');
-        } else {
-            $data['image'] = null; // Pastikan kolom image bisa bernilai null
-        }
+        $data['image'] = $data['image']->store('product/' . Str::random(), 'public');
 
         Product::create($data);
-        return to_route('product');
+        return to_route('product.index');
     }
 
     /**
@@ -58,9 +53,6 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Product $product)
     {
         return inertia("Toko/editProduct", [
@@ -68,16 +60,16 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        
         $data = $request->validated();
-        // dd($data);
+        $image = $data['image'] ?? null;
+        if ($image) {
+            $data['image'] = $image->store('product/' . Str::random(), 'public');
+        }
+
         $product->update($data);
-        return to_route('product');
+        return to_route('product.index');
     }
 
     /**
@@ -86,6 +78,9 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return to_route('product');
+        if ($product->image) {
+            Storage::disk('public')->deleteDirectory(dirname($product->image));
+        }
+        return to_route('product.index');
     }
 }

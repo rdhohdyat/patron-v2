@@ -84,7 +84,7 @@ export default function ProductDetail({
                         <div className="text-xl font-bold">1KG</div>
                     </div>
                     <div className="sm:block flex gap-2">
-                        <Button variant="outline" className="mt-3 sm:w-[300px]">
+                        <Button variant="outline" className="mt-3 w-full">
                             <div className="hidden sm:block">
                                 Hubungi Penjual
                             </div>
@@ -92,7 +92,7 @@ export default function ProductDetail({
                         </Button>
                         <Button
                             variant="outline"
-                            className="w-full mt-3 sm:w-[300px]"
+                            className="w-full mt-3"
                         >
                             Beli Langsung
                         </Button>

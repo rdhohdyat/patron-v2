@@ -24,16 +24,17 @@ import { Link, useForm } from "@inertiajs/react";
 import { useToast } from "@/Components/ui/use-toast";
 
 export default function EditProduct({ auth, product }) {
-    const { data, setData, put, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm({
         name: product.data.name || "",
         category: product.data.category || "",
         price: product.data.price || "",
         stock: product.data.stock || "",
         description: product.data.description || "",
-        image: product.data.image || "",
+        image: "",
+        _method: "PUT",
     });
 
-    const {toast} = useToast();
+    const { toast } = useToast();
 
     const category = [
         "Sayur",
@@ -52,7 +53,7 @@ export default function EditProduct({ auth, product }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route("product.update", { product: product.data.id }), {
+        post(route("product.update", { product: product.data.id }), {
             onSuccess: () => {
                 toast({
                     title: "Berhasil edit produk",
@@ -61,9 +62,10 @@ export default function EditProduct({ auth, product }) {
             },
             onError: () => {
                 toast({
-                    title : "gagal edit produk"
-                })
-            }
+                    title: "Gagal edit produk",
+                    variant: "destructive",
+                });
+            },
         });
     };
 
@@ -74,7 +76,7 @@ export default function EditProduct({ auth, product }) {
                     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                         <div className="mx-auto grid flex-1 auto-rows-max gap-4 w-full sm:max-w-7xl">
                             <div className="flex items-center gap-4">
-                                <Link href={route("product")}>
+                                <Link href={route("product.index")}>
                                     <Button
                                         variant="outline"
                                         size="icon"
@@ -94,8 +96,12 @@ export default function EditProduct({ auth, product }) {
                                     In stock
                                 </Badge>
                                 <div className="hidden items-center gap-2 sm:flex">
-                                    <Button variant="outline">Batal</Button>
-                                    <Button type="submit">Simpan Produk</Button>
+                                    <Link href={route("product.index")}>
+                                        <Button variant="outline">Batal</Button>
+                                    </Link>
+                                    <Button type="submit" disabled={processing}>
+                                        Simpan Produk
+                                    </Button>
                                 </div>
                             </div>
                             <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
@@ -127,9 +133,7 @@ export default function EditProduct({ auth, product }) {
                                                             )
                                                         }
                                                         className="w-full"
-                                                        value={
-                                                            data.name
-                                                        }
+                                                        value={data.name}
                                                     />
                                                 </div>
                                                 <div className="grid gap-3">
@@ -139,10 +143,7 @@ export default function EditProduct({ auth, product }) {
                                                     <Textarea
                                                         id="description"
                                                         className="min-h-32"
-                                                        value={
-                                                            data
-                                                                .description
-                                                        }
+                                                        value={data.description}
                                                         name="description"
                                                         onChange={(e) =>
                                                             setData(
@@ -171,22 +172,40 @@ export default function EditProduct({ auth, product }) {
                                                         Kategori
                                                     </Label>
                                                     <Select
-                                                        value={
-                                                            data
-                                                                .category
+                                                        value={data.category}
+                                                        onValueChange={(
+                                                            value
+                                                        ) =>
+                                                            setData(
+                                                                "category",
+                                                                value
+                                                            )
                                                         }
                                                     >
                                                         <SelectTrigger
                                                             id="category"
                                                             aria-label="Select category"
-                                                            
                                                         >
                                                             <SelectValue placeholder="Pilih Kategori Produk" />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                           {category.map((item, index) => (
-                                                            <SelectItem value={item} key={index}>{item}</SelectItem>
-                                                           ))}
+                                                            {category.map(
+                                                                (
+                                                                    item,
+                                                                    index
+                                                                ) => (
+                                                                    <SelectItem
+                                                                        value={
+                                                                            item
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                    >
+                                                                        {item}
+                                                                    </SelectItem>
+                                                                )
+                                                            )}
                                                         </SelectContent>
                                                     </Select>
                                                 </div>
@@ -214,9 +233,7 @@ export default function EditProduct({ auth, product }) {
                                                         id="price"
                                                         type="text"
                                                         className="w-full"
-                                                        value={
-                                                            data.price
-                                                        }
+                                                        value={data.price}
                                                         name="price"
                                                         onChange={(e) =>
                                                             setData(
@@ -234,9 +251,7 @@ export default function EditProduct({ auth, product }) {
                                                         id="stock"
                                                         type="number"
                                                         className="w-full"
-                                                        value={
-                                                            data.stock
-                                                        }
+                                                        value={data.stock}
                                                         name="stock"
                                                         onChange={(e) =>
                                                             setData(
@@ -260,20 +275,24 @@ export default function EditProduct({ auth, product }) {
                                         <CardContent>
                                             <div className="grid grid-cols-2 gap-2">
                                                 <div className="grid grid-cols-2 gap-2">
-                                                    <Button
-                                                        variant="outline"
-                                                        size="full"
-                                                        className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
-                                                    >
-                                                        <Upload className="h-4 w-4 text-muted-foreground" />
-                                                        <span className="sr-only">
-                                                            Upload
-                                                        </span>
-                                                    </Button>
+                                                    <Input
+                                                        className="w-[100px]"
+                                                        type="file"
+                                                        name="image"
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                "image",
+                                                                e.target
+                                                                    .files[0]
+                                                            )
+                                                        }
+                                                    />
+                                                    <Upload className="-ml-20 "></Upload>
                                                 </div>
                                                 <img
-                                                    src={data.image}
-                                                    alt=""
+                                                    src={product.data.image}
+                                                    alt="Product Image"
+                                                    className="aspect-square rounded-md object-cover"
                                                 />
                                             </div>
                                         </CardContent>
@@ -282,7 +301,9 @@ export default function EditProduct({ auth, product }) {
                             </div>
                             <div className="flex items-center justify-center gap-2 md:hidden">
                                 <Button variant="outline">Batal</Button>
-                                <Button type="submit">Simpan Produk</Button>
+                                <Button type="submit" disabled={processing}>
+                                    Simpan Produk
+                                </Button>
                             </div>
                         </div>
                     </main>

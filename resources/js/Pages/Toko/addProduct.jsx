@@ -42,6 +42,12 @@ export default function AddProduct({ auth }) {
                     variant: "default",
                 });
             },
+            onError: () => {
+                toast({
+                    title: "Gagal menambahkan produk",
+                    variant: "destructive",
+                });
+            },
         });
     };
 
@@ -67,7 +73,7 @@ export default function AddProduct({ auth }) {
                     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                         <div className="mx-auto grid flex-1 auto-rows-max gap-4 w-full sm:max-w-7xl">
                             <div className="flex items-center gap-4">
-                                <Link href={route("product")}>
+                                <Link href={route("product.index")}>
                                     <Button
                                         variant="outline"
                                         size="icon"
@@ -81,7 +87,7 @@ export default function AddProduct({ auth }) {
                                     Tambah Produk Baru
                                 </h1>
                                 <div className="hidden items-center gap-2 md:flex">
-                                    <Link href={route("product")}>
+                                    <Link href={route("product.index")}>
                                         <Button variant="outline">Batal</Button>
                                     </Link>
                                     <Button type="submit" disabled={processing}>
@@ -188,7 +194,10 @@ export default function AddProduct({ auth }) {
                                                                     item,
                                                                     index
                                                                 ) => (
-                                                                    <SelectItem value={item}
+                                                                    <SelectItem
+                                                                        value={
+                                                                            item
+                                                                        }
                                                                         key={
                                                                             index
                                                                         }
@@ -270,32 +279,27 @@ export default function AddProduct({ auth }) {
                                     </Card>
                                     <Card className="overflow-hidden">
                                         <CardHeader>
-                                            <CardTitle>Foto  Produk</CardTitle>
+                                            <CardTitle>Foto Produk</CardTitle>
                                             <p className="text-sm text-gray-600">
-                                                Format foto harus JPG, JPEG dan PNG
+                                                Format foto harus JPG, JPEG dan
+                                                PNG
                                             </p>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid grid-cols-2 gap-2">
                                                 <div className="grid grid-cols-2 gap-2">
-                                                    <div>
-                                                        <Upload className="h-4 w-4 text-muted-foreground" />
-                                                        <Input
-                                                            type="file"
-                                                            onChange={(e) =>
-                                                                setData(
-                                                                    "image",
-                                                                    e.target
-                                                                        .files[0]
-                                                                )
-                                                            }
-                                                        />
-                                                        {errors.image && (
-                                                            <p className="text-red-500 text-sm mt-1">
-                                                                {errors.image}
-                                                            </p>
-                                                        )}
-                                                    </div>
+                                                    <Input
+                                                        className="w-[100px] opacity-0"
+                                                        type="file"
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                "image",
+                                                                e.target
+                                                                    .files[0]
+                                                            )
+                                                        }
+                                                    />
+                                                    <Upload className="-ml-20 "></Upload>
                                                 </div>
                                             </div>
                                         </CardContent>

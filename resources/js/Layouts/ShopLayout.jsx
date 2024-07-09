@@ -276,7 +276,7 @@ export default function ShopLayout({ user, header, children }) {
                                     </Link>
                                     <DropdownMenuSeparator />
                                     <AlertDialogTrigger className="w-full">
-                                        <DropdownMenuItem>
+                                        <DropdownMenuItem className="text-red-500 hover:!bg-red-100 active:!bg-red-300 hover:!text-red-600 ">
                                             Keluar
                                         </DropdownMenuItem>
                                     </AlertDialogTrigger>

@@ -15,19 +15,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/shop/detail/{product}', [ShopController::class, 'product_detail'])->name('shop.detail');
     Route::get('/shop/search', [ShopController::class, 'search'])->name('shop.search');
     Route::get('/shop/category/{key}', [ShopController::class, 'category'])->name('shop.category');
-
     Route::get("/store", [StoreController::class, 'index'])->name('store');
-
-    Route::get("/product", [ProductController::class, 'index'])->name('product');
-    Route::get("/product/tambah", [ProductController::class, 'create'])->name("product.tambah");
-    Route::get("/product/edit/{product}", [ProductController::class, 'edit'])->name("product.edit");
-
-
-    Route::put("/product", [ProductController::class, 'update'])->name("product.update");
-    Route::post("/product", [ProductController::class, 'store'])->name('product.store');
-    Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
+    Route::resource('product', ProductController::class);
 });
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -36,4 +26,5 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
 
