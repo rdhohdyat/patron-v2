@@ -63,13 +63,19 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $data = $request->validated();
-        $image = $data['image'] ?? null;
+        $image = $request->file('image');
+
         if ($image) {
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
             $data['image'] = $image->store('product/' . Str::random(), 'public');
+        } else {
+            $data['image'] = $product->image;
         }
 
         $product->update($data);
-        return to_route('product.index');
+        return redirect()->route('product.index');
     }
 
     /**

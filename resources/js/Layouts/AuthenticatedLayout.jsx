@@ -23,6 +23,7 @@ import {
 import { Menu, Search } from "lucide-react";
 import { Link } from "@inertiajs/react";
 import { Toaster } from "@/Components/ui/toaster";
+import NavLink from "@/Components/NavLink";
 
 export default function Authenticated({ user, children }) {
     return (
@@ -38,30 +39,35 @@ export default function Authenticated({ user, children }) {
                             PATRON
                         </div>
                     </Link>
-                    <Link
-                        // href={route("store")}
+                    <NavLink
+                        href={route("store")}
+                        active={route().current("store")}
                         className="text-foreground  transition-colors hover:text-foreground"
                     >
                         Dashboard
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                         href="#"
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
                         Pemesanan
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                         href={route("product.index")}
+                        active={/product\.(index|create|edit)/.test(
+                            route().current()
+                        )}
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
                         Produk
-                    </Link>
-                    <Link
-                        href="#"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
+                    </NavLink>
+                    <NavLink
+                        // href={route("store.edit")}
+                        // active={route().current("store.edit")}
+                        className="transition-colors hover:text-foreground"
                     >
                         Pengaturan
-                    </Link>
+                    </NavLink>
                 </nav>
                 <Sheet>
                     <SheetTrigger asChild>
@@ -86,30 +92,30 @@ export default function Authenticated({ user, children }) {
                                     PATRON
                                 </div>
                             </Link>
-                            <Link
-                                // href={route("store.index")}
+                            <NavLink
+                                href={route("store")}
+                                active={route().current("store")}
                                 className="hover:text-foreground text-md"
                             >
                                 Dashboard
-                            </Link>
-                            <Link
-                                // href={route("")}
-                                className="text-muted-foreground hover:text-foreground"
-                            >
+                            </NavLink>
+                            <NavLink className="text-muted-foreground hover:text-foreground">
                                 Pemesanan
-                            </Link>
-                            <Link
+                            </NavLink>
+                            <NavLink
                                 href={route("product.index")}
+                                active={route().current("product.index")}
                                 className="text-muted-foreground hover:text-foreground"
                             >
                                 Produk
-                            </Link>
-                            <Link
+                            </NavLink>
+                            <NavLink
                                 href=""
+                                active={route().current("product.index")}
                                 className="text-muted-foreground hover:text-foreground"
                             >
                                 Pengaturan
-                            </Link>
+                            </NavLink>
                         </nav>
                     </SheetContent>
                 </Sheet>

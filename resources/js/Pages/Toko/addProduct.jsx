@@ -116,6 +116,7 @@ export default function AddProduct({ auth }) {
                                                     <Input
                                                         id="name"
                                                         type="text"
+                                                        placeholder="contoh : Cabe busuk gagal panen"
                                                         value={data.name}
                                                         onChange={(e) =>
                                                             setData(
@@ -137,6 +138,7 @@ export default function AddProduct({ auth }) {
                                                     </Label>
                                                     <Textarea
                                                         id="description"
+                                                        placeholder="Berikan detail dari produk yang ingin anda jual"
                                                         value={data.description}
                                                         onChange={(e) =>
                                                             setData(
@@ -287,7 +289,7 @@ export default function AddProduct({ auth }) {
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid grid-cols-2 gap-2">
-                                                <div className="grid grid-cols-2 gap-2">
+                                                <div className="grid grid-cols-2 gap-2  p-5 border border-gray-500 border-dashed rounded">
                                                     <Input
                                                         className="w-[100px] opacity-0"
                                                         type="file"
@@ -299,7 +301,7 @@ export default function AddProduct({ auth }) {
                                                             )
                                                         }
                                                     />
-                                                    <Upload className="-ml-20 "></Upload>
+                                                    <Upload className="-ml-5 text-gray-500"></Upload>
                                                 </div>
                                             </div>
                                         </CardContent>

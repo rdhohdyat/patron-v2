@@ -22,7 +22,7 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'category' => $this->category,
             'stock' => $this->stock,
-            'image' => $this->image ?
+            'image' => $this->image && !(str_starts_with($this->image, 'http')) ?
                 Storage::url($this->image) : $this->image,
         ];
     }

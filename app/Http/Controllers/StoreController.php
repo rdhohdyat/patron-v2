@@ -30,7 +30,7 @@ class StoreController extends Controller
 
     public function edit(Store $store)
     {
-        //
+        return inertia("Toko/StoreSetting");
     }
 
     public function update(Request $request, Store $store)

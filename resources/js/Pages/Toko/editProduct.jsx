@@ -25,14 +25,16 @@ import { useToast } from "@/Components/ui/use-toast";
 
 export default function EditProduct({ auth, product }) {
     const { data, setData, post, processing, errors, reset } = useForm({
+        image: "",
         name: product.data.name || "",
         category: product.data.category || "",
         price: product.data.price || "",
         stock: product.data.stock || "",
         description: product.data.description || "",
-        image: "",
         _method: "PUT",
     });
+
+    console.log(product.data.image);
 
     const { toast } = useToast();
 
@@ -274,9 +276,9 @@ export default function EditProduct({ auth, product }) {
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid grid-cols-2 gap-2">
-                                                <div className="grid grid-cols-2 gap-2">
+                                                <div className="grid grid-cols-2 gap-2  p-5 border h-[150px] border-gray-500  border-dashed rounded">
                                                     <Input
-                                                        className="w-[100px]"
+                                                        className="w-[100px] opacity-0"
                                                         type="file"
                                                         name="image"
                                                         onChange={(e) =>
@@ -287,12 +289,12 @@ export default function EditProduct({ auth, product }) {
                                                             )
                                                         }
                                                     />
-                                                    <Upload className="-ml-20 "></Upload>
+                                                    <Upload className="-ml-5 my-auto z-10 text-white"></Upload>
                                                 </div>
                                                 <img
                                                     src={product.data.image}
                                                     alt="Product Image"
-                                                    className="aspect-square rounded-md object-cover"
+                                                    className=" w-[120px] my-auto -ml-[155px] rounded-md object-cover"
                                                 />
                                             </div>
                                         </CardContent>
