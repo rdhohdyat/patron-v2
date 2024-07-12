@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('store_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->decimal('price', 8, 2);
+            $table->integer('price');
             $table->string('category');
             $table->integer('stock');
             $table->string('image')->nullable(); 

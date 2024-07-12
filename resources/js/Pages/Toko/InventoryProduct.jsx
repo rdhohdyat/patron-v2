@@ -24,13 +24,15 @@ import {
     TableHeader,
     TableRow,
 } from "@/Components/ui/table";
-import { Link , Head} from "@inertiajs/react";
+import { Link, Head } from "@inertiajs/react";
 import { formatRupiah } from "@/lib/convert";
 import { useToast } from "@/Components/ui/use-toast";
 import PaginationComponent from "@/Components/Pagination";
+import EmptyProduct from "@/Components/EmptyProduct";
 
 export default function InventoryProduct({ auth, data }) {
     const products = data.data;
+    // const products = [];
 
     const { toast } = useToast();
 
@@ -93,11 +95,9 @@ export default function InventoryProduct({ auth, data }) {
         ));
     };
 
-    console.log(data);
-
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="List Produk"></Head>
+            <Head title="Inventory Produk"></Head>
             <div className="flex flex-col gap-2 mt-3">
                 <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
                     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6  sm:py-0 ">
@@ -107,8 +107,8 @@ export default function InventoryProduct({ auth, data }) {
                             </h1>
                             <div className="ml-auto flex items-center gap-2">
                                 <Button variant="outline" className="gap-1">
-                                    <File className="h-3.5 w-3.5" />
-                                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                    <File className="h-3.5 w-3.5 text-gray-600" />
+                                    <span className="sr-only sm:not-sr-only text-gray-600  sm:whitespace-nowrap">
                                         Export
                                     </span>
                                 </Button>
@@ -123,42 +123,50 @@ export default function InventoryProduct({ auth, data }) {
                             </div>
                         </div>
 
-                        <Card x-chunk="dashboard-06-chunk-0">
-                            <CardHeader>
-                                <CardTitle>Daftar Produk Anda</CardTitle>
-                                <p className="text-sm text-gray-600">
-                                    Kelola produk yang ada di toko anda
-                                </p>
-                            </CardHeader>
-                            <CardContent>
-                                <Table>
-                                    <TableHeader>
-                                        <TableRow>
-                                            <TableHead className="w-[100px]">
-                                                Foto
-                                            </TableHead>
-                                            <TableHead>Nama Produk</TableHead>
-                                            <TableHead className="hidden sm:table-cell">
-                                                Harga
-                                            </TableHead>
-                                            <TableHead className="hidden md:table-cell">
-                                                Kategori
-                                            </TableHead>
-                                            <TableHead className="hidden md:table-cell">
-                                                Stock
-                                            </TableHead>
-                                            <TableHead>Aksi</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>{renderProducts()}</TableBody>
-                                </Table>
-                            </CardContent>
-                            <CardFooter className="border-t pt-3">
-                                <PaginationComponent
-                                    links={data.meta.links}
-                                ></PaginationComponent>
-                            </CardFooter>
-                        </Card>
+                        {products == null || products.length == 0 ? (
+                            <EmptyProduct></EmptyProduct>
+                        ) : (
+                            <Card x-chunk="dashboard-06-chunk-0">
+                                <CardHeader>
+                                    <CardTitle>Daftar Produk Anda</CardTitle>
+                                    <p className="text-sm text-gray-600">
+                                        Kelola produk yang ada di toko anda
+                                    </p>
+                                </CardHeader>
+                                <CardContent>
+                                    <Table>
+                                        <TableHeader>
+                                            <TableRow>
+                                                <TableHead className="w-[100px]">
+                                                    Foto
+                                                </TableHead>
+                                                <TableHead>
+                                                    Nama Produk
+                                                </TableHead>
+                                                <TableHead className="hidden sm:table-cell">
+                                                    Harga
+                                                </TableHead>
+                                                <TableHead className="hidden md:table-cell">
+                                                    Kategori
+                                                </TableHead>
+                                                <TableHead className="hidden md:table-cell">
+                                                    Stock
+                                                </TableHead>
+                                                <TableHead>Aksi</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {renderProducts()}
+                                        </TableBody>
+                                    </Table>
+                                </CardContent>
+                                <CardFooter className="border-t pt-3">
+                                    <PaginationComponent
+                                        links={data.meta.links}
+                                    ></PaginationComponent>
+                                </CardFooter>
+                            </Card>
+                        )}
                     </main>
                 </div>
             </div>

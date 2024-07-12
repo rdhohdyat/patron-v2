@@ -33,6 +33,13 @@ export default function AddProduct({ auth }) {
         image: null,
     });
 
+    function formatPrice(price) {
+        let formattedPrice = price.replace(/\D/g, "");
+        formattedPrice = formattedPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return formattedPrice;
+    }
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route("product.store"), {
@@ -230,24 +237,34 @@ export default function AddProduct({ auth }) {
                                                 Atur harga dan stok awal produk
                                             </p>
                                         </CardHeader>
+
                                         <CardContent>
                                             <div className="grid gap-6">
                                                 <div className="grid gap-3">
                                                     <Label htmlFor="price">
                                                         Harga
                                                     </Label>
-                                                    <Input
-                                                        id="price"
-                                                        type="text"
-                                                        value={data.price}
-                                                        onChange={(e) =>
-                                                            setData(
-                                                                "price",
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        className="w-full"
-                                                    />
+                                                    <div className="flex items-center gap-2">
+                                                        <h1 className="text-gray-500 font-semibold">Rp.</h1>
+                                                        <Input
+                                                            id="price"
+                                                            type="text"
+                                                            placeholder="Masukan harga"
+                                                            value={formatPrice(
+                                                                data.price
+                                                            )}
+                                                            onChange={(e) =>
+                                                                setData(
+                                                                    "price",
+                                                                    e.target.value.replace(
+                                                                        /\D/g,
+                                                                        ""
+                                                                    )
+                                                                )
+                                                            }
+                                                            className="w-full"
+                                                        />
+                                                    </div>
                                                     {errors.price && (
                                                         <p className="text-red-500 text-sm mt-1">
                                                             {errors.price}
@@ -262,6 +279,7 @@ export default function AddProduct({ auth }) {
                                                         id="stock"
                                                         type="number"
                                                         value={data.stock}
+                                                        placeholder="Masukan jumlah stok"
                                                         onChange={(e) =>
                                                             setData(
                                                                 "stock",
@@ -289,7 +307,7 @@ export default function AddProduct({ auth }) {
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid grid-cols-2 gap-2">
-                                                <div className="grid grid-cols-2 gap-2  p-5 border border-gray-500 border-dashed rounded">
+                                                <div className="group grid grid-cols-2 gap-2  p-5  border-2 border-gray-500 border-dashed rounded transition-colors duration-300 hover:border-green-600">
                                                     <Input
                                                         className="w-[100px] opacity-0"
                                                         type="file"
@@ -301,7 +319,7 @@ export default function AddProduct({ auth }) {
                                                             )
                                                         }
                                                     />
-                                                    <Upload className="-ml-5 text-gray-500"></Upload>
+                                                    <Upload className="-ml-5 text-gray-500 transition-colors duration-300 group-hover:text-green-600"></Upload>
                                                 </div>
                                             </div>
                                         </CardContent>

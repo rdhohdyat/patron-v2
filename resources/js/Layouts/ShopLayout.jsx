@@ -79,9 +79,13 @@ export default function ShopLayout({ user, header, children }) {
         calculateTotal();
     };
 
+    const handleSearch = () => {
+        return null;
+    }
+
     return (
         <div className="min-h-screen bg-gray-100">
-            <Toaster></Toaster>
+            <Toaster/>
             <header className="sticky border top-0 left-0 right-0 bg-white z-20">
                 <div className="h-16 flex justify-between px-5 sm:justify-around items-center">
                     <Link href={route("shop")}>
@@ -89,7 +93,8 @@ export default function ShopLayout({ user, header, children }) {
                             PATRON
                         </div>
                     </Link>
-                    <Link href={route("shop.search")}>
+
+                    <form onSubmit={handleSearch}>
                         <div className="hidden border h-10 sm:flex sm:w-[700px] rounded-xl px-6  items-center gap-2">
                             <Search className="text-gray-400"></Search>
                             <input
@@ -98,7 +103,8 @@ export default function ShopLayout({ user, header, children }) {
                                 placeholder="Cari Product, Lapak dan Pasar"
                             />
                         </div>
-                    </Link>
+                    </form>
+
                     <div className="flex items-center">
                         <Link
                             href={route("shop.search")}

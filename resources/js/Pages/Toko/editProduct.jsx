@@ -20,7 +20,7 @@ import {
     SelectValue,
 } from "@/Components/ui/select";
 import { Textarea } from "@/Components/ui/textarea";
-import { Link, useForm } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import { useToast } from "@/Components/ui/use-toast";
 
 export default function EditProduct({ auth, product }) {
@@ -73,6 +73,7 @@ export default function EditProduct({ auth, product }) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
+            <Head title="Edit Produk"></Head>
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-4 py-4 sm:pl-14">
                     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -93,9 +94,9 @@ export default function EditProduct({ auth, product }) {
                                 </h1>
                                 <Badge
                                     variant="outline"
-                                    className="ml-auto sm:ml-0 bg-white"
+                                    className="ml-auto sm:ml-0 bg-white text-green-500 font-bold"
                                 >
-                                    In stock
+                                    Tersedia
                                 </Badge>
                                 <div className="hidden items-center gap-2 sm:flex">
                                     <Link href={route("product.index")}>
@@ -128,6 +129,7 @@ export default function EditProduct({ auth, product }) {
                                                         id="name"
                                                         type="text"
                                                         name="name"
+                                                        placeholder="contoh : Cabe busuk gagal panen"
                                                         onChange={(e) =>
                                                             setData(
                                                                 "name",
@@ -145,6 +147,7 @@ export default function EditProduct({ auth, product }) {
                                                     <Textarea
                                                         id="description"
                                                         className="min-h-32"
+                                                        placeholder="Berikan detail dari produk yang ingin anda jual"
                                                         value={data.description}
                                                         name="description"
                                                         onChange={(e) =>
@@ -231,19 +234,26 @@ export default function EditProduct({ auth, product }) {
                                                     <Label htmlFor="price">
                                                         Harga
                                                     </Label>
-                                                    <Input
-                                                        id="price"
-                                                        type="text"
-                                                        className="w-full"
-                                                        value={data.price}
-                                                        name="price"
-                                                        onChange={(e) =>
-                                                            setData(
-                                                                "price",
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                    />
+                                                    <div className="flex items-center gap-2">
+                                                        <h1 className="text-gray-500 font-semibold">
+                                                            Rp.
+                                                        </h1>
+                                                        <Input
+                                                            id="price"
+                                                            type="text"
+                                                            className="w-full"
+                                                            value={data.price}
+                                                            placeholder="Masukan harga"
+                                                            name="price"
+                                                            onChange={(e) =>
+                                                                setData(
+                                                                    "price",
+                                                                    e.target
+                                                                        .value
+                                                                )
+                                                            }
+                                                        />
+                                                    </div>
                                                 </div>
                                                 <div className="grid gap-3">
                                                     <Label htmlFor="stock">
@@ -255,6 +265,7 @@ export default function EditProduct({ auth, product }) {
                                                         className="w-full"
                                                         value={data.stock}
                                                         name="stock"
+                                                        placeholder="Masukan jumlah stok"
                                                         onChange={(e) =>
                                                             setData(
                                                                 "stock",
@@ -276,9 +287,9 @@ export default function EditProduct({ auth, product }) {
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid grid-cols-2 gap-2">
-                                                <div className="grid grid-cols-2 gap-2  p-5 border h-[150px] border-gray-500  border-dashed rounded">
+                                                <div className="grid grid-cols-2 gap-2  p-5  h-[150px] border-gray-500  border-dashed border-2 rounded transition-colors duration-300 hover:border-green-600">
                                                     <Input
-                                                        className="w-[100px] opacity-0"
+                                                        className="w-[100px] h-[200px] opacity-0"
                                                         type="file"
                                                         name="image"
                                                         onChange={(e) =>
@@ -289,7 +300,7 @@ export default function EditProduct({ auth, product }) {
                                                             )
                                                         }
                                                     />
-                                                    <Upload className="-ml-5 my-auto z-10 text-white"></Upload>
+                                                    <Upload className="-ml-5 my-10 z-10 text-white"></Upload>
                                                 </div>
                                                 <img
                                                     src={product.data.image}

@@ -99,7 +99,8 @@ export default function Authenticated({ user, children }) {
                             >
                                 Dashboard
                             </NavLink>
-                            <NavLink className="text-muted-foreground hover:text-foreground">
+                            <NavLink className="text-muted-foreground hover:text-foreground"
+                               href="">
                                 Pemesanan
                             </NavLink>
                             <NavLink
@@ -111,7 +112,7 @@ export default function Authenticated({ user, children }) {
                             </NavLink>
                             <NavLink
                                 href=""
-                                active={route().current("product.index")}
+                                // active={route().current("product.index")}
                                 className="text-muted-foreground hover:text-foreground"
                             >
                                 Pengaturan
