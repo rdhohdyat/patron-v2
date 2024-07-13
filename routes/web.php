@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProfileController;
@@ -16,7 +17,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/shop/search', [ShopController::class, 'search'])->name('shop.search');
     Route::get('/shop/category/{key}', [ShopController::class, 'category'])->name('shop.category');
     Route::get("/store", [StoreController::class, 'index'])->name('store');
+
     Route::resource('product', ProductController::class);
+    Route::resource('order', OrderController::class);
 });
 
 Route::middleware('auth')->group(function () {

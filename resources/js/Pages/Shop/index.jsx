@@ -32,8 +32,11 @@ import {
     Croissant,
 } from "lucide-react";
 import { Link } from "@inertiajs/react";
-import { Card, CardContent } from "@/Components/ui/card";
 import { formatRupiah } from "@/lib/convert";
+
+import { SelectInput } from "@/Components/SelectInput";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
 
 export default function index({ auth, data }) {
     const category = [
@@ -60,7 +63,7 @@ export default function index({ auth, data }) {
                     <DialogTrigger asChild>
                         <div className=" bg-white border border-gray-100 rounded-xl p-3 flex items-center text-sm justify-between text-gray-600 hover:bg-white hover:border-gray-300">
                             <div className="flex items-center gap-1">
-                                <MapPin />
+                                <MapPin className="w-5 h-5" />
                                 <p className="w-[200px] sm:w-full truncate">
                                     Umban sari, Rumbai, Pekanbaru
                                 </p>
@@ -72,7 +75,18 @@ export default function index({ auth, data }) {
                         <DialogHeader>
                             <DialogTitle>Lokasi</DialogTitle>
                             <DialogDescription>
-                                <div className="h-[300px]"></div>
+                                <div className="flex flex-col gap-3 mt-5">
+                                    <div className="grid gap-3">
+                                        <Label className="text-start">
+                                            Alamat
+                                        </Label>
+                                        <Input placeholder="Masukan alamat anda"></Input>
+                                    </div>
+                                    <SelectInput label="Provinsi"></SelectInput>
+                                    <SelectInput label="Kabupaten"></SelectInput>
+                                    <SelectInput label="Kecamatan"></SelectInput>
+                                    <SelectInput label="Kelurahan"></SelectInput>
+                                </div>
                             </DialogDescription>
                         </DialogHeader>
                         <DialogFooter>
@@ -82,8 +96,8 @@ export default function index({ auth, data }) {
                 </Dialog>
 
                 <div
-                    className="sm:p-12 p-6 z-10 sm:bg-none bg-cover  bg-center rounded-xl mt-6 bg"
-                    style={{ backgroundImage: "url(/sayur.jpg)" }}
+                    className="sm:p-12 p-6 z-10 sm:bg-none  bg-center rounded-xl mt-6"
+                    style={{ backgroundImage: "url(/sayurr.jpg)" }}
                 >
                     <div>
                         <h1 className="font-semibold text-lg sm:text-2xl  text-white sm:w-[600px]">
@@ -101,7 +115,10 @@ export default function index({ auth, data }) {
                     <h1 className="font-bold text-lg sm:text-xl text-gray-600">
                         Kategori
                     </h1>
-                    <Button variant="link" className="sm:text-md text-green-500">
+                    <Button
+                        variant="link"
+                        className="sm:text-md text-green-500"
+                    >
                         Lihat semua
                     </Button>
                 </div>
@@ -120,11 +137,11 @@ export default function index({ auth, data }) {
                                         )}
                                         className="text-center"
                                     >
-                                        <div className="bg-white shadow border rounded-xl flex items-center justify-center p-2 gap-2">
-                                            <div className="text-green-600">
+                                        <div className=" border border-green-500 bg-white sm:shadow rounded-xl flex items-center justify-center p-2 gap-2">
+                                            <div className="text-green-500">
                                                 {item.icon}
                                             </div>
-                                            <div className="hidden sm:block text-gray-500 font-semibold truncate ...">
+                                            <div className="hidden sm:block text-green-500 font-semibold truncate ...">
                                                 {item.name}
                                             </div>
                                         </div>
@@ -142,7 +159,10 @@ export default function index({ auth, data }) {
                     <h1 className="font-bold text-lg sm:text-xl text-gray-600">
                         Produk terlaris
                     </h1>
-                    <Button variant="link" className="sm:text-md text-green-500">
+                    <Button
+                        variant="link"
+                        className="sm:text-md text-green-500"
+                    >
                         Lihat semua
                     </Button>
                 </div>
@@ -154,18 +174,18 @@ export default function index({ auth, data }) {
                             {products.map((product) => (
                                 <CarouselItem
                                     key={product.id}
-                                    className="basis-1/2  lg:basis-1/5 py-2"
+                                    className="basis-1/2  lg:basis-1/5 py-4"
                                 >
                                     <Link
                                         href={route("shop.detail", product.id)}
                                     >
-                                        <div className="cursor-pointer">
+                                        <div className="cursor-pointer border shadow bg-white border-gray-200  rounded-lg">
                                             <img
                                                 src={product.image}
-                                                className="rounded-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
+                                                className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
                                                 alt={product.name}
                                             />
-                                            <div className="mt-1">
+                                            <div className="p-3">
                                                 <h1 className="w-[180px] truncate ...">
                                                     {product.name}
                                                 </h1>
@@ -191,11 +211,14 @@ export default function index({ auth, data }) {
                     </Carousel>
                 </div>
 
-                <div className="flex justify-between items-center mt-8 mb-2">
+                <div className="flex justify-between items-center mb-2">
                     <h1 className="font-bold text-lg sm:text-xl text-gray-600">
                         Pasar terdekat
                     </h1>
-                    <Button variant="link" className="sm:text-md text-green-500">
+                    <Button
+                        variant="link"
+                        className="sm:text-md text-green-500"
+                    >
                         Lihat semua
                     </Button>
                 </div>
@@ -206,15 +229,15 @@ export default function index({ auth, data }) {
                             {[...Array(10)].map((item, index) => (
                                 <CarouselItem
                                     key={index}
-                                    className="basis-1/2 sm:basis-1/5"
+                                    className="basis-1/2 sm:basis-1/5 py-4"
                                 >
-                                    <div>
+                                    <div className="cursor-pointer border shadow bg-white border-gray-200  rounded-lg">
                                         <img
                                             src="/pasar.jpg"
-                                            className="rounded-lg w-[250px] h-[170px] sm:h-[200px] sm:object-cover"
+                                            className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
                                             alt=""
                                         />
-                                        <div className="mt-1">
+                                        <div className="p-3">
                                             <h1 className="font-semibold">
                                                 Pasar Rumbai
                                             </h1>

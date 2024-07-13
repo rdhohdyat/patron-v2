@@ -51,6 +51,9 @@ export default function ProductDetail({
                         <BreadcrumbLink href="/shop">Detail</BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/shop">{product.name}</BreadcrumbLink>
+                    </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
             <div className="sm:flex justify-between">

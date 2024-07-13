@@ -47,7 +47,8 @@ export default function Authenticated({ user, children }) {
                         Dashboard
                     </NavLink>
                     <NavLink
-                        href="#"
+                        href={route("order.index")}
+                        active={route().current("order.index")}
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
                         Pemesanan
@@ -99,8 +100,11 @@ export default function Authenticated({ user, children }) {
                             >
                                 Dashboard
                             </NavLink>
-                            <NavLink className="text-muted-foreground hover:text-foreground"
-                               href="">
+                            <NavLink
+                                className="text-muted-foreground hover:text-foreground"
+                                href={route("order.index")}
+                                active={route().current("order.index")}
+                            >
                                 Pemesanan
                             </NavLink>
                             <NavLink

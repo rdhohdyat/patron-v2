@@ -314,7 +314,7 @@ export default function ShopLayout({ user, header, children }) {
             </header>
 
             <main className="sm:w-[80%] mx-auto  p-5">{children}</main>
-            <footer className=" text-center py-4 pb-24">
+            <footer className="text-center py-4 pb-24">
                 <div>&copy; 2024 Patron. All rights reserved.</div>
             </footer>
         </div>

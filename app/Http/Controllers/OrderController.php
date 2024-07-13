@@ -13,8 +13,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return inertia("Toko/OrderList");
     }
+
 
     /**
      * Show the form for creating a new resource.

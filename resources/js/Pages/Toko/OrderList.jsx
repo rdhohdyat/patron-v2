@@ -1,8 +1,11 @@
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-const OrderList = () => {
+export default function OrderList({ auth }) {
     return (
-        <div>
-            <div></div>
-        </div>
-    )
+        <AuthenticatedLayout user={auth.user}>
+            <div>
+                <div>Order</div>
+            </div>
+        </AuthenticatedLayout>
+    );
 }
