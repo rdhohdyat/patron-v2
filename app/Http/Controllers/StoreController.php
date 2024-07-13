@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Store;
+use App\Models\Product;
+use App\Http\Resources\ProductResource;
 
 class StoreController extends Controller
 {
     public function index()
     {
-        return inertia("Toko/index");
+        $query = Product::query();
+        $products = $query->paginate(10);
+        return inertia("Toko/index", [
+            "data" => ProductResource::collection($products)
+        ]);
+
     }
 
     public function create()
