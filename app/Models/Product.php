@@ -21,5 +21,11 @@ class Product extends Model
         'category',
         'stock',
         'image',
+        'store_id'
     ];
+
+    public function Store()
+    {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
 }

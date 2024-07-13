@@ -33,6 +33,7 @@
         "@radix-ui/react-toast": "^1.2.1",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",
+        "dotenv": "^16.4.5",
         "embla-carousel-react": "^8.1.6",
         "lucide-react": "^0.400.0",
         "tailwind-merge": "^2.3.0",

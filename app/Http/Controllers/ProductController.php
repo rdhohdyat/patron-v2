@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Models\Store;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -16,12 +18,19 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $query = Product::query();
-        $query->latest();
-        $products = $query->paginate(5);
-        return inertia("Toko/InventoryProduct", [
-            "data" => ProductResource::collection($products),
-        ]);
+        $user = auth()->user();
+        $store = Store::where('user_id', $user->id)->first();
+
+        if ($store) {
+            $query = Product::where('store_id', $store->id)->latest();
+            $products = $query->paginate(5);
+    
+            return inertia("Toko/InventoryProduct", [
+                "data" => ProductResource::collection($products),
+            ]);
+        } else {
+            
+        }
     }
 
     /**
@@ -38,9 +47,14 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
-
         $data['image'] = $data['image']->store('product/' . Str::random(), 'public');
 
+        $user = auth()->user();
+        $store = Store::where('user_id', $user->id)->first();
+
+        if ($store) {
+            $data['store_id'] = $store->id;
+        }
         Product::create($data);
         return to_route('product.index');
     }
