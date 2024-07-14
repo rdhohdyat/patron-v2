@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\MarketController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
@@ -20,6 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('product', ProductController::class);
     Route::resource('order', OrderController::class);
+    Route::resource('market', MarketController::class);
 });
 
 Route::middleware('auth')->group(function () {
