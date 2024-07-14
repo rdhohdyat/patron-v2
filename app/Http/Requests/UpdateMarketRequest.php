@@ -11,18 +11,18 @@ class UpdateMarketRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'nama_market' => 'required|string|max:255',
+            'lokasi_market' => 'required|string|max:255',
+            'image' => 'nullable|image|max:2048',
         ];
     }
 }
