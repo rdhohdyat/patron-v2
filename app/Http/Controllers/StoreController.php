@@ -2,26 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Market;
 use Illuminate\Http\Request;
 use App\Models\Store;
 use App\Models\Product;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+
+        if (!$user->store) {
+            return redirect()->route('store.not_registered');
+        }
+        
         $query = Product::query();
         $products = $query->paginate(10);
+
         return inertia("Toko/index", [
             "data" => ProductResource::collection($products)
         ]);
-
     }
 
     public function create()
     {
-        //
+        $query = Product::query();
+        $products = $query->paginate(10);
+
+        return inertia('Toko/CreateStore', [
+            "data" => ProductResource::collection($products)
+        ]);
     }
 
     public function store(Request $request)

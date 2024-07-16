@@ -6,9 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 export default function index({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user}>
+            <Head title="Dashboard Toko"></Head>
             <div className="flex flex-col gap-4 py-4">
-                <div className="mx-auto  px-3 sm:px-20  flex-1 auto-rows-max gap-4 w-full">
-                    <div className="grid grid-cols-4 gap-6">
+                <div className="mx-auto  px-3 sm:px-28  flex-1 auto-rows-max gap-4 w-full">
+                    <div className="grid sm:grid-cols-4 gap-4 ">
                         <Card className="h-[100px]">
                             <CardHeader>
                                 <CardTitle>Produk</CardTitle>
@@ -34,12 +35,20 @@ export default function index({ auth }) {
                             <CardContent></CardContent>
                         </Card>
                     </div>
-                    <div className="grid grid-cols-3 gap-6 mt-4">
+                    <div className="sm:grid grid-cols-3 gap-4 mt-4">
                         <Card className="col-span-2 h-[450px]">
-                            <CardContent>Hallo</CardContent>
+                            <CardContent>
+                                <CardHeader>
+                                    <CardTitle>Produk</CardTitle>
+                                </CardHeader>
+                            </CardContent>
                         </Card>
-                        <Card className="col-span-1 h-[450px]">
-                            <CardContent>Hallo</CardContent>
+                        <Card className="col-span-1 mt-4 sm:mt-0 h-[450px]">
+                            <CardContent>
+                                <CardHeader>
+                                    <CardTitle>Produk</CardTitle>
+                                </CardHeader>
+                            </CardContent>
                         </Card>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Illuminate\Support\Facades\Storage;
 
 
 class StoreResource extends JsonResource
@@ -21,6 +21,7 @@ class StoreResource extends JsonResource
             'user_id' => $this->user_id,
             'nama_store' => $this->nama_store,
             'lokasi_store' => $this->lokasi_store,
+            // 'products' => ProductResource::collection($this->whenLoaded('products')),
             'image' => $this->image && !(str_starts_with($this->image, 'http')) ?
                 Storage::url($this->image) : $this->image,
         ];

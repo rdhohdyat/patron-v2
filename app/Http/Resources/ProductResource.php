@@ -17,12 +17,13 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'store_id' => new StoreResource($this->Store),
+            'store' => new StoreResource($this->Store),
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,
             'category' => $this->category,
             'stock' => $this->stock,
+            'created_at' => $this->created_at->format('Y-m-d'),
             'image' => $this->image && !(str_starts_with($this->image, 'http')) ?
                 Storage::url($this->image) : $this->image,
         ];

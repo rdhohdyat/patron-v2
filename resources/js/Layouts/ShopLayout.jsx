@@ -84,7 +84,7 @@ export default function ShopLayout({ user, header, children }) {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-50">
             <Toaster/>
             <header className="sticky border top-0 left-0 right-0 bg-white z-20">
                 <div className="h-16 flex justify-between px-5 sm:justify-around items-center">
@@ -314,9 +314,9 @@ export default function ShopLayout({ user, header, children }) {
             </header>
 
             <main className="sm:w-[80%] mx-auto  p-5">{children}</main>
-            <footer className="text-center py-4 pb-24">
+            {/* <footer className="text-center py-4 pb-24">
                 <div>&copy; 2024 Patron. All rights reserved.</div>
-            </footer>
+            </footer> */}
         </div>
     );
 }

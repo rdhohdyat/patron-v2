@@ -1,5 +1,6 @@
 import { Store } from "lucide-react";
 import { Link } from "@inertiajs/react";
+import { Card } from "@/Components/ui/card";
 import {
     Carousel,
     CarouselContent,
@@ -11,14 +12,17 @@ import { Button } from "@/Components/ui/button";
 import { formatRupiah } from "@/lib/convert";
 
 const StoreList = ({ data }) => {
-    const products = data.data;
+    const stores = data.data;
     return (
         <div>
             <div className="flex justify-between items-center mt-6">
                 <h1 className="font-bold text-lg sm:text-xl text-gray-600">
                     Lihat toko lain
                 </h1>
-                <Button variant="link" className="text-md sm:text-lg text-green-500">
+                <Button
+                    variant="link"
+                    className="text-md sm:text-lg text-green-500"
+                >
                     Lihat semua
                 </Button>
             </div>
@@ -26,32 +30,31 @@ const StoreList = ({ data }) => {
             <div className="relative rounded-md">
                 <Carousel className="rounded-md">
                     <CarouselContent>
-                        {products?.map((product) => (
+                        {stores.map((store) => (
                             <CarouselItem
-                                key={product.id}
-                                className="basis-1/2  lg:basis-1/5"
+                                key={store.id}
+                                className="basis-1/2  lg:basis-1/5 py-4"
                             >
-                                <Link href={route("shop.detail", product.id)}>
-                                    <div className="cursor-pointer">
+                                <Link href={route("shop.detail", store.id)}>
+                                    <Card className="cursor-pointer">
                                         <img
-                                            src={product.image}
-                                            className="rounded-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
+                                            // src={store.image}
+                                            src="/market.jpg"
+                                            className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
+                                            alt={store.nama_store}
                                         />
-                                        <div className="mt-1">
-                                            <h1 className="w-[180px] truncate ...">
-                                                {product.name}
-                                            </h1>
-                                            <p className="text-sm font-semibold">
-                                                {formatRupiah(product.price)}
-                                            </p>
+                                        <div className="p-3">
                                             <div className="flex items-center gap-1 mt-2">
                                                 <Store size="16" />
-                                                <p className="text-sm">
-                                                    {product.category}
-                                                </p>
+                                                <h1 className="w-[180px] truncate ...">
+                                                    {store.nama_store}
+                                                </h1>
                                             </div>
+                                            <p className="text-sm">
+                                                {store.lokasi_store}
+                                            </p>
                                         </div>
-                                    </div>
+                                    </Card>
                                 </Link>
                             </CarouselItem>
                         ))}

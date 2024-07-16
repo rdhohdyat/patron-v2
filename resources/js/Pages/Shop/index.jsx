@@ -37,6 +37,7 @@ import { formatRupiah } from "@/lib/convert";
 import { SelectInput } from "@/Components/SelectInput";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
+import { Card } from "@/Components/ui/card";
 
 export default function index({ auth, data }) {
     const category = [
@@ -137,14 +138,14 @@ export default function index({ auth, data }) {
                                         )}
                                         className="text-center"
                                     >
-                                        <div className=" border border-green-500 bg-white sm:shadow rounded-xl flex items-center justify-center p-2 gap-2">
+                                        <Card className="border shadow-none border-green-500 bg-white rounded-xl flex items-center justify-center p-2 gap-2">
                                             <div className="text-green-500">
                                                 {item.icon}
                                             </div>
                                             <div className="hidden sm:block text-green-500 font-semibold truncate ...">
                                                 {item.name}
                                             </div>
-                                        </div>
+                                        </Card>
                                         <h1 className="mx-auto sm:hidden w-10 font-semibold text-gray-500 truncate ...">
                                             {item.name}
                                         </h1>
@@ -179,7 +180,7 @@ export default function index({ auth, data }) {
                                     <Link
                                         href={route("shop.detail", product.id)}
                                     >
-                                        <div className="cursor-pointer border shadow bg-white border-gray-200  rounded-lg">
+                                        <Card className="cursor-pointer">
                                             <img
                                                 src={product.image}
                                                 className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
@@ -201,7 +202,7 @@ export default function index({ auth, data }) {
                                                     </p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </Card>
                                     </Link>
                                 </CarouselItem>
                             ))}

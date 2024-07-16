@@ -2,7 +2,6 @@ import ShopLayout from "@/Layouts/ShopLayout";
 import { Button } from "@/Components/ui/button";
 import { Store } from "lucide-react";
 import StoreList from "./StoreList";
-import { Separator } from "@/Components/ui/separator";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -10,18 +9,20 @@ import {
     BreadcrumbList,
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb";
-import { Head } from "@inertiajs/react";
+import { Head , Link} from "@inertiajs/react";
 import useCartStore from "@/lib/zustand/cartStore";
 import { useToast } from "@/Components/ui/use-toast";
 import ProductList from "./ProductList";
 import { formatRupiah } from "@/lib/convert";
 import { MessageSquareText } from "lucide-react";
+import { Card} from "@/Components/ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "@/Components/ui/avatar";
 
 export default function ProductDetail({
     auth,
     data,
-    datas: products,
-    datas: store,
+    products: otherProducts,
+    stores: otherStores,
 }) {
     const { toast } = useToast();
 
@@ -52,7 +53,9 @@ export default function ProductDetail({
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbLink href="/shop">{product.name}</BreadcrumbLink>
+                        <BreadcrumbLink href="/shop">
+                            {product.name}
+                        </BreadcrumbLink>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
@@ -65,45 +68,62 @@ export default function ProductDetail({
                             alt={product.name}
                         />
                     </div>
-                    <div className="mt-2 sm:w-[300px]">
-                        <p className="uppercase font-semibold text-gray-500 mt-2">
-                            {product.category}
-                        </p>
-                        <h1 className="text-2xl font-bold text-gray-600  flex-wrap">
+                    <div className="mt-2 sm:mt-0 sm:w-[300px]">
+                        <h1 className="text-xl font-semibold flex-wrap">
                             {product.name}
                         </h1>
-                        <h1 className="font-bold text-3xl">
+                        <p className="uppercase font-bold text-gray-600 mt-2 sm:mt-0">
+                            {product.category}
+                        </p>
+                        <h1 className="font-bold text-3xl mt-2">
                             {formatRupiah(product.price)}
                         </h1>
-                        <p className="mt-2">Detail : </p>
-                        <p className="flex-wrap text-sm">
+                        <p className="mt-2 font-semibold">Detail : </p>
+                        <p className="text-wrap text-justify sm:w-[400px] truncate ... sm:h-[120px]">
                             {product.description}
                         </p>
-                        <Separator className="my-3"></Separator>
-                        <div className="flex flex-col items-start  mt-2  font-medium">
+
+                        <Card className="flex items-start justify-between  mt-2  font-medium  p-3 py-5  shadow-none sm:w-[400px]">
                             <div className="flex gap-2 items-center">
-                                <Store size="18" />
-                                <h1>Toko buah pak mamat</h1>
+                                {/* <Store size="18" /> */}
+                                <Avatar className="w-12 h-12">
+                                    <AvatarImage
+                                        src="https://github.com/shadcn.png"
+                                        alt="@shadcn"
+                                    />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                    <h1>{product.store.nama_store}</h1>
+                                    <p className="text-sm font-normal">
+                                        {product.store.nama_store}
+                                    </p>
+                                </div>
                             </div>
-                            <div className="text-gray-600">
-                                <p>Kategori : Buah</p>
-                                <p>Pasar : rumbai</p>
-                            </div>
-                        </div>
+                            <Link href={route('shop.store_detail', product.store.id)} className="text-sm underline text-green-600">
+                                Lihat Toko
+                            </Link>
+                        </Card>
                     </div>
                 </div>
-                <div className="fixed sm:static sm:h-[200px] bottom-0 z-10 bg-white left-0 border right-0 px-5 py-3 sm:rounded-lg">
-                    <div className="sm:block  flex gap-2 ">
+                <Card className="fixed rounded-none sm:static sm:h-[200px] bottom-0 z-10 left-0 border right-0 px-5 py-3 sm:rounded-lg">
+                    <div className="sm:block flex gap-2 ">
                         <div className="hidden sm:block">
                             Total Stock : {product.stock}
                         </div>
-                        <Button variant="outline" className="mt-3 w-full">
+                        <Button
+                            variant="outline"
+                            className="w-full mt-3 text-green-500 hover:bg-green-50 hover:text-green-600 border-green-600"
+                        >
                             <div className="hidden sm:block">
                                 Hubungi Penjual
                             </div>
                             <MessageSquareText className="sm:hidden" />
                         </Button>
-                        <Button variant="outline" className="w-full mt-3">
+                        <Button
+                            variant="outline"
+                            className="w-full mt-3 text-green-500 hover:bg-green-50 hover:text-green-600  border-green-600"
+                        >
                             Beli Langsung
                         </Button>
                         <Button
@@ -113,10 +133,10 @@ export default function ProductDetail({
                             Tambah Keranjang
                         </Button>
                     </div>
-                </div>
+                </Card>
             </div>
-            <ProductList data={products}></ProductList>
-            <StoreList data={products}></StoreList>
+            <ProductList data={otherProducts}></ProductList>
+            <StoreList data={otherStores}></StoreList>
         </ShopLayout>
     );
 }
