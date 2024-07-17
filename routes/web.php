@@ -26,14 +26,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('product', ProductController::class);
     Route::resource('order', OrderController::class);
     Route::resource('market', MarketController::class);
+
+    Route::middleware(\App\Http\Middleware\AdminMiddleware::class, )->group(function () {
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+        Route::get('/admin/market', [AdminController::class, 'market'])->name('admin.market');
+        Route::get('/admin/store', [AdminController::class, 'store'])->name('admin.store');
+        Route::get('/admin/request', [AdminController::class, 'request'])->name('admin.request');
+    });
+
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/market', [AdminController::class, 'market'])->name('admin.market');
-    Route::get('/admin/store', [AdminController::class, 'store'])->name('admin.store');
-    Route::get('/admin/request', [AdminController::class, 'request'])->name('admin.request');
-});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
