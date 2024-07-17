@@ -25,7 +25,7 @@ import { Link } from "@inertiajs/react";
 import { Toaster } from "@/Components/ui/toaster";
 import NavLink from "@/Components/NavLink";
 
-export default function Authenticated({ user, children }) {
+export default function AdminLayout({ user, children }) {
     return (
         <div className="min-h-screen bg-gray-50">
             <Toaster></Toaster>

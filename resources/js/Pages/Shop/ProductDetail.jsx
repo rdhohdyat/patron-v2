@@ -9,20 +9,22 @@ import {
     BreadcrumbList,
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb";
-import { Head , Link} from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import useCartStore from "@/lib/zustand/cartStore";
 import { useToast } from "@/Components/ui/use-toast";
 import ProductList from "./ProductList";
 import { formatRupiah } from "@/lib/convert";
 import { MessageSquareText } from "lucide-react";
-import { Card} from "@/Components/ui/card";
+import { Card } from "@/Components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/Components/ui/avatar";
+import MarketList from "./MarketList";
 
 export default function ProductDetail({
     auth,
     data,
     products: otherProducts,
     stores: otherStores,
+    markets,
 }) {
     const { toast } = useToast();
 
@@ -94,13 +96,19 @@ export default function ProductDetail({
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
                                 <div>
-                                    <h1>{product.store.nama_store}</h1>
+                                    <h1 className="font-semibold">{product.store.nama_store}</h1>
                                     <p className="text-sm font-normal">
                                         {product.store.nama_store}
                                     </p>
                                 </div>
                             </div>
-                            <Link href={route('shop.store_detail', product.store.id)} className="text-sm underline text-green-600">
+                            <Link
+                                href={route(
+                                    "shop.store_detail",
+                                    product.store.id
+                                )}
+                                className="text-sm underline text-green-600"
+                            >
                                 Lihat Toko
                             </Link>
                         </Card>
@@ -113,10 +121,10 @@ export default function ProductDetail({
                         </div>
                         <Button
                             variant="outline"
-                            className="w-full mt-3 text-green-500 hover:bg-green-50 hover:text-green-600 border-green-600"
+                            className="sm:w-full mt-3 text-green-500 hover:bg-green-50 hover:text-green-600 border-green-600"
                         >
                             <div className="hidden sm:block">
-                                Hubungi Penjual
+                                Hubungi Penjual{" "}
                             </div>
                             <MessageSquareText className="sm:hidden" />
                         </Button>
@@ -137,6 +145,7 @@ export default function ProductDetail({
             </div>
             <ProductList data={otherProducts}></ProductList>
             <StoreList data={otherStores}></StoreList>
+            <MarketList data={otherStores} />
         </ShopLayout>
     );
 }

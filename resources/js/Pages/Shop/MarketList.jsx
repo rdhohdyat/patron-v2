@@ -11,13 +11,13 @@ import {
 import { Button } from "@/Components/ui/button";
 import { formatRupiah } from "@/lib/convert";
 
-const StoreList = ({ data }) => {
+const MarketList = ({ data }) => {
     const stores = data.data;
     return (
         <div>
             <div className="flex justify-between items-center mt-6">
                 <h1 className="font-bold text-lg sm:text-xl text-gray-600">
-                    Lihat toko lain
+                    Pasar Lainnya
                 </h1>
                 <Button
                     variant="link"
@@ -36,15 +36,12 @@ const StoreList = ({ data }) => {
                                 className="basis-1/2  lg:basis-1/5 py-4"
                             >
                                 <Link
-                                    href={route(
-                                        "shop.store_detail",
-                                        store.id
-                                    )}
+                                    href={route("shop.store_detail", store.id)}
                                 >
                                     <Card className="cursor-pointer">
                                         <img
                                             // src={store.image}
-                                            src="/market.jpg"
+                                            src="/pasar.jpg"
                                             className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
                                             alt={store.nama_store}
                                         />
@@ -72,4 +69,4 @@ const StoreList = ({ data }) => {
     );
 };
 
-export default StoreList;
+export default MarketList;

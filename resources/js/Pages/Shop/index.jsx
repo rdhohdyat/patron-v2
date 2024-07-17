@@ -62,7 +62,7 @@ export default function index({ auth, data }) {
             <div className="w-full">
                 <Dialog>
                     <DialogTrigger asChild>
-                        <div className=" bg-white border border-gray-100 rounded-xl p-3 flex items-center text-sm justify-between text-gray-600 hover:bg-white hover:border-gray-300">
+                        <div className=" bg-white border border-gray-200 rounded-xl p-3 flex items-center text-sm justify-between text-gray-600 hover:bg-white hover:border-gray-300">
                             <div className="flex items-center gap-1">
                                 <MapPin className="w-5 h-5" />
                                 <p className="w-[200px] sm:w-full truncate">

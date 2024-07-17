@@ -21,6 +21,7 @@ class StoreResource extends JsonResource
             'user_id' => $this->user_id,
             'nama_store' => $this->nama_store,
             'lokasi_store' => $this->lokasi_store,
+            'created_at' => $this->created_at->format('Y-m-d'),
             // 'products' => ProductResource::collection($this->whenLoaded('products')),
             'image' => $this->image && !(str_starts_with($this->image, 'http')) ?
                 Storage::url($this->image) : $this->image,

@@ -38,7 +38,7 @@ export default function CategoryList({ auth, data, category }) {
                             className="w-[400px]"
                             alt=""
                         />
-                        <h1 className="font-semibold text-gray-600 text-center">{`Produk dan Lapak dengan kategori ${category} tidak ditemukan`}</h1>
+                        <h1 className="font-bold text-gray-600 text-center">{`Produk dan Lapak dengan kategori ${category} tidak ditemukan`}</h1>
                     </div>
                 ) : (
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
