@@ -19,6 +19,7 @@ return new class extends Migration
             $table->dateTime('tanggal_pemesanan');
             $table->dateTime('tanggal_pengiriman');
             $table->decimal('total_harga', 8, 2);
+            $table->enum('status', ['pending', 'processing', 'completed', 'cancelled']);
             $table->timestamps();
         });
     }
