@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Market extends Model
 {
+    protected $fillable = [
+        'nama_market',
+        'lokasi_market',
+        'image'
+    ];
     use HasFactory;
 }
