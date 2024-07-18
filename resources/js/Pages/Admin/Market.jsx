@@ -23,27 +23,24 @@ import { Link } from "@inertiajs/react";
 
 export default function Market({ auth, data }) {
     
-    const renderProducts = () => {
-        return data.data.map((product) => (
-            <TableRow key={product.id}>
+    const renderMarket = () => {
+        return data.data.map((market) => (
+            <TableRow key={market.id}>
                 <TableCell>
                     <img
-                        alt="Product img"
+                        alt="market img"
                         className="aspect-square rounded-md object-cover"
                         height="64"
-                        src={product.image}
+                        src={market.image}
                         width="64"
                     />
                 </TableCell>
-                <TableCell className="font-medium">{product.name}</TableCell>
+                <TableCell className="font-medium">{market.nama_market}</TableCell>
                 <TableCell className="hidden sm:table-cell">
-                    {product.category}
+                    {market.lokasi_market}
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                    {product.stock}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                    {product.created_at}
+                    {market.created_at}
                 </TableCell>
                 <TableCell>
                     <DropdownMenu>
@@ -58,12 +55,12 @@ export default function Market({ auth, data }) {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Aksi</DropdownMenuLabel>
-                            <Link href={route("product.edit", product.id)}>
+                            <Link href={route("market.edit", market.id)}>
                                 <DropdownMenuItem>Edit</DropdownMenuItem>
                             </Link>
                             <Link
                                 method="delete"
-                                href={route("product.destroy", product.id)}
+                                href={route("market.destroy", market.id)}
                                 onSuccess={() =>
                                     toast({
                                         title: "Berhasil menghapus",
@@ -85,9 +82,9 @@ export default function Market({ auth, data }) {
     return (
         <AdminLayout user={auth.user}>
             <div className="flex justify-between">
-                <h1 className="font-semibold text-xl">Manajemen Pasar</h1>
+                <h1 className="font-semibold text-xl"> Pasar</h1>
                 <Button>
-                    <Link>Tambah Pasar Baru</Link>
+                    <Link href={route("market.create")}>Tambah Pasar Baru</Link>
                 </Button>
             </div>
             <div className="flex flex-1 justify-center rounded-lg border-2 shadow-sm bg-white p-3">
@@ -100,15 +97,12 @@ export default function Market({ auth, data }) {
                                 Lokasi
                             </TableHead>
                             <TableHead className="hidden md:table-cell">
-                                Kategori
-                            </TableHead>
-                            <TableHead className="hidden md:table-cell">
                                 Tanggal Ditambahkan
                             </TableHead>
                             <TableHead>Aksi</TableHead>
                         </TableRow>
                     </TableHeader>
-                    <TableBody>{renderProducts()}</TableBody>
+                    <TableBody>{renderMarket()}</TableBody>
                 </Table>
             </div>
         </AdminLayout>

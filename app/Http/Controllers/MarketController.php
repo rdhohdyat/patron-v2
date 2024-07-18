@@ -17,7 +17,7 @@ class MarketController extends Controller
     public function index()
     {
         $markets = Market::latest()->paginate(5);
-        return inertia("Market/Index", [
+        return inertia("Admin/Market", [
             "data" => MarketResource::collection($markets),
         ]);
     }
@@ -27,7 +27,7 @@ class MarketController extends Controller
      */
     public function create()
     {
-        return inertia("Market/Create");
+        return inertia("Admin/AddMarket");
     }
 
     /**
