@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MarketResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\StoreResource;
+use App\Models\Market;
 use App\Models\Product;
 use App\Models\Store;
 use Illuminate\Http\Request;
@@ -17,10 +19,10 @@ class AdminController extends Controller
 
     public function market()
     {
-        $query = Product::query();
-        $products = $query->paginate(50);
+        $query = Market::query();
+        $market = $query->paginate(50);
         return inertia("Admin/Market", [
-            "data" => ProductResource::collection($products),
+            "data" => MarketResource::collection($market),
         ]);
     }
 

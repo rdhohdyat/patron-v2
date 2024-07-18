@@ -22,6 +22,8 @@ import {
 import { Link } from "@inertiajs/react";
 
 export default function Market({ auth, data }) {
+
+    console.log(data.data)
     
     const renderMarket = () => {
         return data.data.map((market) => (
