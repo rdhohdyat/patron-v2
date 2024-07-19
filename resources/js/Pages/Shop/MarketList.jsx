@@ -53,7 +53,7 @@ const MarketList = ({ data }) => {
                                                     {market.nama_market}
                                                 </h1>
                                             </div>
-                                            <p className="text-sm">
+                                            <p className="text-sm w-[200px] truncate ...">
                                                 {market.lokasi_market}
                                             </p>
                                         </div>
