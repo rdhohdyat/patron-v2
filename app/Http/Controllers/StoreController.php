@@ -26,6 +26,10 @@ class StoreController extends Controller
             return redirect()->route('store.store_pending');
         }
 
+        if ($user->store->status == 'rejected') {
+            return redirect()->route('store.not_registered');
+        }
+
         $query = Product::query();
         $products = $query->paginate(10);
 
@@ -76,6 +80,6 @@ class StoreController extends Controller
         return response()->json(null, 204);
     }
 
-   
+
 
 }

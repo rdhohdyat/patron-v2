@@ -59,7 +59,7 @@ export default function ProductDetail({
                     <div className="sm:flex gap-3">
                         <img
                             src={store.image}
-                            className=" w-full sm:w-[200px] h-[150px] sm:h-[140px] object-cover"
+                            className="w-full sm:w-[200px] sm:h-[140px] sm:object-cover"
                             alt={store.name}
                         />
                         <div>
@@ -87,7 +87,7 @@ export default function ProductDetail({
                             <Card className="cursor-pointer">
                                 <img
                                     src={product.image}
-                                    className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
+                                    className="rounded-t-lg w-full h-[170px] sm:h-[200px] object-cover"
                                     alt={product.name}
                                 />
                                 <div className="p-3">

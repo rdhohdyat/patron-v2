@@ -245,7 +245,9 @@ export default function AddProduct({ auth }) {
                                                         Harga
                                                     </Label>
                                                     <div className="flex items-center gap-2">
-                                                        <h1 className="text-gray-500 font-semibold">Rp.</h1>
+                                                        <h1 className="text-gray-500 font-semibold">
+                                                            Rp.
+                                                        </h1>
                                                         <Input
                                                             id="price"
                                                             type="text"
@@ -329,7 +331,7 @@ export default function AddProduct({ auth }) {
                             <div className="flex items-center justify-center gap-2 md:hidden">
                                 <Button variant="outline">Batal</Button>
                                 <Button type="submit" disabled={processing}>
-                                    Simpan Produk
+                                    {processing ? "Menyimpan..." : "Simpan Produk"}
                                 </Button>
                             </div>
                         </div>

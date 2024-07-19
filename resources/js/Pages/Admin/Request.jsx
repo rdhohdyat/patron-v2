@@ -18,8 +18,10 @@ import {
 } from "@/Components/ui/table";
 import PaginationComponent from "@/Components/Pagination";
 import { Link, router } from "@inertiajs/react";
+import { useToast } from "@/Components/ui/use-toast";
 
 export default function Request({ auth, data }) {
+
     const handleAccept = (storeId) => {
         router.patch(route("admin.update_status", storeId), {
             status: "accepted",
@@ -53,7 +55,7 @@ export default function Request({ auth, data }) {
                 <TableCell className="hidden md:table-cell">
                     {store.created_at}
                 </TableCell>
-                <TableCell>
+                <TableCell className="flex gap-3">
                     <Button
                         variant="default"
                         onClick={() => handleAccept(store.id)}
@@ -91,25 +93,25 @@ export default function Request({ auth, data }) {
                                 <TableHead className="hidden md:table-cell">
                                     Tanggal Pendaftaran
                                 </TableHead>
-                                <TableHead>Aksi</TableHead>
+                                <TableHead>Verifikasi</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody className="w-full">
-                            {data.data.length !== 0 ? renderRequest() : null}
+                            {renderRequest()}
                         </TableBody>
                     </Table>
                 ) : (
-                    <div className="">
+                    <div className="flex items-center justify-center">
                         <div className="">
                             <img
                                 src="/check.png"
                                 className="w-[300px] h-[300px] "
                                 alt=""
                             />
+                            <h1 className="text-xl text-gray-600 font-semibold text-center w-[300px] mt-3">
+                                Tidak ada permintaan pembukaan toko
+                            </h1>
                         </div>
-                        <h1 className="text-xl text-gray-600 font-semibold">
-                            Tidak ada permintaan pembukaan toko
-                        </h1>
                     </div>
                 )}
             </div>

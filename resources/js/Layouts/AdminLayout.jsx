@@ -189,7 +189,7 @@ export default function AdminLayout({ user, children }) {
                                 <AlertDialogCancel className="w-full">
                                     Batal
                                 </AlertDialogCancel>
-                                <Link method="post" href={route("logout")}>
+                                <Link method="post" href={route("logout")} className="w-full">
                                     <Button
                                         className="w-full"
                                         variant="destructive"

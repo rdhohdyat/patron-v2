@@ -315,7 +315,9 @@ export default function EditProduct({ auth, product }) {
                             <div className="flex items-center justify-center gap-2 md:hidden">
                                 <Button variant="outline">Batal</Button>
                                 <Button type="submit" disabled={processing}>
-                                    Simpan Produk
+                                    {processing
+                                        ? "Menyimpan..."
+                                        : "Simpan Produk"}
                                 </Button>
                             </div>
                         </div>
