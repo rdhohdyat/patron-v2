@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MarketResource;
 use App\Http\Resources\StoreResource;
+use App\Models\Market;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductResource;
@@ -12,10 +14,11 @@ class ShopController extends Controller
 {
     public function index()
     {
-        $query = Product::query();
-        $products = $query->paginate(10);
+        $products = Product::query()->paginate(10);
+        $markets = Market::query()->paginate(10);
         return inertia("Shop/index", [
-            "data" => ProductResource::collection($products)
+            "data" => ProductResource::collection($products),
+            "markets" => MarketResource::collection($markets),
         ]);
     }
 
@@ -25,11 +28,14 @@ class ShopController extends Controller
 
         $otherProducts = $store->products()->where('id', '!=', $product->id)->paginate(10);
         $otherStores = Store::query()->paginate(10);
+        $market = Market::query()->paginate(10);
+
 
         return inertia("Shop/ProductDetail", [
             "data" => new ProductResource($product),
             "products" => ProductResource::collection($otherProducts),
             "stores" => StoreResource::collection($otherStores),
+            "markets" => MarketResource::collection($market),
         ]);
     }
 
@@ -44,18 +50,32 @@ class ShopController extends Controller
 
     public function category($key)
     {
-        $products = Product::where('category', 'like', '%' . $key . '%')->paginate(10);
+        $products = Product::where('category', 'LIKE', '%' . $key . '%')->paginate(10);
         return inertia("Shop/CategoryList", [
             "data" => ProductResource::collection($products),
             "category" => $key
         ]);
     }
 
+
     public function store_detail(Store $store)
     {
+        $store->load('products');
         $products = $store->products()->paginate(5);
+
         return inertia("Shop/StoreDetail", [
             "data" => new StoreResource($store),
+            "products" => ProductResource::collection($products),
+        ]);
+    }
+
+
+    public function market_detail(Market $market){
+        $market->load('stores');
+
+        $products = Product::query()->paginate(10);
+        return inertia("Shop/MarketDetail", [
+            "data" => new MarketResource($market),
             "products" => ProductResource::collection($products),
         ]);
     }

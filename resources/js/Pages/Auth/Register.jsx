@@ -2,11 +2,10 @@ import { useEffect } from "react";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
+import { useToast } from "@/Components/ui/use-toast";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -25,11 +24,25 @@ export default function Register() {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("register"));
+        post(route("register"), {
+            onSuccess: () => {
+                toast({
+                    title: "Akun anda berhasil didaftarkan",
+                    variant: "default",
+                });
+            },
+            onError: () => {
+                toast({
+                    title: "Gagal mendaftarkan akun",
+                    variant: "alert",
+                });
+            },
+        });
     };
 
     return (
         <GuestLayout>
+            <Head title="Daftar Akun"></Head>
             <div className="mx-auto grid w-[350px] gap-6">
                 <div className="grid gap-2 text-center">
                     <h1 className="text-3xl font-bold">Mendaftar</h1>

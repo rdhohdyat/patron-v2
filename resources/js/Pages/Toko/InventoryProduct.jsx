@@ -29,6 +29,7 @@ import { formatRupiah } from "@/lib/convert";
 import { useToast } from "@/Components/ui/use-toast";
 import PaginationComponent from "@/Components/Pagination";
 import EmptyProduct from "@/Components/EmptyProduct";
+import { useEffect } from "react";
 
 export default function InventoryProduct({ auth, data }) {
     const products = data.data;

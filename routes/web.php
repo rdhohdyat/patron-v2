@@ -14,16 +14,19 @@ use Inertia\Inertia;
 Route::redirect('/', '/shop');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::middleware(\App\Http\Middleware\UserMiddleware::class)->group(function (){
+    Route::middleware(\App\Http\Middleware\UserMiddleware::class)->group(function () {
         Route::get('/shop', [ShopController::class, 'index'])->name('shop');
         Route::get('/shop/detail/{product}', [ShopController::class, 'product_detail'])->name('shop.detail');
         Route::get('/shop/search', [ShopController::class, 'search'])->name('shop.search');
         Route::get('/shop/category/{key}', [ShopController::class, 'category'])->name('shop.category');
-    
         Route::get('/shop/detail_toko/{store}', [ShopController::class, 'store_detail'])->name('shop.store_detail');
-    
+        Route::get('/shop/detail_pasar/{market}', [ShopController::class, 'market_detail'])->name('shop.market');
+
+        Route::get('/shop/detail_toko/{store}', [ShopController::class, 'store_detail'])->name('shop.store_detail');
+
         Route::get("/store", [StoreController::class, 'index'])->name('store');
-    
+        Route::get("/store/register", [StoreController::class, 'create'])->name('store.create');
+
         Route::resource('product', ProductController::class);
     });
     // Route::get('/shop', [ShopController::class, 'index'])->name('shop');
@@ -60,9 +63,6 @@ Route::get('/toko/not_registered', function () {
     return inertia('Toko/DontHaveStore');
 })->name("store.not_registered");
 
-Route::get('/toko/register', function () {
-    return inertia('Toko/CreateStore');
-})->name("store.create");
 
 
 require __DIR__ . '/auth.php';
@@ -70,5 +70,4 @@ require __DIR__ . '/auth.php';
 Route::fallback(function () {
     return Inertia::render('NotFound');
 });
-
 

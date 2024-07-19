@@ -12,7 +12,9 @@ import { Button } from "@/Components/ui/button";
 import { formatRupiah } from "@/lib/convert";
 
 const MarketList = ({ data }) => {
-    const stores = data.data;
+    const markets = data.data;
+
+    console.log(markets)
     return (
         <div>
             <div className="flex justify-between items-center mt-6">
@@ -30,30 +32,29 @@ const MarketList = ({ data }) => {
             <div className="relative rounded-md">
                 <Carousel className="rounded-md">
                     <CarouselContent>
-                        {stores.map((store) => (
+                        {markets.map((market) => (
                             <CarouselItem
-                                key={store.id}
+                                key={market.id}
                                 className="basis-1/2  lg:basis-1/5 py-4"
                             >
                                 <Link
-                                    href={route("shop.store_detail", store.id)}
+                                    href={route("shop.store_detail", market.id)}
                                 >
                                     <Card className="cursor-pointer">
                                         <img
-                                            // src={store.image}
-                                            src="/pasar.jpg"
+                                            src={market.image}
                                             className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
-                                            alt={store.nama_store}
+                                            alt={market.nama_market}
                                         />
                                         <div className="p-3">
                                             <div className="flex items-center gap-1 mt-2">
                                                 <Store size="16" />
                                                 <h1 className="w-[180px] truncate ...">
-                                                    {store.nama_store}
+                                                    {market.nama_market}
                                                 </h1>
                                             </div>
                                             <p className="text-sm">
-                                                {store.lokasi_store}
+                                                {market.lokasi_market}
                                             </p>
                                         </div>
                                     </Card>

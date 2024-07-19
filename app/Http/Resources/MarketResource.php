@@ -21,6 +21,7 @@ class MarketResource extends JsonResource
             'lokasi_market' => $this->lokasi_market,
             'image' => $this->image && !(str_starts_with($this->image, 'http')) ?
                 Storage::url($this->image) : $this->image,
+            'stores' => StoreResource::collection($this->whenLoaded('stores')),
             'created_at' => $this->created_at->format('Y-m-d'),
         ];
     }

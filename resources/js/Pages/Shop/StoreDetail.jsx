@@ -29,19 +29,6 @@ export default function ProductDetail({
     const { toast } = useToast();
 
     const store = data.data;
-    console.log(otherProducts)
-    console.log(store);
-    const { addToCart, calculateTotal } = useCartStore();
-
-    const handleAddToCart = (product) => {
-        addToCart(product);
-        toast({
-            title: "Berhasil menambahkan ke keranjang",
-            variant: "default",
-        });
-
-        calculateTotal();
-    };
 
     return (
         <ShopLayout user={auth.user}>
@@ -53,7 +40,11 @@ export default function ProductDetail({
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbLink href="/shop">Pasar</BreadcrumbLink>
+                        <BreadcrumbLink
+                            href={route("shop.market", store.market.id)}
+                        >
+                            {store.market.nama_market}
+                        </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
@@ -64,43 +55,32 @@ export default function ProductDetail({
                 </BreadcrumbList>
             </Breadcrumb>
             <div>
-                <Card className="p-3 py-5">
-                    <div className="flex gap-3">
-                        <Avatar className="w-20 h-20 sm:w-24 sm:h-24">
-                            <AvatarImage
-                                src="https://github.com/shadcn.png"
-                                alt="@shadcn"
-                            />
-                            <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
+                <Card className="p-3">
+                    <div className="sm:flex gap-3">
+                        <img
+                            src={store.image}
+                            className=" w-full sm:w-[200px] h-[150px] sm:h-[140px] object-cover"
+                            alt={store.name}
+                        />
                         <div>
-                            <h1 className="font-bold text-xl mb-2">
+                            <h1 className="font-bold text-xl">
                                 {store.nama_store}
                             </h1>
-                            <div className="flex gap-2 mb-2">
-                                <div className="font-semibold bg-green-100 rounded py-1 px-2 text-sm">
-                                    Pasar Rumbai
-                                </div>
-                                <div className="font-semibold bg-green-100 rounded p-1 text-sm">
-                                    Bumbu Dapur
-                                </div>
+                            <h2 className="font-medium mb-2">{store.user.name}</h2>
+                            <div className="text-sm">
+                                {store.market.nama_market},{" "}
+                                {store.market.lokasi_market}
                             </div>
-                            {/* <p className="text-gray-600 text-sm w-[500px]">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Optio excepturi fuga labore
-                                repellat ipsum quibusdam pariatur nesciunt
-                                mollitia, quis veniam.
-                            </p> */}
-                            <Button className="">
-                                Chat Penjual
-                            </Button>
+                            <Button variant="outline" className="mt-2">Hubungi Penjual</Button>
                         </div>
                     </div>
                 </Card>
             </div>
 
             <div className="mt-3">
-                <h1 className="font-bold text-lg mb-2">Produk Pada Toko Ini</h1>
+                <h1 className="font-bold text-lg sm:text-xl mb-2 text-gray-600">
+                    Produk Pada Toko Ini
+                </h1>
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
                     {otherProducts.data.map((product) => (
                         <Link href={route("shop.detail", product.id)}>
@@ -127,7 +107,9 @@ export default function ProductDetail({
                         </Link>
                     ))}
                 </div>
-                <PaginationComponent links={otherProducts.meta.links}></PaginationComponent>
+                <PaginationComponent
+                    links={otherProducts.meta.links}
+                ></PaginationComponent>
             </div>
         </ShopLayout>
     );
