@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\Store;
 use App\Http\Requests\StoreOrderRequest;
@@ -15,8 +16,24 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return inertia("Toko/OrderList");
+        $orders = Order::query()->paginate(10);
+        $data = Order::query()->first();
+
+        $pendingCount = Order::where('status', 'pending')->count();
+        $processingCount = Order::where('status', 'processing')->count();
+        $completedCount = Order::where('status', 'completed')->count();
+        $cancelCount = Order::where('status', 'cancelled')->count();
+
+        return inertia("Toko/OrderList", [
+            "orders" => OrderResource::collection($orders),
+            "data" => new OrderResource($data),
+            "pendingCount" => $pendingCount,
+            "processingCount" => $processingCount,
+            "completedCount" => $completedCount,
+            "cancelCount" => $cancelCount,
+        ]);
     }
+
 
 
     /**
@@ -39,8 +56,7 @@ class OrderController extends Controller
         $store_id_user = $request->store_id;
         $store = Store::find($store_id_user);
 
-        if($data['user_id'] == $store->user_id)
-        {
+        if ($data['user_id'] == $store->user_id) {
             return to_route('shop');
         }
         $data['tanggal_pemesanan'] = now();
