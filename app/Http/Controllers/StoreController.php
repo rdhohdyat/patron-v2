@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\MarketResource;
 use App\Models\Market;
-use Illuminate\Http\Request;
 use App\Models\Store;
 use App\Models\Product;
+use Illuminate\Support\Str;
 use App\Http\Resources\ProductResource;
+use App\Http\Requests\StoreStoreRequest;
 use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
@@ -42,9 +43,14 @@ class StoreController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreStoreRequest $request)
     {
-
+        $data = $request->validated();
+        $user = Auth::user();
+        $data['user_id'] = $user->id;
+        $data['image'] = $data['image']->store('store/' . Str::random(), 'public');
+        Store::create($data);
+        return to_route('shop');
     }
 
     public function show(Store $store)

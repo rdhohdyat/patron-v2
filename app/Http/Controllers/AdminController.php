@@ -28,15 +28,24 @@ class AdminController extends Controller
 
     public function store()
     {
-        $query = Store::query();
-        $stores = $query->paginate(50);
-        return inertia("Admin/Store", [
+        $query = Store::where('status', 'accepted')->orderBy('created_at', 'desc');
+        $stores = $query->paginate(50); 
+        return inertia('Admin/Request', [
             "data" => StoreResource::collection($stores),
         ]);
     }
 
     public function request()
     {
-        return inertia('Admin/Request');
+        $query = Store::where('status', 'pending')->orderBy('created_at', 'desc');
+        $stores = $query->paginate(50); 
+        return inertia('Admin/Request', [
+            "data" => StoreResource::collection($stores),
+        ]);
+    }
+
+    public function statusStore()
+    {
+        console.log("hi");
     }
 }

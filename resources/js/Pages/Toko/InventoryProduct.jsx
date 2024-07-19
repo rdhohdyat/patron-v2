@@ -62,6 +62,9 @@ export default function InventoryProduct({ auth, data }) {
                 <TableCell className="hidden md:table-cell">
                     {product.created_at}
                 </TableCell>
+                <TableCell className="hidden md:table-cell">
+                    {product.updated_at}
+                </TableCell>
                 <TableCell>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -77,6 +80,11 @@ export default function InventoryProduct({ auth, data }) {
                             <DropdownMenuLabel>Aksi</DropdownMenuLabel>
                             <Link href={route("product.edit", product.id)}>
                                 <DropdownMenuItem>Edit</DropdownMenuItem>
+                            </Link>
+                            <Link href={route("product.edit", product.id)}>
+                                <DropdownMenuItem>
+                                    Tambah Stock
+                                </DropdownMenuItem>
                             </Link>
                             <Link
                                 method="delete"
@@ -158,6 +166,9 @@ export default function InventoryProduct({ auth, data }) {
                                                 </TableHead>
                                                 <TableHead className="hidden md:table-cell">
                                                     Tanggal Ditambahkan
+                                                </TableHead>
+                                                <TableHead className="hidden md:table-cell">
+                                                    Tanggal Diperbarui
                                                 </TableHead>
                                                 <TableHead>Aksi</TableHead>
                                             </TableRow>
