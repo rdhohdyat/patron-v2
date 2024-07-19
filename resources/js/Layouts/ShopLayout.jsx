@@ -48,12 +48,7 @@ export default function ShopLayout({ user, children }) {
         removeFromCart,
         calculateTotal,
     } = useCartStore();
-<<<<<<< HEAD
 
-
-=======
-    
->>>>>>> c2400dfa546b417db85e3c762e72a32f5ecea824
     const handleIncreaseQty = (productId) => {
         increaseQty(productId);
         calculateTotal();
@@ -73,11 +68,6 @@ export default function ShopLayout({ user, children }) {
         calculateTotal();
     };
 
-<<<<<<< HEAD
-=======
-    const handleSearch = () => {
-        return null;
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -99,7 +89,6 @@ export default function ShopLayout({ user, children }) {
         });
     };
 
->>>>>>> c2400dfa546b417db85e3c762e72a32f5ecea824
     return (
         <div className="min-h-screen bg-gray-50">
             <Toaster />
