@@ -55,7 +55,7 @@ class MarketController extends Controller
      */
     public function edit(Market $market)
     {
-        return inertia("Market/Edit", [
+        return inertia("Admin/EditMarket", [
             "market" => new MarketResource($market),
         ]);
     }
