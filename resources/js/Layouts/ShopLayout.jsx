@@ -36,6 +36,7 @@ import { Toaster } from "@/Components/ui/toaster";
 import { formatRupiah } from "@/lib/convert";
 import EmptyCart from "@/Components/EmptyCart";
 import { useToast } from "@/Components/ui/use-toast";
+import { Input } from "@/Components/ui/input";
 
 export default function ShopLayout({ user, children }) {
     const { toast } = useToast();
@@ -47,8 +48,12 @@ export default function ShopLayout({ user, children }) {
         removeFromCart,
         calculateTotal,
     } = useCartStore();
+<<<<<<< HEAD
 
 
+=======
+    
+>>>>>>> c2400dfa546b417db85e3c762e72a32f5ecea824
     const handleIncreaseQty = (productId) => {
         increaseQty(productId);
         calculateTotal();
@@ -68,6 +73,33 @@ export default function ShopLayout({ user, children }) {
         calculateTotal();
     };
 
+<<<<<<< HEAD
+=======
+    const handleSearch = () => {
+        return null;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        post(route("order.store"), {
+            data: formData,
+            onSuccess: () => {
+                toast({
+                    title: "Berhasil Membuat Order",
+                    variant: "default",
+                });
+            },
+            onError: () => {
+                toast({
+                    title: "Gagal Membuat Order",
+                    variant: "destructive",
+                });
+            },
+        });
+    };
+
+>>>>>>> c2400dfa546b417db85e3c762e72a32f5ecea824
     return (
         <div className="min-h-screen bg-gray-50">
             <Toaster />
@@ -112,133 +144,141 @@ export default function ShopLayout({ user, children }) {
                                     </div>
                                 </Button>
                             </SheetTrigger>
-                            <SheetContent className="flex flex-col h-full justify-between">
-                                <div className="overflow-y-auto flex flex-col gap-2 max-h-[80%] sm:max-h-[80%] flex-grow">
-                                    <SheetHeader>
-                                        <SheetTitle>
-                                            Keranjang Belanja
-                                        </SheetTitle>
-                                    </SheetHeader>
-                                    {cart.map((item) => (
-                                        <div
-                                            key={item.id}
-                                            className="flex justify-between border p-2 rounded"
-                                        >
-                                            <div className="flex items-center gap-3">
-                                                <img
-                                                    src={item.image}
-                                                    className="w-[70px] h-[70px] object-cover"
-                                                    alt={item.name}
+                            <form onSubmit={handleSubmit}>
+                                <SheetContent className="flex flex-col h-full justify-between">
+                                    <div className="overflow-y-auto flex flex-col gap-2 max-h-[80%] sm:max-h-[80%] flex-grow">
+                                        <SheetHeader>
+                                            <SheetTitle>
+                                                Keranjang Belanja
+                                            </SheetTitle>
+                                        </SheetHeader>
+                                        {cart.map((item) => (
+                                            <div
+                                                key={item.id}
+                                                className="flex justify-between border p-2 rounded"
+                                            >
+                                                <input
+                                                    type="hidden"
+                                                    name="items[]"
+                                                    value={JSON.stringify({
+                                                        id: item.id,
+                                                        qty: item.qty,
+                                                        price: item.price,
+                                                    })}
                                                 />
-                                                <div className="text-start">
-                                                    <h1 className="text-sm">
-                                                        {item.name}
-                                                    </h1>
-                                                    <p className="font-semibold">
-                                                        {formatRupiah(
-                                                            item.price
-                                                        )}
-                                                    </p>
+                                                <div className="flex items-center gap-3">
+                                                    <img
+                                                        src={item.image}
+                                                        className="w-[70px] h-[70px] object-cover"
+                                                        alt={item.name}
+                                                    />
+                                                    <div className="text-start">
+                                                        <h1 className="text-sm">
+                                                            {item.name}
+                                                        </h1>
+                                                        <p className="font-semibold">
+                                                            {formatRupiah(
+                                                                item.price
+                                                            )}
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="sm:flex items-center gap-3">
-                                                <div className="flex items-center gap-2 w-24 justify-between">
-                                                    <Button
-                                                        size="xs"
-                                                        onClick={() =>
-                                                            handleDecreaseQty(
-                                                                item.id
-                                                            )
-                                                        }
-                                                        variant="outline"
-                                                    >
-                                                        -
-                                                    </Button>
-                                                    <div className="">
-                                                        {parseInt(item.qty)}
+                                                <div className="sm:flex items-center gap-3">
+                                                    <div className="flex items-center gap-2 w-24 justify-between">
+                                                        <Button
+                                                            size="xs"
+                                                            onClick={() =>
+                                                                handleDecreaseQty(
+                                                                    item.id
+                                                                )
+                                                            }
+                                                            variant="outline"
+                                                        >
+                                                            -
+                                                        </Button>
+                                                        <div className="">
+                                                            {parseInt(item.qty)}
+                                                        </div>
+                                                        <Button
+                                                            size="xs"
+                                                            onClick={() =>
+                                                                handleIncreaseQty(
+                                                                    item.id
+                                                                )
+                                                            }
+                                                            variant="outline"
+                                                        >
+                                                            +
+                                                        </Button>
                                                     </div>
                                                     <Button
-                                                        size="xs"
+                                                        size="sm"
+                                                        variant="destructive"
                                                         onClick={() =>
-                                                            handleIncreaseQty(
+                                                            handleRemoveFromCart(
                                                                 item.id
                                                             )
                                                         }
-                                                        variant="outline"
+                                                        className="mt-3 w-full h-8"
                                                     >
-                                                        +
+                                                        Hapus
                                                     </Button>
                                                 </div>
-                                                <Button
-                                                    size="sm"
-                                                    variant="destructive"
-                                                    onClick={() =>
-                                                        handleRemoveFromCart(
-                                                            item.id
-                                                        )
-                                                    }
-                                                    className="mt-3 w-full h-8"
-                                                >
-                                                    Hapus
+                                            </div>
+                                        ))}
+                                        {cart.length == 0 && <EmptyCart />}
+                                    </div>
+                                    <SheetFooter>
+                                        {cart.length > 0 && (
+                                            <div className="flex flex-col w-full">
+                                                <div className="text-black">
+                                                    <h1 className="text-lg font-semibold">
+                                                        Rincian pembayaran
+                                                    </h1>
+                                                    <div>
+                                                        <tr>
+                                                            <td>Sub-total</td>
+                                                            <td className="w-5">
+                                                                :
+                                                            </td>
+                                                            <td>
+                                                                {formatRupiah(
+                                                                    total
+                                                                )}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Ongkos Kirim</td>
+                                                            <td className="w-5">
+                                                                :
+                                                            </td>
+                                                            <td>Rp.10.000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <h1 className="font-semibold text-xl">
+                                                                    Total Pembayaran
+                                                                </h1>
+                                                            </td>
+                                                            <td className="w-5">
+                                                                :
+                                                            </td>
+                                                            <td className="text-xl">
+                                                                {formatRupiah(
+                                                                    total
+                                                                )}
+                                                            </td>
+                                                        </tr>
+                                                    </div>
+                                                </div>
+                                                <Button type="submit" className="w-full mt-3">
+                                                    Checkout
                                                 </Button>
                                             </div>
-                                        </div>
-                                    ))}
-                                    {cart.length == 0 && <EmptyCart />}
-                                </div>
-                                <SheetFooter>
-                                    {cart.length > 0 && (
-                                        <div className="flex flex-col w-full">
-                                            <div className="text-black">
-                                                <h1 className="text-lg font-semibold">
-                                                    Rincian pembayaran
-                                                </h1>
-                                                <div>
-                                                    <tr>
-                                                        <td>Sub-total</td>
-                                                        <td className="w-5">
-                                                            :
-                                                        </td>
-                                                        <td>
-                                                            {formatRupiah(
-                                                                total
-                                                            )}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Ongkos Kirim</td>
-                                                        <td className="w-5">
-                                                            :
-                                                        </td>
-                                                        <td>Rp.10.000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <h1 className="font-semibold text-xl">
-                                                                Total Pembayaran
-                                                            </h1>
-                                                        </td>
-                                                        <td className="w-5">
-                                                            :
-                                                        </td>
-                                                        <td className="text-xl">
-                                                            {formatRupiah(
-                                                                total
-                                                            )}
-                                                        </td>
-                                                    </tr>
-                                                </div>
-                                            </div>
-                                            <Button
-                                                type="submit"
-                                                className="w-full mt-3"
-                                            >
-                                                Checkout
-                                            </Button>
-                                        </div>
-                                    )}
-                                </SheetFooter>
-                            </SheetContent>
+                                        )}
+                                    </SheetFooter>
+                                </SheetContent>
+                            </form>
                         </Sheet>
                         <AlertDialog>
                             <DropdownMenu>

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Store;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -30,7 +32,21 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        $user = Auth::user();
+        $data = $request->validated();
+        $data['user_id'] = $user->id;
+
+        $store_id_user = $request->store_id;
+        $store = Store::find($store_id_user);
+
+        if($data['user_id'] == $store->user_id)
+        {
+            return to_route('shop');
+        }
+        $data['tanggal_pemesanan'] = now();
+        Order::create($data);
+
+        return to_route('shop');
     }
 
     /**

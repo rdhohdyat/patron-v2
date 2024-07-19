@@ -9,7 +9,7 @@ import {
     BreadcrumbList,
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import useCartStore from "@/lib/zustand/cartStore";
 import { useToast } from "@/Components/ui/use-toast";
 import ProductList from "./ProductList";
@@ -60,6 +60,14 @@ export default function ProductDetail({
         if (quantity > 1) {
             setQuantity(quantity - 1);
         }
+    };
+    const handleSubmit = (product_id) => {
+        router.post(route("order.store", product_id), {
+            product_id: product_id,
+            jumlah_barang: quantity,
+            total_harga: subtotal,
+            store_id: product.store.id,
+        });
     };
 
     const subtotal = product.price * quantity;
@@ -196,6 +204,7 @@ export default function ProductDetail({
                             <Button
                                 variant="outline"
                                 className="w-full mt-3 text-green-500 hover:bg-green-50 hover:text-green-600 border-green-600"
+                                onClick={() => handleSubmit(product.id)}
                             >
                                 Beli Langsung
                             </Button>
