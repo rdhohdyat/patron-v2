@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react";
 
-export default function NavLink({
+export default function AdminNavLink({
     active = false,
     className = "",
     children,
@@ -10,8 +10,8 @@ export default function NavLink({
         <Link
             {...props}
             className={
-                "inline-flex w-[100px] sm:px-3 sm:py-3 sm:w-full items-center text-gray-600 font-medium  transition duration-150 ease-in-out" +
-                (active ? " text-green-600 " : " ") +
+                "flex items-center gap-3 rounded-lg px-3 py-3 text-gray-600 transition-all hover:text-primary " +
+                (active ? "text-green-600 " : " ") +
                 className
             }
         >

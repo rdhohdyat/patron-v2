@@ -13,8 +13,7 @@ import {
 } from "lucide-react";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/Components/ui/avatar";
-
-import NavLink from "@/Components/NavLink";
+import AdminNavLink from "@/Components/AdminNavLink";
 
 import { Badge } from "@/Components/ui/badge";
 import { Button } from "@/Components/ui/button";
@@ -48,43 +47,41 @@ export default function AdminLayout({ user, children }) {
                             href="/"
                             className="flex items-center gap-2 font-bold"
                         >
-                            <span className="text-xl text-green-600">PATRON</span>
+                            <span className="text-xl text-green-600">
+                                PATRON
+                            </span>
                         </Link>
                     </div>
                     <div className="flex-1">
-                        <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-                            <Link
+                        <nav className="grid items-start px-2 font-medium lg:px-4">
+                            <AdminNavLink
                                 href={route("admin.index")}
                                 active={route().current("admin.index")}
-                                className="flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition-all hover:text-primary"
                             >
                                 <Home className="h-4 w-4" />
                                 Dashboard
-                            </Link>
-                            <Link
+                            </AdminNavLink>
+                            <AdminNavLink
                                 href={route("admin.market")}
                                 active={route().current("admin.market")}
-                                className="flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition-all hover:text-primary"
                             >
                                 <ShoppingCart className="h-4 w-4" />
                                 Pasar
-                            </Link>
-                            <Link
+                            </AdminNavLink>
+                            <AdminNavLink
                                 href={route("admin.store")}
                                 active={route().current("admin.store")}
-                                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-3 text-primary transition-all hover:text-primary"
                             >
                                 <Store className="h-4 w-4" />
                                 Toko
-                            </Link>
-                            <Link
+                            </AdminNavLink>
+                            <AdminNavLink
                                 href={route("admin.request")}
                                 active={route().current("admin.request")}
-                                className="flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition-all hover:text-primary"
                             >
                                 <Users className="h-4 w-4" />
                                 Permintaan
-                            </Link>
+                            </AdminNavLink>
                         </nav>
                     </div>
                 </div>
@@ -106,38 +103,34 @@ export default function AdminLayout({ user, children }) {
                         </SheetTrigger>
                         <SheetContent side="left" className="flex flex-col">
                             <nav className="grid gap-2 text-lg font-medium">
-                                <Link
+                                <AdminNavLink
                                     href={route("admin.index")}
                                     active={route().current("admin.index")}
-                                    className="flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition-all hover:text-primary"
                                 >
-                                    <Home className="h-4 w-4" />
+                                    <Home className="h-5 w-5" />
                                     Dashboard
-                                </Link>
-                                <Link
+                                </AdminNavLink>
+                                <AdminNavLink
                                     href={route("admin.market")}
                                     active={route().current("admin.market")}
-                                    className="flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition-all hover:text-primary"
                                 >
-                                    <ShoppingCart className="h-4 w-4" />
+                                    <ShoppingCart className="h-5 w-5" />
                                     Pasar
-                                </Link>
-                                <Link
+                                </AdminNavLink>
+                                <AdminNavLink
                                     href={route("admin.store")}
                                     active={route().current("admin.store")}
-                                    className="flex items-center gap-3 rounded-lg bg-muted px-3 py-3 text-primary transition-all hover:text-primary"
                                 >
-                                    <Store className="h-4 w-4" />
+                                    <Store className="h-5 w-5" />
                                     Toko
-                                </Link>
-                                <Link
+                                </AdminNavLink>
+                                <AdminNavLink
                                     href={route("admin.request")}
                                     active={route().current("admin.request")}
-                                    className="flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition-all hover:text-primary"
                                 >
-                                    <Users className="h-4 w-4" />
+                                    <Users className="h-5 w-5" />
                                     Permintaan
-                                </Link>
+                                </AdminNavLink>
                             </nav>
                         </SheetContent>
                     </Sheet>

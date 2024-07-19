@@ -7,10 +7,11 @@ export default function index({ auth }) {
         <AdminLayout user={auth.user}>
             <h1 className="text-xl font-semibold">Dashboard</h1>
             <div className="flex flex-col gap-4">
-                <div className="grid grid-cols-3 sm:gap-4 gap-2">
+                <div className="grid grid-cols-3 sm:gap-4 gap-2 h-28">
                     <Card>
                         <CardHeader>
                             <CardTitle>Pasar</CardTitle>
+                            <CardTitle></CardTitle>
                         </CardHeader>
                     </Card>
                     <Card>

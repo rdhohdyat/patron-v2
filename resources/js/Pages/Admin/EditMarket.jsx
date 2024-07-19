@@ -33,6 +33,7 @@ export default function index({ auth, market }) {
             },
         });
     };
+    
     return (
         <AdminLayout user={auth.user}>
             <form onSubmit={handleSubmit}>

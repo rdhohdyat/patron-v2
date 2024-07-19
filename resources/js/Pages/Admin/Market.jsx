@@ -1,4 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/Components/ui/card";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+    CardFooter,
+} from "@/Components/ui/card";
 import { File, MoreHorizontal, PlusCircle } from "lucide-react";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Button } from "@/Components/ui/button";
@@ -22,9 +28,8 @@ import {
 import { Link } from "@inertiajs/react";
 
 export default function Market({ auth, data }) {
+    console.log(data);
 
-    console.log(data.data)
-    
     const renderMarket = () => {
         return data.data.map((market) => (
             <TableRow key={market.id}>
@@ -37,10 +42,13 @@ export default function Market({ auth, data }) {
                         width="64"
                     />
                 </TableCell>
-                <TableCell className="font-medium">{market.nama_market}</TableCell>
+                <TableCell className="font-medium">
+                    {market.nama_market}
+                </TableCell>
                 <TableCell className="hidden sm:table-cell">
                     {market.lokasi_market}
                 </TableCell>
+
                 <TableCell className="hidden md:table-cell">
                     {market.created_at}
                 </TableCell>
@@ -89,23 +97,32 @@ export default function Market({ auth, data }) {
                     <Link href={route("market.create")}>Tambah Pasar Baru</Link>
                 </Button>
             </div>
-            <div className="flex flex-1 justify-center rounded-lg border-2 shadow-sm bg-white p-3">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead className="w-[100px]">Foto</TableHead>
-                            <TableHead>Nama Pasar</TableHead>
-                            <TableHead className="hidden sm:table-cell">
-                                Lokasi
-                            </TableHead>
-                            <TableHead className="hidden md:table-cell">
-                                Tanggal Ditambahkan
-                            </TableHead>
-                            <TableHead>Aksi</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>{renderMarket()}</TableBody>
-                </Table>
+            <div className="bg-white rounded-lg border-2 shadow-sm p-3">
+                <div className="flex flex-1 justify-center border-b">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="w-[100px]">
+                                    Foto
+                                </TableHead>
+                                <TableHead>Nama Pasar</TableHead>
+                                <TableHead className="hidden sm:table-cell">
+                                    Lokasi
+                                </TableHead>
+                                <TableHead className="hidden md:table-cell">
+                                    Tanggal Ditambahkan
+                                </TableHead>
+                                <TableHead>Aksi</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>{renderMarket()}</TableBody>
+                    </Table>
+                </div>
+                <div className="pt-3">
+                    <PaginationComponent
+                        links={data.meta.links}
+                    ></PaginationComponent>
+                </div>
             </div>
         </AdminLayout>
     );

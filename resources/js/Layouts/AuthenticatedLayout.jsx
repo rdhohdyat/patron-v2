@@ -30,7 +30,7 @@ export default function AdminLayout({ user, children }) {
         <div className="min-h-screen bg-gray-50">
             <Toaster></Toaster>
             <header className="sticky top-0 flex h-16  items-center gap-4 border-b bg-background px-4 md:px-6 bg-white z-10">
-                <nav className="hidden flex-col gap-6 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6  ">
+                <nav className="hidden flex-col gap-6 font-medium md:flex md:flex-row md:items-center md:gap-5  lg:gap-6  ">
                     <Link
                         href="#"
                         className="flex items-center gap-2 text-lg font-semibold md:text-base"
@@ -42,14 +42,12 @@ export default function AdminLayout({ user, children }) {
                     <NavLink
                         href={route("store")}
                         active={route().current("store")}
-                        className="text-foreground  transition-colors hover:text-foreground"
                     >
                         Dashboard
                     </NavLink>
                     <NavLink
                         href={route("order.index")}
                         active={route().current("order.index")}
-                        className="text-muted-foreground transition-colors hover:text-foreground"
                     >
                         Pemesanan
                     </NavLink>
@@ -58,14 +56,12 @@ export default function AdminLayout({ user, children }) {
                         active={/product\.(index|create|edit)/.test(
                             route().current()
                         )}
-                        className="text-muted-foreground transition-colors hover:text-foreground"
                     >
                         Produk
                     </NavLink>
                     <NavLink
-                        // href={route("store.edit")}
-                        // active={route().current("store.edit")}
-                        className="transition-colors hover:text-foreground"
+                    // href={route("store.edit")}
+                    // active={route().current("store.edit")}
                     >
                         Pengaturan
                     </NavLink>
@@ -96,12 +92,11 @@ export default function AdminLayout({ user, children }) {
                             <NavLink
                                 href={route("store")}
                                 active={route().current("store")}
-                                className="hover:text-foreground"
+                               
                             >
                                 Dashboard
                             </NavLink>
                             <NavLink
-                                className="text-muted-foreground hover:text-foreground"
                                 href={route("order.index")}
                                 active={route().current("order.index")}
                             >
@@ -110,14 +105,12 @@ export default function AdminLayout({ user, children }) {
                             <NavLink
                                 href={route("product.index")}
                                 active={route().current("product.index")}
-                                className="text-muted-foreground hover:text-foreground"
                             >
                                 Produk
                             </NavLink>
                             <NavLink
                                 href=""
                                 // active={route().current("product.index")}
-                                className="text-muted-foreground hover:text-foreground"
                             >
                                 Pengaturan
                             </NavLink>
