@@ -30,7 +30,7 @@ class AdminController extends Controller
     {
         $query = Store::where('status', 'accepted')->orderBy('created_at', 'desc');
         $stores = $query->paginate(50);
-        return inertia('Admin/Request', [
+        return inertia('Admin/Store', [
             "data" => StoreResource::collection($stores),
         ]);
     }
@@ -53,6 +53,6 @@ class AdminController extends Controller
         $store->status = $request->status;
         $store->save();
 
-        return inertia("Admin/index");
+        return to_route('admin.request');
     }
 }
