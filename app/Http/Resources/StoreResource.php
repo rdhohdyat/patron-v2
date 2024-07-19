@@ -19,6 +19,7 @@ class StoreResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'market_id' => new MarketResource($this->Market),
             'nama_store' => $this->nama_store,
             'lokasi_store' => $this->lokasi_store,
             'created_at' => $this->created_at->format('Y-m-d'),
