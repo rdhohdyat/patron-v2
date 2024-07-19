@@ -3,17 +3,35 @@ import { Button } from "@/Components/ui/button";
 import { Link, useForm } from "@inertiajs/react";
 import { Input } from "@/Components/ui/input";
 import { Card, CardHeader, CardContent, CardTitle } from "@/Components/ui/card";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/Components/ui/select";
 import InputLabel from "@/Components/InputLabel";
 import { ChevronLeft, Upload } from "lucide-react";
 import { SelectInput } from "@/Components/SelectInput";
+import { Label } from "@/Components/ui/label";
+import { useState } from "react";
 
-export default function CreateStore({ auth }) {
+export default function CreateStore({ auth, markets }) {
     const { data, setData, post, processing, errors } = useForm({
         nama_store: "",
         lokasi_store: "",
         image: null,
         market_id: "",
     });
+
+    console.log(data)
+
+    const handleMarketChange = (value) => {
+        setData("market_id", value);
+        
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -79,7 +97,27 @@ export default function CreateStore({ auth }) {
                                 )}
                             </div>
                             <div className="w-[500px] mt-5">
-                                <SelectInput label="Pasar"></SelectInput>
+                                <div className="grid gap-3">
+                                    <Label className="text-start">Pasar</Label>
+                                    <Select onValueChange={handleMarketChange}>
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Pilih pasar" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {markets.data.map((market) => (
+                                                    <SelectItem
+                                                        key={market.id}
+                                                        value={market.id}
+                                                    >
+                                                        {market.nama_market}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
                                 {errors.market_id && (
                                     <div className="text-red-600">
                                         {errors.market_id}
@@ -89,7 +127,7 @@ export default function CreateStore({ auth }) {
                         </Card>
                         <Card className="overflow-hidden">
                             <CardHeader>
-                                <CardTitle>Foto Produk</CardTitle>
+                                <CardTitle>Foto Toko</CardTitle>
                                 <p className="text-sm text-gray-600">
                                     Format foto harus JPG, JPEG dan PNG
                                 </p>

@@ -26,6 +26,7 @@ class ProductResource extends JsonResource
             'created_at' => $this->created_at->format('Y-m-d'),
             'image' => $this->image && !(str_starts_with($this->image, 'http')) ?
                 Storage::url($this->image) : $this->image,
+       
         ];
     }
 }

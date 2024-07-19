@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MarketResource;
 use App\Models\Market;
 use Illuminate\Http\Request;
 use App\Models\Store;
@@ -18,7 +19,11 @@ class StoreController extends Controller
         if (!$user->store) {
             return redirect()->route('store.not_registered');
         }
-        
+
+        if ($user->store->status == 'pending') {
+            return redirect()->route('store.store_pending');
+        }
+
         $query = Product::query();
         $products = $query->paginate(10);
 
@@ -29,18 +34,17 @@ class StoreController extends Controller
 
     public function create()
     {
-        $query = Product::query();
-        $products = $query->paginate(10);
+        $query = Market::query();
+        $market = $query->paginate(10);
 
         return inertia('Toko/CreateStore', [
-            "data" => ProductResource::collection($products)
+            "markets" => MarketResource::collection($market)
         ]);
     }
 
     public function store(Request $request)
     {
-        $store = Store::create($request->all());
-        return response()->json($store, 201);
+
     }
 
     public function show(Store $store)

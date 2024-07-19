@@ -39,7 +39,7 @@ import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import { Card } from "@/Components/ui/card";
 
-export default function index({ auth, data }) {
+export default function index({ auth, data, markets }) {
     const category = [
         { name: "Sayur", icon: <LeafyGreen /> },
         { name: "Buah", icon: <Apple /> },
@@ -138,11 +138,11 @@ export default function index({ auth, data }) {
                                         )}
                                         className="text-center"
                                     >
-                                        <Card className="border shadow-none border-green-500 bg-white rounded-xl flex items-center justify-center p-2 gap-2">
-                                            <div className="text-green-500">
+                                        <Card className="border shadow-none border-green-600 bg-white rounded-xl flex items-center justify-center p-2 gap-2">
+                                            <div className="text-green-600">
                                                 {item.icon}
                                             </div>
-                                            <div className="hidden sm:block text-green-500 font-semibold truncate ...">
+                                            <div className="hidden sm:block text-green-600 font-semibold truncate ...">
                                                 {item.name}
                                             </div>
                                         </Card>
@@ -183,7 +183,7 @@ export default function index({ auth, data }) {
                                         <Card className="cursor-pointer">
                                             <img
                                                 src={product.image}
-                                                className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
+                                                className="rounded-t-lg w-full h-[170px] sm:h-[200px] object-cover"
                                                 alt={product.name}
                                             />
                                             <div className="p-3">
@@ -227,31 +227,28 @@ export default function index({ auth, data }) {
                 <div>
                     <Carousel>
                         <CarouselContent>
-                            {[...Array(10)].map((item, index) => (
+                            {markets.data.map((market) => (
                                 <CarouselItem
-                                    key={index}
+                                    key={market.id}
                                     className="basis-1/2 sm:basis-1/5 py-4"
                                 >
-                                    <div className="cursor-pointer border shadow bg-white border-gray-200  rounded-lg">
-                                        <img
-                                            src="/pasar.jpg"
-                                            className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
-                                            alt=""
-                                        />
-                                        <div className="p-3">
-                                            <h1 className="font-semibold">
-                                                Pasar Rumbai
-                                            </h1>
-                                            <p className="text-sm">
-                                                Jl. Sekolah, Kec. Rumbai,
-                                                Pekanbaru
-                                            </p>
-                                            <div className="text-sm flex items-center gap-1 mt-2">
-                                                <MapPin size="16" />
-                                                <p>2 Km</p>
+                                    <Link href={route('shop.market', market.id)}>
+                                        <Card className="cursor-pointer">
+                                            <img
+                                                src={market.image}
+                                                className="rounded-t-lg w-full h-[170px] sm:h-[200px] object-cover"
+                                                alt=""
+                                            />
+                                            <div className="p-3">
+                                                <h1 className="font-semibold">
+                                                    {market.nama_market}
+                                                </h1>
+                                                <p className="text-sm">
+                                                    {market.lokasi_market}
+                                                </p>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </Card>
+                                    </Link>
                                 </CarouselItem>
                             ))}
                         </CarouselContent>

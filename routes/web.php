@@ -20,14 +20,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/shop/category/{key}', [ShopController::class, 'category'])->name('shop.category');
 
     Route::get('/shop/detail_toko/{store}', [ShopController::class, 'store_detail'])->name('shop.store_detail');
+    Route::get('/shop/detail_pasar/{market}', [ShopController::class, 'market_detail'])->name('shop.market');
+
 
     Route::get("/store", [StoreController::class, 'index'])->name('store');
+    Route::get("/store/register", [StoreController::class, 'create'])->name('store.create');
+
 
     Route::resource('product', ProductController::class);
     Route::resource('order', OrderController::class);
-    Route::resource('market', MarketController::class);
-
+    
     Route::middleware(\App\Http\Middleware\AdminMiddleware::class, )->group(function () {
+        Route::resource('market', MarketController::class);
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
         Route::get('/admin/market', [AdminController::class, 'market'])->name('admin.market');
         Route::get('/admin/store', [AdminController::class, 'store'])->name('admin.store');
@@ -47,9 +51,6 @@ Route::get('/toko/not_registered', function () {
     return inertia('Toko/DontHaveStore');
 })->name("store.not_registered");
 
-Route::get('/toko/register', function () {
-    return inertia('Toko/CreateStore');
-})->name("store.create");
 
 
 require __DIR__ . '/auth.php';

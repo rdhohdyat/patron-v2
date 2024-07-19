@@ -20,9 +20,11 @@ class StoreResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'nama_store' => $this->nama_store,
+            'user' => new UserResource($this->user),
             'lokasi_store' => $this->lokasi_store,
             'created_at' => $this->created_at->format('Y-m-d'),
-            // 'products' => ProductResource::collection($this->whenLoaded('products')),
+            'products' => ProductResource::collection($this->whenLoaded('products')),
+            'market' => new MarketResource($this->market),
             'image' => $this->image && !(str_starts_with($this->image, 'http')) ?
                 Storage::url($this->image) : $this->image,
         ];

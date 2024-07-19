@@ -16,10 +16,10 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && !Auth::user()->is_admin) {
+        if (Auth::check() && Auth::user()->role == 'user') {
             return $next($request);
         }
 
-        return redirect('/shop');
+        return redirect('/admin');
     }
 }

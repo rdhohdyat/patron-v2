@@ -145,7 +145,7 @@ export default function ProductDetail({
             </div>
             <ProductList data={otherProducts}></ProductList>
             <StoreList data={otherStores}></StoreList>
-            <MarketList data={otherStores} />
+            <MarketList data={markets} />
         </ShopLayout>
     );
 }

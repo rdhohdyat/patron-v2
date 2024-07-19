@@ -81,11 +81,11 @@ export default function ShopLayout({ user, header, children }) {
 
     const handleSearch = () => {
         return null;
-    }
+    };
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <Toaster/>
+            <Toaster />
             <header className="sticky border top-0 left-0 right-0 bg-white z-20">
                 <div className="h-16 flex justify-between px-5 sm:justify-around items-center">
                     <Link href={route("shop")}>
@@ -298,7 +298,11 @@ export default function ShopLayout({ user, header, children }) {
                                     <AlertDialogCancel className="w-full">
                                         Batal
                                     </AlertDialogCancel>
-                                    <Link method="post" href={route("logout")}>
+                                    <Link
+                                        method="post"
+                                        href={route("logout")}
+                                        className="w-full"
+                                    >
                                         <Button
                                             className="w-full"
                                             variant="destructive"
@@ -314,7 +318,8 @@ export default function ShopLayout({ user, header, children }) {
             </header>
 
             <main className="sm:w-[80%] mx-auto  p-5">{children}</main>
-            <footer className="text-center py-4 pb-24">
+            <footer className="text-center py-4 pb-12">
+                <h1 className="font-bold text-3xl text-green-600 mb-2">PATRON</h1>
                 <div>&copy; 2024 Patron. All rights reserved.</div>
             </footer>
         </div>
