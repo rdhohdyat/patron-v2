@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->integer('jumlah_barang');
             $table->dateTime('tanggal_pemesanan');
-            $table->dateTime('tanggal_pengiriman');
+            $table->dateTime('tanggal_pengiriman')->nullable();
             $table->decimal('total_harga', 8, 2);
-            $table->enum('status', ['pending', 'processing', 'completed', 'cancelled']);
+            $table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }
