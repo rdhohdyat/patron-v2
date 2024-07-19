@@ -17,95 +17,73 @@ import {
     TableRow,
 } from "@/Components/ui/table";
 import PaginationComponent from "@/Components/Pagination";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
 export default function Request({ auth, data }) {
-        // <AdminLayout user={auth.user}>
-        //     <div>
-        //         <h1 className="font-semibold text-xl">Permintaan Pembukaan Toko</h1>
-        //     </div>
-        //     <div className="flex flex-1 items-center justify-center rounded-lg border-2 shadow-sm bg-white ">
-        //         Permintaan
-        //     </div>
-        // </AdminLayout>
-        const handleAccept = () => {
+    const handleAccept = (storeId) => {
+        router.patch(route("admin.update_status", storeId), {
+            status: "accepted",
+        });
+    };
 
-        }
+    const handleReject = (storeId) => {
+        router.patch(route("admin.update_status", storeId), {
+            status: "rejected",
+        });
+    };
 
-        const handleReject = () => {
-            
-        }
-        const renderRequest = () => {
-            return data.data.map((store) => (
-                <TableRow key={store.id}>
-                    <TableCell>
-                        <img
-                            alt="store img"
-                            className="aspect-square rounded-md object-cover"
-                            height="64"
-                            src="/sayurr.jpg"
-                            width="64"
-                        />
-                    </TableCell>
-                    <TableCell className="font-medium">{store.nama_store}</TableCell>
-                    <TableCell className="hidden md:table-cell">
-                        {store.lokasi_store}
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell">
-                        {store.created_at}
-                    </TableCell>
-                    <TableCell>
-                        <Button variant="default" onClick={handleAccept}>
-                            <Link>Terima</Link> 
-                        </Button>
-                        <Button variant="destructive">
-                            <Link>Tolak</Link>
-                        </Button>
-                        {/* <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button
-                                    aria-haspopup="true"
-                                    size="icon"
-                                    variant="ghost"
-                                >
-                                    <MoreHorizontal className="h-4 w-4" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Detail</DropdownMenuLabel>
-                                <Link>
-                                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                                </Link>
-                                <Link
-                                >
-                                    <DropdownMenuItem className="text-red-500 hover:!bg-red-100 active:!bg-red-300 hover:!text-red-600">
-                                        Hapus
-                                    </DropdownMenuItem>
-                                </Link>
-                            </DropdownMenuContent>
-                        </DropdownMenu> */}
-                    </TableCell>
-                </TableRow>
-            ));
-        };
-        return (
-            <AdminLayout user={auth.user}>
-                <div>
-                    <h1 className="font-semibold text-xl">Daftar Permintaan</h1>
-                </div>
-                <div className="flex flex-1 justify-center rounded-lg border-2 shadow-sm bg-white p-3">
+    const renderRequest = () => {
+        return data.data?.map((store) => (
+            <TableRow key={store.id}>
+                <TableCell>
+                    <img
+                        alt="store img"
+                        className="aspect-square rounded-md object-cover"
+                        height="64"
+                        src={store.image}
+                        width="64"
+                    />
+                </TableCell>
+                <TableCell className="font-medium">
+                    {store.nama_store}
+                </TableCell>
+                <TableCell className="hidden md:table-cell">
+                    {store.lokasi_store}
+                </TableCell>
+                <TableCell className="hidden md:table-cell">
+                    {store.created_at}
+                </TableCell>
+                <TableCell>
+                    <Button
+                        variant="default"
+                        onClick={() => handleAccept(store.id)}
+                    >
+                        Terima
+                    </Button>
+                    <Button
+                        variant="destructive"
+                        onClick={() => handleReject(store.id)}
+                    >
+                        Tolak
+                    </Button>
+                </TableCell>
+            </TableRow>
+        ));
+    };
+
+    return (
+        <AdminLayout user={auth.user}>
+            <div>
+                <h1 className="font-semibold text-xl">Daftar Permintaan</h1>
+            </div>
+            <div className="flex flex-1 justify-center rounded-lg border-2 shadow-sm bg-white p-3">
+                {data.data.length !== 0 ? (
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead className="w-[100px]">Foto</TableHead>
+                                <TableHead className="w-[100px]">
+                                    Foto
+                                </TableHead>
                                 <TableHead>Nama Toko</TableHead>
                                 <TableHead className="hidden sm:table-cell">
                                     Lokasi
@@ -116,10 +94,25 @@ export default function Request({ auth, data }) {
                                 <TableHead>Aksi</TableHead>
                             </TableRow>
                         </TableHeader>
-                        <TableBody>{renderRequest()}</TableBody>
+                        <TableBody className="w-full">
+                            {data.data.length !== 0 ? renderRequest() : null}
+                        </TableBody>
                     </Table>
-                </div>
-            </AdminLayout>
+                ) : (
+                    <div className="">
+                        <div className="">
+                            <img
+                                src="/check.png"
+                                className="w-[300px] h-[300px] "
+                                alt=""
+                            />
+                        </div>
+                        <h1 className="text-xl text-gray-600 font-semibold">
+                            Tidak ada permintaan pembukaan toko
+                        </h1>
+                    </div>
+                )}
+            </div>
+        </AdminLayout>
     );
 }
-

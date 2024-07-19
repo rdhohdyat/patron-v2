@@ -6,6 +6,7 @@ use App\Http\Resources\MarketResource;
 use App\Models\Market;
 use App\Models\Store;
 use App\Models\Product;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use App\Http\Resources\ProductResource;
 use App\Http\Requests\StoreStoreRequest;
@@ -74,4 +75,7 @@ class StoreController extends Controller
         $store->delete();
         return response()->json(null, 204);
     }
+
+   
+
 }

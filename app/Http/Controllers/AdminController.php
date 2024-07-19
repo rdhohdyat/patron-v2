@@ -29,7 +29,7 @@ class AdminController extends Controller
     public function store()
     {
         $query = Store::where('status', 'accepted')->orderBy('created_at', 'desc');
-        $stores = $query->paginate(50); 
+        $stores = $query->paginate(50);
         return inertia('Admin/Request', [
             "data" => StoreResource::collection($stores),
         ]);
@@ -38,14 +38,21 @@ class AdminController extends Controller
     public function request()
     {
         $query = Store::where('status', 'pending')->orderBy('created_at', 'desc');
-        $stores = $query->paginate(50); 
+        $stores = $query->paginate(50);
         return inertia('Admin/Request', [
             "data" => StoreResource::collection($stores),
         ]);
     }
 
-    public function statusStore()
+    public function updateStatus(Request $request, Store $store)
     {
-        console.log("hi");
+        $request->validate([
+            'status' => 'required|string|in:accepted,rejected',
+        ]);
+
+        $store->status = $request->status;
+        $store->save();
+
+        return inertia("Admin/index");
     }
 }
