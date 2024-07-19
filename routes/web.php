@@ -26,6 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get("/store", [StoreController::class, 'index'])->name('store');
         Route::get("/store/register", [StoreController::class, 'create'])->name('store.create');
+        Route::post("/store/register",[StoreController::class, 'store'])->name('store.store');
 
         Route::resource('product', ProductController::class);
     });
@@ -48,6 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/store', [AdminController::class, 'store'])->name('admin.store');
         Route::get('/admin/request', [AdminController::class, 'request'])->name('admin.request');
 
+        Route::resource('admin', AdminController::class);
         Route::resource('market', MarketController::class);
     });
 });

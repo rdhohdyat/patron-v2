@@ -26,7 +26,7 @@ export default function CreateStore({ auth, markets }) {
         market_id: "",
     });
 
-    console.log(data)
+    // console.log(data)
 
     const handleMarketChange = (value) => {
         setData("market_id", value);
@@ -35,7 +35,7 @@ export default function CreateStore({ auth, markets }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("stores.store"));
+        post(route("store.store"));
     };
 
     return (

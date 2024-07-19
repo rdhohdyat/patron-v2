@@ -33,6 +33,15 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
+import {
+    AlertDialog,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/Components/ui/alert-dialog";
 import { Input } from "@/Components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/Components/ui/sheet";
 import { Link } from "@inertiajs/react";
@@ -48,7 +57,9 @@ export default function AdminLayout({ user, children }) {
                             href="/"
                             className="flex items-center gap-2 font-bold"
                         >
-                            <span className="text-xl text-green-600">PATRON</span>
+                            <span className="text-xl text-green-600">
+                                PATRON
+                            </span>
                         </Link>
                     </div>
                     <div className="flex-1">
@@ -153,22 +164,51 @@ export default function AdminLayout({ user, children }) {
                             </div>
                         </form>
                     </div>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Avatar className="w-8 h-8">
-                                <AvatarImage
-                                    src="https://github.com/shadcn.png"
-                                    alt="@shadcn"
-                                />
-                                <AvatarFallback>CN</AvatarFallback>
-                            </Avatar>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <AlertDialog>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Avatar className="w-8 h-8">
+                                    <AvatarImage
+                                        src="https://github.com/shadcn.png"
+                                        alt="@shadcn"
+                                    />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>
+                                    {user.name}
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <AlertDialogTrigger className="w-full">
+                                    <DropdownMenuItem className="text-red-500 hover:!bg-red-100 active:!bg-red-300 hover:!text-red-600 ">
+                                        Keluar
+                                    </DropdownMenuItem>
+                                </AlertDialogTrigger>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle className="text-sm">
+                                    Apakah anda yakin untuk keluar ?
+                                </AlertDialogTitle>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel className="w-full">
+                                    Batal
+                                </AlertDialogCancel>
+                                <Link method="post" href={route("logout")}>
+                                    <Button
+                                        className="w-full"
+                                        variant="destructive"
+                                    >
+                                        Keluar
+                                    </Button>
+                                </Link>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
                 </header>
                 <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
                     {children}

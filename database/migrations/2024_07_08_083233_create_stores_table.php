@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_store');
             $table->text('lokasi_store')->nullable();
             $table->string('image')->nullable(); 
+            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }
