@@ -113,11 +113,7 @@ export default function index({ auth, market }) {
                                     <Input
                                         type="file"
                                         onChange={(e) =>
-                                            setData(
-                                                "image",
-                                                e.target
-                                                    .files[0]
-                                            )
+                                            setData("image", e.target.files[0])
                                         }
                                     />
                                 </div>
@@ -130,7 +126,7 @@ export default function index({ auth, market }) {
                         <Button variant="outline">Batal</Button>
                     </Link>
                     <Button type="submit" disabled={processing}>
-                        Simpan Pasar
+                        {processing ? "Menyimpan..." : "Simpan Pasar"}
                     </Button>
                 </div>
             </form>

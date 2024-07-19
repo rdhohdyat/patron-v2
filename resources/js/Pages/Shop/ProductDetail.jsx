@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import ShopLayout from "@/Layouts/ShopLayout";
 import { Button } from "@/Components/ui/button";
-import { Store } from "lucide-react";
 import StoreList from "./StoreList";
 import {
     Breadcrumb,
@@ -31,8 +31,10 @@ export default function ProductDetail({
     const product = data.data;
     const { addToCart, calculateTotal } = useCartStore();
 
+    const [quantity, setQuantity] = useState(1);
+
     const handleAddToCart = (product) => {
-        addToCart(product);
+        addToCart({ ...product, qty: quantity });
         toast({
             title: "Berhasil menambahkan ke keranjang",
             variant: "default",
@@ -40,6 +42,27 @@ export default function ProductDetail({
 
         calculateTotal();
     };
+
+    const handleQuantityChange = (event) => {
+        const value = parseInt(event.target.value);
+        if (value > 0 && value <= product.stock) {
+            setQuantity(value);
+        }
+    };
+
+    const increaseQuantity = () => {
+        if (quantity < product.stock) {
+            setQuantity(quantity + 1);
+        }
+    };
+
+    const decreaseQuantity = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        }
+    };
+
+    const subtotal = product.price * quantity;
 
     return (
         <ShopLayout user={auth.user}>
@@ -87,7 +110,6 @@ export default function ProductDetail({
 
                         <Card className="flex items-start justify-between  mt-2  font-medium  p-3 py-5  shadow-none sm:w-[400px]">
                             <div className="flex gap-2 items-center">
-                                {/* <Store size="18" /> */}
                                 <Avatar className="w-12 h-12">
                                     <AvatarImage
                                         src="https://github.com/shadcn.png"
@@ -96,7 +118,9 @@ export default function ProductDetail({
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
                                 <div>
-                                    <h1 className="font-semibold">{product.store.nama_store}</h1>
+                                    <h1 className="font-semibold">
+                                        {product.store.nama_store}
+                                    </h1>
                                     <p className="text-sm font-normal">
                                         {product.store.nama_store}
                                     </p>
@@ -114,34 +138,76 @@ export default function ProductDetail({
                         </Card>
                     </div>
                 </div>
-                <Card className="fixed rounded-none sm:static sm:h-[200px] bottom-0 z-10 left-0 border right-0 px-5 py-3 sm:rounded-lg">
-                    <div className="sm:block flex gap-2 ">
-                        <div className="hidden sm:block">
-                            Total Stock : {product.stock}
-                        </div>
-                        <Button
-                            variant="outline"
-                            className="sm:w-full mt-3 text-green-500 hover:bg-green-50 hover:text-green-600 border-green-600"
-                        >
-                            <div className="hidden sm:block">
-                                Hubungi Penjual{" "}
+                <div>
+                    <Card className="fixed rounded-none sm:static  bottom-0 z-10 left-0 border right-0 px-5 py-3 sm:rounded-lg">
+                        <div className="">
+                            <h1 className="font-semibold text-lg hidden sm:block">
+                                Atur Jumlah
+                            </h1>
+                            <div className="flex justify-between items-center mt-5">
+                                <div className=" flex items-center gap-2">
+                                    <button
+                                        className="px-3 py-1 border rounded bg-gray-200"
+                                        onClick={decreaseQuantity}
+                                    >
+                                        -
+                                    </button>
+                                    <input
+                                        type="number"
+                                        id="quantity"
+                                        value={quantity}
+                                        onChange={handleQuantityChange}
+                                        min="1"
+                                        max={product.stock}
+                                        className="border rounded text-center h-10 w-10"
+                                    />
+                                    <button
+                                        className="px-3 py-1 border rounded bg-gray-200"
+                                        onClick={increaseQuantity}
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                                <div className="mt-3">
+                                    Stok Total :{" "}
+                                    <span className="font-bold">
+                                        {product.stock}
+                                    </span>
+                                </div>
                             </div>
-                            <MessageSquareText className="sm:hidden" />
-                        </Button>
-                        <Button
-                            variant="outline"
-                            className="w-full mt-3 text-green-500 hover:bg-green-50 hover:text-green-600  border-green-600"
-                        >
-                            Beli Langsung
-                        </Button>
-                        <Button
-                            className="w-full mt-3 sm:w-[300px] block"
-                            onClick={() => handleAddToCart(product)}
-                        >
-                            Tambah Keranjang
-                        </Button>
-                    </div>
-                </Card>
+                            <h1 className="flex justify-between  items-center mt-4">
+                                <div>Substotal : </div>
+
+                                <div className="font-bold text-xl">
+                                    {formatRupiah(subtotal)}
+                                </div>
+                            </h1>
+                        </div>
+                        <div className="sm:block flex gap-2">
+                            <Button
+                                variant="outline"
+                                className="sm:w-full mt-3 text-green-500 hover:bg-green-50 hover:text-green-600 border-green-600"
+                            >
+                                <div className="hidden sm:block">
+                                    Hubungi Penjual
+                                </div>
+                                <MessageSquareText className="sm:hidden" />
+                            </Button>
+                            <Button
+                                variant="outline"
+                                className="w-full mt-3 text-green-500 hover:bg-green-50 hover:text-green-600 border-green-600"
+                            >
+                                Beli Langsung
+                            </Button>
+                            <Button
+                                className="w-full mt-3 sm:w-[300px] block"
+                                onClick={() => handleAddToCart(product)}
+                            >
+                                Tambah Keranjang
+                            </Button>
+                        </div>
+                    </Card>
+                </div>
             </div>
             <ProductList data={otherProducts}></ProductList>
             <StoreList data={otherStores}></StoreList>

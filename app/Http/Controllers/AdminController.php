@@ -53,6 +53,6 @@ class AdminController extends Controller
         $store->status = $request->status;
         $store->save();
 
-        return inertia("Admin/index");
+        return to_route('admin.request');
     }
 }

@@ -92,7 +92,7 @@ export default function Market({ auth, data }) {
     return (
         <AdminLayout user={auth.user}>
             <div className="flex justify-between">
-                <h1 className="font-semibold text-xl"> Pasar</h1>
+                <h1 className="font-semibold text-xl">Pasar</h1>
                 <Button>
                     <Link href={route("market.create")}>Tambah Pasar Baru</Link>
                 </Button>

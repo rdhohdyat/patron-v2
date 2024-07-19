@@ -243,7 +243,7 @@ export default function index({ auth, data, markets }) {
                                                 <h1 className="font-semibold">
                                                     {market.nama_market}
                                                 </h1>
-                                                <p className="text-sm">
+                                                <p className="text-sm w-[180px] truncate ...">
                                                     {market.lokasi_market}
                                                 </p>
                                             </div>
