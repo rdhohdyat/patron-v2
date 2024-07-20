@@ -1,7 +1,6 @@
 import ShopLayout from "@/Layouts/ShopLayout";
 import { Button } from "@/Components/ui/button";
 import { Store } from "lucide-react";
-import StoreList from "./StoreList";
 import { Separator } from "@/Components/ui/separator";
 import PaginationComponent from "@/Components/Pagination";
 import {
@@ -12,13 +11,10 @@ import {
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb";
 import { Head, Link } from "@inertiajs/react";
-import useCartStore from "@/lib/zustand/cartStore";
 import { useToast } from "@/Components/ui/use-toast";
-import ProductList from "./ProductList";
 import { formatRupiah } from "@/lib/convert";
-import { MessageSquareText } from "lucide-react";
 import { Card } from "@/Components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/Components/ui/avatar";
+import ProductNotFound from "@/Components/ProductNotFound";
 
 export default function ProductDetail({
     auth,
@@ -27,13 +23,12 @@ export default function ProductDetail({
     stores: otherStores,
 }) {
     const { toast } = useToast();
-
     const store = data.data;
 
     return (
         <ShopLayout user={auth.user}>
-            <Head title={`Detail ${store.nama_store}`}></Head>
-            <Breadcrumb className="mb-2 font-medium text-xl">
+            <Head title={`Detail ${store.nama_store}`} />
+            <Breadcrumb className="mb-4 font-medium text-lg">
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/shop">Home</BreadcrumbLink>
@@ -54,64 +49,76 @@ export default function ProductDetail({
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-            <div>
-                <Card className="p-3">
-                    <div className="sm:flex gap-3">
-                        <img
-                            src={store.image}
-                            className="w-full sm:w-[200px] sm:h-[140px] sm:object-cover"
-                            alt={store.name}
-                        />
-                        <div>
-                            <h1 className="font-bold text-xl">
-                                {store.nama_store}
-                            </h1>
-                            <h2 className="font-medium mb-2">{store.user.name}</h2>
-                            <div className="text-sm">
-                                {store.market.nama_market},{" "}
-                                {store.market.lokasi_market}
-                            </div>
-                            <Button variant="outline" className="mt-2">Hubungi Penjual</Button>
-                        </div>
-                    </div>
-                </Card>
-            </div>
 
-            <div className="mt-3">
-                <h1 className="font-bold text-lg  mb-2 text-gray-600">
+            <Card className="p-5 mb-4 bg-white shadow-md rounded-lg">
+                <div className="sm:flex gap-4 items-center">
+                    <img
+                        src={store.image}
+                        className="w-full sm:w-60 sm:h-40 object-cover rounded-lg"
+                        alt={store.nama_store}
+                    />
+                    <div className="mt-4 sm:mt-0 sm:ml-4">
+                        <h1 className="text-2xl font-bold text-gray-800">
+                            {store.nama_store}
+                        </h1>
+                        <h2 className="text-lg font-semibold text-gray-600 mb-2">
+                            {store.user.name}
+                        </h2>
+                        <p className="text-sm text-gray-500 mb-2">
+                            {store.market.nama_market},{" "}
+                            {store.market.lokasi_market}
+                        </p>
+                        <Button variant="outline" className="mt-2">
+                            Hubungi Penjual
+                        </Button>
+                    </div>
+                </div>
+            </Card>
+
+            <div className="mt-6">
+                <h1 className="text-xl font-bold text-gray-700 mb-4">
                     Produk Pada Toko Ini
                 </h1>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
-                    {otherProducts.data.map((product) => (
-                        <Link href={route("shop.detail", product.id)}>
-                            <Card className="cursor-pointer">
-                                <img
-                                    src={product.image}
-                                    className="rounded-t-lg w-full h-[170px] sm:h-[200px] object-cover"
-                                    alt={product.name}
-                                />
-                                <div className="p-3">
-                                    <h1 className="w-[180px] font-semibold truncate ...">
-                                        {product.name}
-                                    </h1>
-                                    <p className="font-bold  text-md">
-                                        {formatRupiah(product.price)}
-                                    </p>
-                                    <div className="flex items-center gap-1 mt-2">
-                                        <p className="text-sm">
-                                            {product.category}
+                {otherProducts.data.length > 0 ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                        {otherProducts.data.map((product) => (
+                            <Link
+                                key={product.id}
+                                href={route("shop.detail", product.id)}
+                            >
+                                <Card className="cursor-pointer bg-white shadow-md rounded-lg">
+                                    <img
+                                        src={product.image}
+                                        className="rounded-t-lg w-full h-40 object-cover"
+                                        alt={product.name}
+                                    />
+                                    <div className="p-4">
+                                        <h2 className="text-lg font-semibold truncate">
+                                            {product.name}
+                                        </h2>
+                                        <p className="text-md font-bold text-gray-800">
+                                            {formatRupiah(product.price)}
                                         </p>
+                                        <div className="flex items-center gap-1 mt-2 text-gray-600">
+                                            <p className="text-sm">
+                                                {product.category}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            </Card>
-                        </Link>
-                    ))}
-                </div>
-                <PaginationComponent
-                    links={otherProducts.meta.links}
-                ></PaginationComponent>
-            </div>
+                                </Card>
+                            </Link>
+                        ))}
+                    </div>
+                ) : (
+                    <ProductNotFound />
+                )}
 
+                {otherProducts.data.length > 0 && (
+                    <div className="mt-6">
+                        <PaginationComponent links={otherProducts.meta.links} />
+                    </div>
+                )}
+            </div>
         </ShopLayout>
     );
 }

@@ -16,7 +16,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::query()->paginate(10);
+        $orders = Order::query()->paginate(5);
         $data = Order::query()->first();
 
         $pendingCount = Order::where('status', 'pending')->count();

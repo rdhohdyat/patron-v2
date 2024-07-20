@@ -29,7 +29,7 @@ export default function AdminLayout({ user, children }) {
     return (
         <div className="min-h-screen bg-gray-50">
             <Toaster></Toaster>
-            <header className="sticky top-0 flex h-16  items-center gap-4 border-b bg-background px-4 md:px-6 bg-white z-10">
+            <header className="sticky top-0 flex h-16 items-center border-b bg-white shadow-md px-4 md:px-6 z-10">
                 <nav className="hidden flex-col gap-6 font-medium md:flex md:flex-row md:items-center md:gap-5  lg:gap-6  ">
                     <Link
                         href="#"
@@ -92,7 +92,6 @@ export default function AdminLayout({ user, children }) {
                             <NavLink
                                 href={route("store")}
                                 active={route().current("store")}
-                               
                             >
                                 Dashboard
                             </NavLink>
@@ -169,7 +168,11 @@ export default function AdminLayout({ user, children }) {
                                 <AlertDialogCancel className="w-full">
                                     Batal
                                 </AlertDialogCancel>
-                                <Link method="post" href={route("logout")} className="w-full">
+                                <Link
+                                    method="post"
+                                    href={route("logout")}
+                                    className="w-full"
+                                >
                                     <Button
                                         className="w-full"
                                         variant="destructive"
@@ -183,7 +186,7 @@ export default function AdminLayout({ user, children }) {
                 </div>
             </header>
 
-            <main>{children}</main>
+            <main className="p-4 md:p-6 lg:p-8">{children}</main>
         </div>
     );
 }

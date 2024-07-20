@@ -41,9 +41,9 @@ const StoreList = ({ data }) => {
                                         store.id
                                     )}
                                 >
-                                    <Card className="cursor-pointer">
+                                    <Card className="cursor-pointer shadow-md">
                                         <img
-                                            // src={store.image}
+                                        
                                             src={store.image}
                                             className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
                                             alt={store.nama_store}

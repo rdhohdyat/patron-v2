@@ -20,7 +20,7 @@ export default function index({ auth }) {
         post(route("market.store"), {
             onSuccess: () => {
                 toast({
-                    title: "Berhasil menambahkan Market",
+                    title: "Berhasil menambahkan pasar",
                     variant: "default",
                 });
             },
@@ -34,71 +34,82 @@ export default function index({ auth }) {
     };
     return (
         <AdminLayout user={auth.user}>
-            <div className="sm:max-w-5xl">
+            <div className="w-full max-w-5xl  sm:px-6">
                 <form onSubmit={handleSubmit}>
-                    <h1 className="text-xl font-semibold">Menambahkan Pasar</h1>
-                    <div className="flex flex-col gap-4">
-                        <div>
-                            <Card className="flex-1 h-full">
-                                <CardHeader>
-                                    <CardTitle>Pengisian Data Pasar</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="grid gap-6">
-                                        <div className="grid gap-3">
-                                            <Label htmlFor="nama_market">
-                                                Nama Pasar
-                                            </Label>
-                                            <Input
-                                                id="nama_market"
-                                                type="text"
-                                                placeholder="Contoh : Pasar Bawah"
-                                                value={data.nama_market}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        "nama_market",
-                                                        e.target.value
-                                                    )
-                                                }
-                                                className="w-full"
-                                            />
-                                            {errors.nama_market && (
-                                                <p className="text-red-500 text-sm mt-1">
-                                                    {errors.nama_market}
+                    <h1 className="text-xl font-semibold mb-4">
+                        Menambahkan Pasar
+                    </h1>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Pengisian Data Pasar</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="grid gap-6">
+                                <div className="grid gap-3">
+                                    <Label htmlFor="nama_market">
+                                        Nama Pasar
+                                    </Label>
+                                    <Input
+                                        id="nama_market"
+                                        type="text"
+                                        placeholder="Contoh : Pasar Bawah"
+                                        value={data.nama_market}
+                                        onChange={(e) =>
+                                            setData(
+                                                "nama_market",
+                                                e.target.value
+                                            )
+                                        }
+                                        className="w-full"
+                                    />
+                                    {errors.nama_market && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.nama_market}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="grid gap-3">
+                                    <Label htmlFor="lokasi_market">
+                                        Lokasi Pasar
+                                    </Label>
+                                    <Input
+                                        id="lokasi_market"
+                                        type="text"
+                                        placeholder="Contoh : Jl Riau"
+                                        value={data.lokasi_market}
+                                        onChange={(e) =>
+                                            setData(
+                                                "lokasi_market",
+                                                e.target.value
+                                            )
+                                        }
+                                        className="w-full"
+                                    />
+                                    {errors.lokasi_market && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.lokasi_market}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="grid gap-3">
+                                    <Label htmlFor="image">Gambar</Label>
+                                    <div className="flex items-center justify-center w-full">
+                                        <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
+                                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <Upload className="w-10 h-10 mb-3 text-gray-500" />
+                                                <p className="mb-2 text-sm text-gray-500">
+                                                    <span className="font-semibold">
+                                                        Klik untuk upload
+                                                    </span>{" "}
                                                 </p>
-                                            )}
-                                        </div>
-                                        <div className="grid gap-3">
-                                            <Label htmlFor="lokasi_market">
-                                                Lokasi Pasar
-                                            </Label>
-                                            <Input
-                                                id="lokasi_market"
-                                                type="text"
-                                                placeholder="Contoh : Jl Riau"
-                                                value={data.lokasi_market}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        "lokasi_market",
-                                                        e.target.value
-                                                    )
-                                                }
-                                                className="w-full"
-                                            />
-                                            {errors.lokasi_market && (
-                                                <p className="text-red-500 text-sm mt-1">
-                                                    {errors.lokasi_market}
+                                                <p className="text-xs text-gray-500">
+                                                    SVG, PNG, JPG
                                                 </p>
-                                            )}
-                                        </div>
-                                        <Label htmlFor="lokasi_market">
-                                            Gambar
-                                        </Label>
-                                        {/* <div className="grid grid-cols-2 gap-2">
-                                        <div className="group grid grid-cols-2 gap-2  p-5  border-2 border-gray-500 border-dashed rounded transition-colors duration-300 hover:border-green-600">
+                                            </div>
                                             <Input
-                                                className="w-[100px] opacity-0"
+                                                id="image"
                                                 type="file"
+                                                className="hidden"
                                                 onChange={(e) =>
                                                     setData(
                                                         "image",
@@ -106,29 +117,23 @@ export default function index({ auth }) {
                                                     )
                                                 }
                                             />
-                                            <Upload className="-ml-5 text-gray-500 transition-colors duration-300 group-hover:text-green-600"></Upload>
-                                        </div>
-                                    </div> */}
-                                        <Input
-                                            type="file"
-                                            onChange={(e) =>
-                                                setData(
-                                                    "image",
-                                                    e.target.files[0]
-                                                )
-                                            }
-                                        />
+                                        </label>
                                     </div>
-                                </CardContent>
-                            </Card>
-                        </div>
-                    </div>
-                    <div className="hidden items-center gap-2 md:flex">
+                                    {errors.image && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.image}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+                    <div className="flex flex-col sm:flex-row justify-start items-center gap-3 mt-6">
                         <Link href={route("admin.market")}>
                             <Button variant="outline">Batal</Button>
                         </Link>
                         <Button type="submit" disabled={processing}>
-                            Simpan Pasar
+                            {processing ? "Menyimpan..." : "Simpan Pasar"}
                         </Button>
                     </div>
                 </form>

@@ -75,7 +75,7 @@ export default function ProductDetail({
     return (
         <ShopLayout user={auth.user}>
             <Head title={`Detail ${product.name}`}></Head>
-            <Breadcrumb className="mb-2 font-medium text-xl">
+            <Breadcrumb className="mb-4 font-medium text-lg">
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/shop">Home</BreadcrumbLink>
@@ -92,44 +92,44 @@ export default function ProductDetail({
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-            <div className="sm:flex justify-between">
-                <div className="sm:flex gap-4">
-                    <div>
+            <div className="sm:flex sm:gap-6 justify-between">
+                <div className="sm:flex sm:gap-6">
+                    <div className="flex-shrink-0">
                         <img
                             src={product.image}
-                            className="w-full object-cover rounded sm:max-w-[350px] h-[350px]"
+                            className="w-full object-cover rounded-lg shadow-lg sm:w-[350px] h-[350px]"
                             alt={product.name}
                         />
                     </div>
-                    <div className="mt-2 sm:mt-0 sm:w-[300px]">
-                        <h1 className="text-xl font-semibold flex-wrap">
-                            {product.name}
-                        </h1>
-                        <p className="uppercase font-bold text-gray-600 mt-2 sm:mt-0">
+                    <div className="mt-4 sm:mt-0 sm:w-[300px]">
+                        <h1 className="text-2xl font-bold">{product.name}</h1>
+                        <p className="uppercase font-semibold text-gray-700 mt-2">
                             {product.category}
                         </p>
-                        <h1 className="font-bold text-3xl mt-2">
+                        <h2 className="text-4xl font-bold mt-2">
                             {formatRupiah(product.price)}
-                        </h1>
-                        <p className="mt-2 font-semibold">Detail : </p>
-                        <p className="text-wrap text-justify sm:w-[400px] truncate ... sm:h-[120px]">
+                        </h2>
+                        <p className="mt-2 font-semibold text-gray-800">
+                            Detail:
+                        </p>
+                        <p className="mt-2 text-gray-600 sm:w-[400px] sm:h-[120px]">
                             {product.description}
                         </p>
 
-                        <Card className="flex items-start justify-between  mt-2  font-medium  p-3 py-5  sm:w-[400px]">
-                            <div className="flex gap-2 items-center">
-                                <Avatar className="w-12 h-12">
+                        <Card className="mt-4 p-4 shadow-md">
+                            <div className="flex items-center gap-4">
+                                <Avatar className="w-14 h-14">
                                     <AvatarImage
                                         src={product.store.image}
-                                        alt="@shadcn"
+                                        alt={product.store.nama_store}
                                     />
-                                    <AvatarFallback>CN</AvatarFallback>
+                                    <AvatarFallback>ST</AvatarFallback>
                                 </Avatar>
                                 <div>
-                                    <h1 className="font-semibold">
+                                    <h3 className="font-semibold text-lg">
                                         {product.store.nama_store}
-                                    </h1>
-                                    <p className="text-sm font-normal">
+                                    </h3>
+                                    <p className="text-sm text-gray-500">
                                         {product.store.nama_store}
                                     </p>
                                 </div>
@@ -139,7 +139,7 @@ export default function ProductDetail({
                                     "shop.store_detail",
                                     product.store.id
                                 )}
-                                className="text-sm underline text-green-600"
+                                className="text-sm text-green-600 underline mt-2"
                             >
                                 Lihat Toko
                             </Link>
@@ -148,7 +148,7 @@ export default function ProductDetail({
                 </div>
                 <div>
                     <Card className="fixed rounded-none sm:static  bottom-0 z-10 left-0 border right-0 px-5 pb-5 sm:rounded-lg">
-                        <div>
+                        <div className="mt-5">
                             <h1 className="font-semibold text-lg hidden sm:block text-center">
                                 Atur Jumlah
                             </h1>
@@ -161,7 +161,6 @@ export default function ProductDetail({
                                         -
                                     </button>
                                     <input
-                                       
                                         id="quantity"
                                         value={quantity}
                                         onChange={handleQuantityChange}
@@ -218,8 +217,8 @@ export default function ProductDetail({
                     </Card>
                 </div>
             </div>
-            <ProductList data={otherProducts}></ProductList>
-            <StoreList data={otherStores}></StoreList>
+            <ProductList data={otherProducts} />
+            <StoreList data={otherStores} />
             <MarketList data={markets} />
         </ShopLayout>
     );

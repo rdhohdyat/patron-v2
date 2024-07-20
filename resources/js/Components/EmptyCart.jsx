@@ -10,7 +10,7 @@ export default function EmptyCart() {
             <div className="text-center">
                 <EmptyCartImage></EmptyCartImage>
                 <h1 className="text-gray-600 text-xl font-bold mt-5">Keranjang anda masih kosong</h1>
-                <Link href={route("shop")}>
+                <Link href={route("shop.search")}>
                     <Button className="mt-3">Mulai belanja</Button>
                 </Link>
             </div>

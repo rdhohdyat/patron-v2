@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import ShopLayout from "@/Layouts/ShopLayout";
 import { Button } from "@/Components/ui/button";
 import { Store, ShoppingBasket } from "lucide-react";
@@ -6,7 +7,6 @@ import { Separator } from "@/Components/ui/separator";
 import PaginationComponent from "@/Components/Pagination";
 import ProductNotFound from "@/Components/ProductNotFound";
 import StoreNotFound from "@/Components/StoreNotFound";
-import { useState } from "react";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -17,20 +17,11 @@ import {
 import { Head, Link } from "@inertiajs/react";
 import { useToast } from "@/Components/ui/use-toast";
 import { formatRupiah } from "@/lib/convert";
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-    CardFooter,
-} from "@/Components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/Components/ui/avatar";
-
+import { Card } from "@/Components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 
-export default function MarketDetail({ auth, data, products : dataProducts }) {
+export default function MarketDetail({ auth, data, products: dataProducts }) {
     const { toast } = useToast();
-
     const market = data.data;
     const products = dataProducts.data;
 
@@ -39,7 +30,6 @@ export default function MarketDetail({ auth, data, products : dataProducts }) {
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
-
         if (category === "Semua Kategori") {
             setFilterProducts(products);
         } else {
@@ -67,8 +57,8 @@ export default function MarketDetail({ auth, data, products : dataProducts }) {
 
     return (
         <ShopLayout user={auth.user}>
-            <Head title={`Detail ${market.nama_market}`}></Head>
-            <Breadcrumb className="mb-2 font-medium text-xl">
+            <Head title={`Detail ${market.nama_market}`} />
+            <Breadcrumb className="mb-4 font-medium text-lg">
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/shop">Home</BreadcrumbLink>
@@ -85,41 +75,41 @@ export default function MarketDetail({ auth, data, products : dataProducts }) {
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-            <div>
-                <Card className="p-5">
-                    <div className="sm:flex gap-3">
-                        <img
-                            src={market.image}
-                            className="rounded w-full sm:w-[300px] h-[170px] sm:h-[200px] object-cover"
-                            alt=""
-                        />
-                        <div className="mt-3 sm:mt-0">
-                            <h1 className="uppercase text-lg sm:text-xl font-bold">
-                                {market.nama_market}
-                            </h1>
-                            <h2 className="text-md font-semibold">
-                                {market.lokasi_market}
-                            </h2>
-                            <div className="flex items-center gap-3">
-                                <Store className="h-5 w-5"></Store>
-                                {market.stores.length}
-                            </div>
+            <div className="bg-white shadow-md rounded-lg p-5 mb-5">
+                <div className="sm:flex gap-4 items-center">
+                    <img
+                        src={market.image}
+                        className="rounded-lg w-full sm:w-80 h-48 object-cover"
+                        alt=""
+                    />
+                    <div className="mt-4 sm:mt-0 sm:ml-4">
+                        <h1 className="text-2xl font-bold text-gray-800">
+                            {market.nama_market}
+                        </h1>
+                        <h2 className="text-lg font-semibold text-gray-600">
+                            {market.lokasi_market}
+                        </h2>
+                        <div className="flex items-center gap-2 mt-2 text-gray-500">
+                            <Store className="h-5 w-5" />
+                            {market.stores.length} Toko
                         </div>
                     </div>
-                </Card>
+                </div>
+            </div>
 
-                <div className="sm:grid grid-cols-12 mt-3 gap-3">
-                    <Card className="col-span-2 sm:block hidden h-[500px]">
-                        <h1 className="font-bold p-2 px-6 text-green-600">
+            <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* Sidebar for categories on larger screens */}
+                <div className="lg:col-span-2 hidden lg:block">
+                    <Card className="bg-white shadow-md rounded-lg">
+                        <h1 className="font-bold text-lg p-4 border-b border-gray-200 text-green-600">
                             Kategori
                         </h1>
-
-                        <Separator></Separator>
+                        <Separator />
                         <div className="mt-2 flex flex-col">
                             {category.map((c) => (
                                 <div
                                     key={c}
-                                    className={`hover:bg-gray-100 px-6 py-1 cursor-pointer ${
+                                    className={`hover:bg-gray-100 px-4 py-2 cursor-pointer ${
                                         selectedCategory === c
                                             ? "bg-gray-200"
                                             : ""
@@ -131,142 +121,167 @@ export default function MarketDetail({ auth, data, products : dataProducts }) {
                             ))}
                         </div>
                     </Card>
-                    <div className="col-span-10 ">
-                        <Tabs defaultValue="produk">
-                            <TabsList className="w-full sm:w-[400px] rounded-none">
-                                <TabsTrigger
-                                    value="produk"
-                                    className="w-full flex gap-2 items-center"
-                                >
-                                    Produk
-                                    <ShoppingBasket className="h-5 w-5" />
-                                </TabsTrigger>
-                                <TabsTrigger
-                                    value="toko"
-                                    className="w-full flex gap-2 items-center"
-                                >
-                                    Toko
-                                    <Store className="h-5 w-5" />
-                                </TabsTrigger>
-                            </TabsList>
-                            <Separator></Separator>
-                            <TabsContent value="produk">
-                                {filterProducts.length > 0 ? (
-                                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-3">
-                                        {filterProducts.map((product) => (
-                                            <Link
-                                                key={product.id}
-                                                href={route(
-                                                    "shop.detail",
-                                                    product.id
-                                                )}
-                                            >
-                                                <Card className="cursor-pointer">
-                                                    <img
-                                                        src={product.image}
-                                                        className="rounded-t-lg w-full h-[170px] sm:h-[200px] object-cover"
-                                                        alt={product.name}
-                                                    />
-                                                    <div className="p-3">
-                                                        <h1 className="w-[180px] truncate ...">
-                                                            {product.name}
-                                                        </h1>
-                                                        <p className="font-bold text-md">
-                                                            {formatRupiah(
-                                                                product.price
-                                                            )}
-                                                        </p>
-                                                        <div className="flex items-center gap-1 mt-2">
-                                                            <Store size="16" />
-                                                            <p className="text-sm">
-                                                                {
-                                                                    product.category
-                                                                }
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </Card>
-                                            </Link>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <div className="w-full">
-                                        <ProductNotFound className="mx-auto" />
-                                    </div>
-                                )}
+                </div>
 
-                                {filterProducts.length > 10 ? (
-                                    <div className="mt-10">
-                                        <PaginationComponent
-                                            links={dataProducts.meta.links}
-                                        />
-                                    </div>
-                                ) : null}
-                            </TabsContent>
-                            <TabsContent value="toko">
-                                {market.stores.length !== 0 ? (
-                                    <div className="p-3 grid grid-cols-4 gap-3">
-                                        {market.stores.map((store) => (
-                                            <Link
-                                                href={route(
-                                                    "shop.store_detail",
-                                                    store.id
-                                                )}
-                                            >
-                                                <Card className="p-3">
-                                                    <img
-                                                        src={store.image}
-                                                        className="rounded w-full sm:w-[200px] h-[170px] sm:h-[200px] object-cover"
-                                                        alt=""
-                                                    />
-                                                    <h1>{store.nama_store}</h1>
-                                                </Card>
-                                            </Link>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <StoreNotFound />
-                                )}
-                            </TabsContent>
-                        </Tabs>
+                {/* Collapsible Categories Menu for mobile screens */}
+                <div className="lg:hidden mb-4">
+                    <button
+                        className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md w-full text-left flex items-center justify-between"
+                        onClick={() =>
+                            document
+                                .getElementById("mobile-category-menu")
+                                .classList.toggle("hidden")
+                        }
+                    >
+                        <span>Kategori: {selectedCategory}</span>
+                        <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M19 9l-7 7-7-7"
+                            ></path>
+                        </svg>
+                    </button>
+                    <div
+                        id="mobile-category-menu"
+                        className="absolute top-16 left-0 w-full bg-white border border-gray-200 rounded-lg mt-1 hidden z-50"
+                    >
+                        <div className="p-2">
+                            {category.map((c) => (
+                                <div
+                                    key={c}
+                                    className={`hover:bg-gray-100 px-4 py-2 cursor-pointer ${
+                                        selectedCategory === c
+                                            ? "bg-gray-200"
+                                            : ""
+                                    }`}
+                                    onClick={() => {
+                                        handleCategoryClick(c);
+                                        document
+                                            .getElementById(
+                                                "mobile-category-menu"
+                                            )
+                                            .classList.add("hidden");
+                                    }}
+                                >
+                                    {c}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {/* <div className="mt-3">
-                <h1 className="font-bold text-lg sm:text-xl mb-2 text-gray-600">
-                    Produk Pada Toko Ini
-                </h1>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
-                    {otherProducts.data.map((product) => (
-                        <Link href={route("shop.detail", product.id)}>
-                            <Card className="cursor-pointer">
-                                <img
-                                    src={product.image}
-                                    className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
-                                    alt={product.name}
-                                />
-                                <div className="p-3">
-                                    <h1 className="w-[180px] font-semibold truncate ...">
-                                        {product.name}
-                                    </h1>
-                                    <p className="font-bold  text-md">
-                                        {formatRupiah(product.price)}
-                                    </p>
-                                    <div className="flex items-center gap-1 mt-2">
-                                        <p className="text-sm">
-                                            {product.category}
-                                        </p>
-                                    </div>
+                <div className="lg:col-span-10">
+                    <Tabs defaultValue="produk" className="mb-4">
+                        <TabsList className="flex gap-4 border-b border-gray-200">
+                            <TabsTrigger
+                                value="produk"
+                                className="p-2 font-semibold text-gray-600 hover:text-green-600"
+                            >
+                                Produk
+                                <ShoppingBasket className="inline h-5 w-5 ml-1" />
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="toko"
+                                className="p-2 font-semibold text-gray-600 hover:text-green-600"
+                            >
+                                Toko
+                                <Store className="inline h-5 w-5 ml-1" />
+                            </TabsTrigger>
+                        </TabsList>
+                        <Separator />
+                        <TabsContent value="produk" className="mt-4">
+                            {filterProducts.length > 0 ? (
+                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                    {filterProducts.map((product) => (
+                                        <Link
+                                            key={product.id}
+                                            href={route(
+                                                "shop.detail",
+                                                product.id
+                                            )}
+                                        >
+                                            <Card className="cursor-pointer bg-white shadow-md rounded-lg">
+                                                <img
+                                                    src={product.image}
+                                                    className="rounded-t-lg w-full h-48 object-cover"
+                                                    alt={product.name}
+                                                />
+                                                <div className="p-3">
+                                                    <h1 className="text-lg font-semibold truncate">
+                                                        {product.name}
+                                                    </h1>
+                                                    <p className="font-bold text-md text-gray-700">
+                                                        {formatRupiah(
+                                                            product.price
+                                                        )}
+                                                    </p>
+                                                    <div className="flex items-center gap-1 mt-2 text-gray-500">
+                                                        <Store size="16" />
+                                                        <p className="text-sm">
+                                                            {product.category}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </Card>
+                                        </Link>
+                                    ))}
                                 </div>
-                            </Card>
-                        </Link>
-                    ))}
+                            ) : (
+                                <ProductNotFound className="mx-auto" />
+                            )}
+
+                            {filterProducts.length > 10 && (
+                                <div className="mt-8">
+                                    <PaginationComponent
+                                        links={dataProducts.meta.links}
+                                    />
+                                </div>
+                            )}
+                        </TabsContent>
+                        <TabsContent value="toko" className="mt-4">
+                            {market.stores.length > 0 ? (
+                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                                    {market.stores.map((store) => (
+                                        <Link
+                                            key={store.id}
+                                            href={route(
+                                                "shop.store_detail",
+                                                store.id
+                                            )}
+                                        >
+                                            <Card className="cursor-pointer bg-white shadow-md rounded-lg">
+                                                <img
+                                                    src={store.image}
+                                                    className="rounded-t-lg w-full h-48 object-cover"
+                                                    alt={store.nama_store}
+                                                />
+                                                <div className="p-3">
+                                                    <h1 className="text-lg font-semibold truncate">
+                                                        {store.nama_store}
+                                                    </h1>
+                                                    <p className="text-sm text-gray-600">
+                                                        {store.lokasi_store}
+                                                    </p>
+                                                </div>
+                                            </Card>
+                                        </Link>
+                                    ))}
+                                </div>
+                            ) : (
+                                <StoreNotFound />
+                            )}
+                        </TabsContent>
+                    </Tabs>
                 </div>
-                <PaginationComponent
-                    links={otherProducts.meta.links}
-                ></PaginationComponent>
-            </div> */}
+            </div>
         </ShopLayout>
     );
 }

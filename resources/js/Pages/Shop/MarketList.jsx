@@ -9,24 +9,22 @@ import {
     CarouselPrevious,
 } from "@/Components/ui/carousel";
 import { Button } from "@/Components/ui/button";
-import { formatRupiah } from "@/lib/convert";
 
 const MarketList = ({ data }) => {
     const markets = data.data;
 
-    console.log(markets)
     return (
-        <div>
-            <div className="flex justify-between items-center mt-6">
-                <h1 className="font-bold text-lg sm:text-xl text-gray-600">
+        <div className="my-6">
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="font-bold text-lg sm:text-xl text-gray-700">
                     Pasar Lainnya
                 </h1>
-                <Button
-                    variant="link"
-                    className="text-md sm:text-lg text-green-500"
+                <Link
+                    href="/all-markets" // Update this link as needed
+                    className="text-md sm:text-lg text-green-600 hover:text-green-800"
                 >
                     Lihat semua
-                </Button>
+                </Link>
             </div>
 
             <div className="relative rounded-md">
@@ -35,25 +33,26 @@ const MarketList = ({ data }) => {
                         {markets.map((market) => (
                             <CarouselItem
                                 key={market.id}
-                                className="basis-1/2  lg:basis-1/5 py-4"
+                                className="basis-1/2 lg:basis-1/5 py-4 px-2"
                             >
-                                <Link
-                                    href={route("shop.store_detail", market.id)}
-                                >
-                                    <Card className="cursor-pointer">
+                                <Link href={route("shop.market", market.id)}>
+                                    <Card className="cursor-pointer shadow-md">
                                         <img
                                             src={market.image}
-                                            className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
+                                            className="rounded-t-lg w-full h-[200px] object-cover"
                                             alt={market.nama_market}
                                         />
                                         <div className="p-3">
-                                            <div className="flex items-center gap-1 mt-2">
-                                                <Store size="16" />
-                                                <h1 className="w-[180px] truncate ...">
+                                            <div className="flex items-center gap-2 mt-2">
+                                                <Store
+                                                    size="16"
+                                                    className="text-gray-600"
+                                                />
+                                                <h1 className="text-lg font-semibold truncate ...">
                                                     {market.nama_market}
                                                 </h1>
                                             </div>
-                                            <p className="text-sm w-[200px] truncate ...">
+                                            <p className="text-sm text-gray-500 truncate ...">
                                                 {market.lokasi_market}
                                             </p>
                                         </div>
@@ -62,8 +61,8 @@ const MarketList = ({ data }) => {
                             </CarouselItem>
                         ))}
                     </CarouselContent>
-                    <CarouselPrevious className="hidden sm:flex absolute left-0 top-[40%] transform -translate-y-1/2" />
-                    <CarouselNext className="hidden sm:flex absolute right-0 top-[40%] transform -translate-y-1/2" />
+                    <CarouselPrevious className="absolute left-0 top-1/2 transform -translate-y-1/2 text-gray-700 hover:text-gray-900" />
+                    <CarouselNext className="absolute right-0 top-1/2 transform -translate-y-1/2 text-gray-700 hover:text-gray-900" />
                 </Carousel>
             </div>
         </div>

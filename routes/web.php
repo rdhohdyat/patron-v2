@@ -26,7 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get("/store", [StoreController::class, 'index'])->name('store');
         Route::get("/store/register", [StoreController::class, 'create'])->name('store.create');
-        Route::post("/store/register",[StoreController::class, 'store'])->name('store.store');
+        Route::post("/store/register", [StoreController::class, 'store'])->name('store.store');
 
         Route::resource('product', ProductController::class);
     });
@@ -48,7 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/market', [AdminController::class, 'market'])->name('admin.market');
         Route::get('/admin/store', [AdminController::class, 'store'])->name('admin.store');
         Route::get('/admin/request', [AdminController::class, 'request'])->name('admin.request');
-        
+        Route::patch('/admin/update-status/{store}', [AdminController::class, 'updateStatus'])->name('admin.update_status');
+
         Route::resource('market', MarketController::class);
     });
 });
@@ -64,6 +65,9 @@ Route::get('/toko/not_registered', function () {
     return inertia('Toko/DontHaveStore');
 })->name("store.not_registered");
 
+Route::get('/toko/pending', function () {
+    return inertia('Toko/StorePending');
+})->name("store.store_pending");
 
 
 require __DIR__ . '/auth.php';

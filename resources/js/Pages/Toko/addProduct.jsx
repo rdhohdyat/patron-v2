@@ -39,7 +39,6 @@ export default function AddProduct({ auth }) {
         return formattedPrice;
     }
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route("product.store"), {
@@ -109,10 +108,10 @@ export default function AddProduct({ auth }) {
                                             <CardTitle>
                                                 Informasi Produk
                                             </CardTitle>
-                                            <p className="text-sm text-gray-600">
+                                            <CardDescription>
                                                 Isi informasi produk yang akan
                                                 anda jual
-                                            </p>
+                                            </CardDescription>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid gap-6">
@@ -169,10 +168,10 @@ export default function AddProduct({ auth }) {
                                             <CardTitle>
                                                 Kategori Produk
                                             </CardTitle>
-                                            <p className="text-sm text-gray-600">
+                                            <CardDescription>
                                                 Isi kategori produk yang akan
                                                 dijual
-                                            </p>
+                                            </CardDescription>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid gap-6 sm:grid-cols-3">
@@ -233,9 +232,9 @@ export default function AddProduct({ auth }) {
                                             <CardTitle>
                                                 Harga dan Stok
                                             </CardTitle>
-                                            <p className="text-sm text-gray-600">
+                                            <CardDescription>
                                                 Atur harga dan stok awal produk
-                                            </p>
+                                            </CardDescription>
                                         </CardHeader>
 
                                         <CardContent>
@@ -302,17 +301,32 @@ export default function AddProduct({ auth }) {
                                     <Card className="overflow-hidden">
                                         <CardHeader>
                                             <CardTitle>Foto Produk</CardTitle>
-                                            <p className="text-sm text-gray-600">
+                                            <CardDescription>
                                                 Format foto harus JPG, JPEG dan
                                                 PNG
-                                            </p>
+                                            </CardDescription>
                                         </CardHeader>
                                         <CardContent>
-                                            <div className="grid grid-cols-2 gap-2">
-                                                <div className="group grid grid-cols-2 gap-2  p-5  border-2 border-gray-500 border-dashed rounded transition-colors duration-300 hover:border-green-600">
+                                            <div className="flex items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
+                                                <label className="flex flex-col items-center justify-center w-full h-full">
+                                                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                                        <Upload className="w-8 h-8 mb-4 text-gray-500 group-hover:text-green-600" />
+                                                        <p className="mb-2 text-sm text-gray-500">
+                                                            <span className="font-semibold">
+                                                                Klik untuk
+                                                                mengunggah
+                                                            </span>{" "}
+                                                            atau seret dan
+                                                            lepaskan
+                                                        </p>
+                                                        <p className="text-xs text-gray-500">
+                                                            JPG, JPEG, PNG
+                                                        </p>
+                                                    </div>
                                                     <Input
-                                                        className="w-[100px] opacity-0"
+                                                        className="hidden"
                                                         type="file"
+                                                        accept="image/*"
                                                         onChange={(e) =>
                                                             setData(
                                                                 "image",
@@ -321,8 +335,7 @@ export default function AddProduct({ auth }) {
                                                             )
                                                         }
                                                     />
-                                                    <Upload className="-ml-5 text-gray-500 transition-colors duration-300 group-hover:text-green-600"></Upload>
-                                                </div>
+                                                </label>
                                             </div>
                                         </CardContent>
                                     </Card>
@@ -331,7 +344,9 @@ export default function AddProduct({ auth }) {
                             <div className="flex items-center justify-center gap-2 md:hidden">
                                 <Button variant="outline">Batal</Button>
                                 <Button type="submit" disabled={processing}>
-                                    {processing ? "Menyimpan..." : "Simpan Produk"}
+                                    {processing
+                                        ? "Menyimpan..."
+                                        : "Simpan Produk"}
                                 </Button>
                             </div>
                         </div>

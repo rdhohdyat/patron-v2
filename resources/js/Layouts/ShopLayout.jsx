@@ -92,7 +92,7 @@ export default function ShopLayout({ user, children }) {
     return (
         <div className="min-h-screen bg-gray-50">
             <Toaster />
-            <header className="sticky border top-0 left-0 right-0 bg-white z-20">
+            <header className="sticky shadow top-0 left-0 right-0 bg-white z-20">
                 <div className="h-16 flex justify-between px-5 sm:justify-around items-center">
                     <Link href={route("shop")}>
                         <div className="logo font-bold text-xl text-green-600">

@@ -36,7 +36,7 @@ export default function Store({ auth, data }) {
                         alt="store img"
                         className="aspect-square rounded-md object-cover"
                         height="64"
-                        src="/sayurr.jpg"
+                        src={store.image}
                         width="64"
                     />
                 </TableCell>

@@ -11,7 +11,7 @@ import {
 import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/Components/ui/tabs";
 import { formatRupiah } from "@/lib/convert";
 import { Separator } from "@/Components/ui/separator";
-import { Store, ShoppingBasket } from "lucide-react";
+import { Store, ShoppingBasket, MapPinned } from "lucide-react";
 import PaginationComponent from "@/Components/Pagination";
 import ProductNotFound from "@/Components/ProductNotFound";
 import StoreNotFound from "@/Components/StoreNotFound";
@@ -58,68 +58,127 @@ export default function Search({
 
     return (
         <ShopLayout user={auth.user}>
-            <div className="">
-                <div className="sm:grid grid-cols-12 mt-3 gap-6">
-                    <Card className="col-span-2 sm:block hidden h-[500px]">
-                        <h1 className="font-bold p-2 px-6 text-green-600">
-                            Kategori
-                        </h1>
+            <div className="container mx-auto px-4 sm:px-6 py-6">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div className="lg:col-span-2 hidden lg:block">
+                        <Card className="p-4 border rounded-lg shadow-sm">
+                            <h1 className="font-bold text-lg text-green-600 mb-2">
+                                Kategori
+                            </h1>
+                            <Separator />
+                            <div className="mt-2 flex flex-col">
+                                {categoryList.map((c) => (
+                                    <div
+                                        key={c}
+                                        className={`hover:bg-gray-100 px-4 py-2 cursor-pointer rounded-md transition-colors ${
+                                            selectedCategory === c
+                                                ? "bg-gray-200"
+                                                : ""
+                                        }`}
+                                        onClick={() => handleCategoryClick(c)}
+                                    >
+                                        {c}
+                                    </div>
+                                ))}
+                            </div>
+                            <CardFooter></CardFooter>
+                        </Card>
+                    </div>
 
-                        <Separator></Separator>
-                        <div className="mt-2 flex flex-col">
-                            {categoryList.map((c) => (
-                                <div
-                                    key={c}
-                                    className={`hover:bg-gray-100 px-6 py-1 cursor-pointer ${
-                                        selectedCategory === c
-                                            ? "bg-gray-200"
-                                            : ""
-                                    }`}
-                                    onClick={() => handleCategoryClick(c)}
+                    <div className="lg:col-span-10">
+                        <div className="lg:hidden mb-4">
+                            <div className="relative">
+                                <button
+                                    className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md w-full text-left flex items-center justify-between"
+                                    onClick={() =>
+                                        document
+                                            .getElementById(
+                                                "mobile-category-menu"
+                                            )
+                                            .classList.toggle("hidden")
+                                    }
                                 >
-                                    {c}
+                                    <span>Kategori: {selectedCategory}</span>
+                                    <svg
+                                        className="w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M19 9l-7 7-7-7"
+                                        ></path>
+                                    </svg>
+                                </button>
+                                <div
+                                    id="mobile-category-menu"
+                                    className="absolute top-full left-0 w-full bg-white border border-gray-200 rounded-lg mt-1 hidden"
+                                >
+                                    <div className="p-2">
+                                        {categoryList.map((c) => (
+                                            <div
+                                                key={c}
+                                                className={`hover:bg-gray-100 px-4 py-2 cursor-pointer rounded-md transition-colors ${
+                                                    selectedCategory === c
+                                                        ? "bg-gray-200"
+                                                        : ""
+                                                }`}
+                                                onClick={() => {
+                                                    handleCategoryClick(c);
+                                                    document
+                                                        .getElementById(
+                                                            "mobile-category-menu"
+                                                        )
+                                                        .classList.add(
+                                                            "hidden"
+                                                        );
+                                                }}
+                                            >
+                                                {c}
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                            ))}
+                            </div>
                         </div>
-                        <CardFooter></CardFooter>
-                    </Card>
-                    <div className="col-span-10">
-                        {keyword ? (
-                            <h1 className="font-semibold text-lg mb-4">
-                                Hasil Pencarian untuk kata kunci {keyword}
-                            </h1>
-                        ) : (
-                            <h1 className="font-semibold text-lg mb-4">
-                                Menampilkan semua Produk, Toko, dan Pasar
-                            </h1>
-                        )}
+
+                        <h1 className="font-semibold sm:text-xl mb-4">
+                            {keyword
+                                ? `Hasil Pencarian untuk kata kunci "${keyword}"`
+                                : "Menampilkan semua Produk, Toko, dan Pasar"}
+                        </h1>
                         <Tabs defaultValue="products" className="mb-4">
-                            <TabsList className="w-full sm:w-[500px]">
+                            <TabsList className="flex flex-wrap gap-2 border-b rounded-none border-gray-200">
                                 <TabsTrigger
                                     value="products"
-                                    className="w-full flex gap-2 items-center"
+                                    className="flex gap-2 items-center px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors"
                                 >
                                     Produk
                                     <ShoppingBasket className="h-5 w-5" />
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="stores"
-                                    className="w-full flex gap-2 items-center"
+                                    className="flex gap-2 items-center px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors"
                                 >
                                     Toko
                                     <Store className="h-5 w-5" />
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="markets"
-                                    className="w-full flex gap-2 items-center"
+                                    className="flex gap-2 items-center px-4 py-2  cursor-pointer hover:bg-gray-100 transition-colors"
                                 >
                                     Pasar
+                                    <MapPinned className="h-5 w-5" />
                                 </TabsTrigger>
                             </TabsList>
 
                             <TabsContent value="products" className="mt-4">
                                 {filterProducts.length > 0 ? (
-                                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                         {filterProducts.map((product) => (
                                             <Link
                                                 key={product.id}
@@ -128,14 +187,14 @@ export default function Search({
                                                     product.id
                                                 )}
                                             >
-                                                <Card className="cursor-pointer">
+                                                <Card className="cursor-pointer border rounded-lg shadow-md">
                                                     <img
                                                         src={product.image}
-                                                        className="rounded-t-lg w-full h-[170px] sm:h-[200px] object-cover"
+                                                        className="rounded-t-lg w-full h-[200px] object-cover"
                                                         alt={product.name}
                                                     />
-                                                    <div className="p-3">
-                                                        <h1 className="w-[180px] truncate ...">
+                                                    <CardContent className="p-3">
+                                                        <h1 className="text-base font-semibold truncate">
                                                             {product.name}
                                                         </h1>
                                                         <p className="font-bold text-md">
@@ -151,7 +210,7 @@ export default function Search({
                                                                 }
                                                             </p>
                                                         </div>
-                                                    </div>
+                                                    </CardContent>
                                                 </Card>
                                             </Link>
                                         ))}
@@ -161,14 +220,13 @@ export default function Search({
                                         <ProductNotFound className="mx-auto" />
                                     </div>
                                 )}
-
-                                {filterProducts.length > 10 ? (
+                                {filterProducts.length > 10 && (
                                     <div className="mt-10">
                                         <PaginationComponent
                                             links={dataProduct.meta.links}
                                         />
                                     </div>
-                                ) : null}
+                                )}
                             </TabsContent>
 
                             <TabsContent value="stores" className="mt-4">
@@ -182,25 +240,25 @@ export default function Search({
                                                     store.id
                                                 )}
                                             >
-                                                <Card className="cursor-pointer">
+                                                <Card className="cursor-pointer border rounded-lg shadow-md">
                                                     <img
                                                         src={store.image}
-                                                        className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
+                                                        className="rounded-t-lg w-full h-[200px] object-cover"
                                                         alt={store.nama_store}
                                                     />
-                                                    <div className="p-3">
-                                                        <div className="flex items-center gap-1 mt-2">
+                                                    <CardContent className="p-3">
+                                                        <div className="flex items-center gap-1">
                                                             <Store size="16" />
-                                                            <h1 className="w-[180px] truncate ...">
+                                                            <h1 className="text-base font-semibold truncate">
                                                                 {
                                                                     store.nama_store
                                                                 }
                                                             </h1>
                                                         </div>
-                                                        <p className="text-sm">
+                                                        <p className="text-sm truncate">
                                                             {store.lokasi_store}
                                                         </p>
-                                                    </div>
+                                                    </CardContent>
                                                 </Card>
                                             </Link>
                                         ))}
@@ -210,14 +268,13 @@ export default function Search({
                                         <StoreNotFound className="mx-auto" />
                                     </div>
                                 )}
-
-                                {stores.data.length > 10 ? (
+                                {stores.data.length > 10 && (
                                     <div className="mt-10">
                                         <PaginationComponent
                                             links={stores.meta.links}
                                         />
                                     </div>
-                                ) : null}
+                                )}
                             </TabsContent>
 
                             <TabsContent value="markets" className="mt-4">
@@ -231,22 +288,22 @@ export default function Search({
                                                     market.id
                                                 )}
                                             >
-                                                <Card className="cursor-pointer">
+                                                <Card className="cursor-pointer border rounded-lg shadow-md">
                                                     <img
                                                         src={market.image}
-                                                        className="rounded-t-lg w-full h-[170px] sm:h-[200px] object-cover"
+                                                        className="rounded-t-lg w-full h-[200px] object-cover"
                                                         alt=""
                                                     />
-                                                    <div className="p-3">
-                                                        <h1 className="font-semibold">
+                                                    <CardContent className="p-3">
+                                                        <h1 className="text-base font-semibold truncate">
                                                             {market.nama_market}
                                                         </h1>
-                                                        <p className="text-sm w-[180px] truncate ...">
+                                                        <p className="text-sm truncate">
                                                             {
                                                                 market.lokasi_market
                                                             }
                                                         </p>
-                                                    </div>
+                                                    </CardContent>
                                                 </Card>
                                             </Link>
                                         ))}
@@ -256,13 +313,13 @@ export default function Search({
                                         <MarketNotFound className="mx-auto" />
                                     </div>
                                 )}
-                                {markets.data.length > 10 ? (
+                                {markets.data.length > 10 && (
                                     <div className="mt-10">
                                         <PaginationComponent
                                             links={markets.meta.links}
                                         />
                                     </div>
-                                ) : null}
+                                )}
                             </TabsContent>
                         </Tabs>
                     </div>

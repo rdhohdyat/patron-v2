@@ -6,6 +6,7 @@ import {
     CardTitle,
     CardFooter,
 } from "@/Components/ui/card";
+import { Button } from "@/Components/ui/button";
 import PaginationComponent from "@/Components/Pagination";
 import {
     Table,
@@ -17,6 +18,15 @@ import {
 } from "@/Components/ui/table";
 import { Badge } from "@/Components/ui/badge";
 import { useState, useEffect } from "react";
+import { formatRupiah } from "@/lib/convert";
+import { ShoppingCart, Package,MoreVertical, CheckCircle, XCircle, Clock, User } from "lucide-react";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
+} from "@/Components/ui/dropdown-menu";
 
 export default function OrderList({
     auth,
@@ -30,7 +40,6 @@ export default function OrderList({
 
     const handleDetailClick = (order) => {
         setSelectedOrder(order);
-        console.log(selectedOrder);
     };
 
     useEffect(() => {
@@ -41,7 +50,11 @@ export default function OrderList({
         return orders.data.map((order) => (
             <TableRow
                 key={order.id}
-                className={selectedOrder.id === order.id ? "bg-gray-100" : ""}
+                className={`cursor-pointer ${
+                    selectedOrder.id === order.id
+                        ? "bg-gray-100"
+                        : "hover:bg-gray-50"
+                }`}
                 onClick={() => handleDetailClick(order)}
             >
                 <TableCell>{order.user.name}</TableCell>
@@ -55,7 +68,7 @@ export default function OrderList({
                     </Badge>
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                    {order.total_harga}
+                    {formatRupiah(order.total_harga)}
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
                     {order.tanggal_pemesanan}
@@ -79,24 +92,53 @@ export default function OrderList({
                     <div className="sm:grid grid-cols-12 gap-5">
                         <div className="grid col-span-9 gap-5">
                             <div className="grid sm:grid-cols-4 grid-cols-1 gap-4">
-                                <Card className="h-[100px]">
+                                <Card className="border shadow-md">
                                     <CardHeader>
-                                        <div>{pendingCount}</div>
+                                        <CardTitle className="flex items-center justify-center gap-2 text-yellow-600">
+                                            <Clock className="h-5 w-5" />
+                                            Tertunda
+                                        </CardTitle>
                                     </CardHeader>
+                                    <CardContent className="text-center text-xl font-bold">
+                                        {pendingCount} Orders
+                                    </CardContent>
                                 </Card>
-                                <Card className="h-[100px]">
+                                <Card className="border shadow-md">
                                     <CardHeader>
-                                        <div>{processingCount}</div>
+                                        <CardTitle className="flex items-center justify-center gap-2 text-blue-600">
+                                            <Package className="h-5 w-5" />
+                                            Proses
+                                        </CardTitle>
                                     </CardHeader>
+                                    <CardContent className="text-center text-xl font-bold">
+                                        {processingCount} Orders
+                                    </CardContent>
                                 </Card>
-                                <Card className="h-[100px]">
-                                    <CardHeader>{completedCount}</CardHeader>
+
+                                <Card className=" border shadow-md">
+                                    <CardHeader>
+                                        <CardTitle className="flex items-center justify-center gap-2 text-green-600">
+                                            <CheckCircle className="h-5 w-5" />
+                                            Selesai{" "}
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="text-center text-xl font-bold">
+                                        {completedCount} Orders
+                                    </CardContent>
                                 </Card>
-                                <Card className="h-[100px]">
-                                    <CardHeader>{cancelCount}</CardHeader>
+                                <Card className="border shadow-md">
+                                    <CardHeader>
+                                        <CardTitle className="flex items-center justify-center gap-2 text-red-600">
+                                            <XCircle className="h-5 w-5" />
+                                            Batal{" "}
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="text-center text-xl font-bold">
+                                        {cancelCount} Orders
+                                    </CardContent>
                                 </Card>
                             </div>
-                            <Card>
+                            <Card className="shadow-md">
                                 <CardHeader>
                                     <CardTitle>Daftar Pesanan Anda</CardTitle>
                                     <p className="text-sm text-gray-600">
@@ -137,61 +179,130 @@ export default function OrderList({
                             </Card>
                         </div>
                         <div className="col-span-3">
-                            <Card>
-                                <CardHeader>
-                                    <h1 className=" font-semibold">
+                            <Card className="shadow-lg rounded-lg overflow-hidden border border-gray-200">
+                                <CardHeader className="bg-gray-100 p-4 rounded-t-lg">
+                                    <h1 className="font-semibold text-xl text-gray-800">
                                         Detail Pemesanan
                                     </h1>
-                                    <div className="flex justify-between">
-                                        <h2>Tanggal Pemesanan</h2>
-                                        <p>{selectedOrder.tanggal_pemesanan}</p>
+                                    <div className="flex justify-between mt-2 text-gray-600">
+                                        <h2 className="font-medium">
+                                            Tanggal Pemesanan
+                                        </h2>
+                                        <p className="font-light">
+                                            {selectedOrder?.created_at ||
+                                                "Pilih pesanan untuk melihat detail"}
+                                        </p>
                                     </div>
                                 </CardHeader>
-                                <CardContent>
+                                <CardContent className="p-4">
                                     {selectedOrder ? (
-                                        <div className="flex flex-col gap-3">
-                                            <div>
-                                                <h1 className=" font-semibold">
+                                        <div className="flex flex-col gap-4">
+                                            <div className="border-b pb-4">
+                                                <h1 className="font-semibold text-lg text-gray-800">
                                                     Informasi Pesanan
                                                 </h1>
-                                                <div className="flex justify-between ">
+                                                <div className="flex justify-between mt-2">
                                                     <div>
-                                                    {selectedOrder.product.name}
+                                                        {
+                                                            selectedOrder
+                                                                .product.name
+                                                        }{" "}
+                                                        <span className="font-bold">
+                                                            x{" "}
+                                                            {selectedOrder.total_harga /
+                                                                selectedOrder
+                                                                    .product
+                                                                    .price}
+                                                        </span>
                                                     </div>
-                                                    {selectedOrder.total_harga}
+                                                    <div className="text-gray-800 font-semibold">
+                                                        {formatRupiah(
+                                                            selectedOrder
+                                                                .product.price
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div className="flex justify-between mt-2 font-semibold text-gray-800">
+                                                    <div>Subtotal</div>
+                                                    <div>
+                                                        {formatRupiah(
+                                                            selectedOrder.total_harga
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <h1 className=" font-semibold">
+                                            <div className="border-b pb-4">
+                                                <h1 className="font-semibold text-lg text-gray-800">
                                                     Informasi Pelanggan
                                                 </h1>
-                                                <div className="flex justify-between text-gray-600">
+                                                <div className="flex justify-between mt-2 text-gray-600">
                                                     <div>Pelanggan</div>
-                                                    <div>
+                                                    <div className="font-medium">
                                                         {
                                                             selectedOrder.user
                                                                 .name
                                                         }
                                                     </div>
                                                 </div>
-                                                <div className="flex justify-between  text-gray-600">
+                                                <div className="flex justify-between mt-2 text-gray-600">
                                                     <div>No Hp</div>
-                                                    <div>
+                                                    <div className="font-medium">
                                                         {selectedOrder.user
                                                             .phone ||
                                                             "08243243423"}
-                                                    </div>{" "}
-                                                    {/* Tambahkan field phone di data user */}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     ) : (
-                                        <p>
+                                        <p className="text-center text-gray-600">
                                             Pilih pesanan untuk melihat detail
                                         </p>
                                     )}
                                 </CardContent>
-                                <CardFooter></CardFooter>
+                                <CardFooter className="border-t p-4 flex justify-end">
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button
+                                                variant="outline"
+                                                className="text-gray-600 border-gray-600 hover:bg-gray-100 flex items-center gap-2"
+                                            >
+                                                <MoreVertical className="h-4 w-4" />
+                                                <span>Edit Status</span>
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                            <DropdownMenuLabel>
+                                                Ubah Status
+                                            </DropdownMenuLabel>
+                                           
+                                            <DropdownMenuItem>
+                                                <Button
+                                                    variant="outline"
+                                                    className="text-blue-600 hover:bg-blue-50"
+                                                >
+                                                    Proses
+                                                </Button>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Button
+                                                    variant="outline"
+                                                    className="text-green-600 hover:bg-green-50"
+                                                >
+                                                    Selesai
+                                                </Button>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Button
+                                                    variant="outline"
+                                                    className="text-red-600 hover:bg-red-50"
+                                                >
+                                                    Tolak
+                                                </Button>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </CardFooter>
                             </Card>
                         </div>
                     </div>

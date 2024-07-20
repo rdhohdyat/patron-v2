@@ -34,11 +34,9 @@ export default function EditProduct({ auth, product }) {
         _method: "PUT",
     });
 
-    console.log(product.data.category);
-
     const { toast } = useToast();
 
-    const category = [
+    const categories = [
         "Sayur",
         "Buah",
         "Daging",
@@ -114,10 +112,10 @@ export default function EditProduct({ auth, product }) {
                                             <CardTitle>
                                                 Informasi Produk
                                             </CardTitle>
-                                            <p className="text-sm text-gray-600">
+                                            <CardDescription>
                                                 Perbarui informasi dari produk
                                                 yang ada di toko anda
-                                            </p>
+                                            </CardDescription>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid gap-6">
@@ -166,9 +164,9 @@ export default function EditProduct({ auth, product }) {
                                             <CardTitle>
                                                 Kategori Produk
                                             </CardTitle>
-                                            <p className="text-sm text-gray-600">
+                                            <CardDescription>
                                                 Atur kategori dari produk
-                                            </p>
+                                            </CardDescription>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid gap-6 sm:grid-cols-3">
@@ -194,7 +192,7 @@ export default function EditProduct({ auth, product }) {
                                                             <SelectValue placeholder="Pilih Kategori Produk" />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            {category.map(
+                                                            {categories.map(
                                                                 (
                                                                     item,
                                                                     index
@@ -224,9 +222,9 @@ export default function EditProduct({ auth, product }) {
                                             <CardTitle>
                                                 Harga dan Stok
                                             </CardTitle>
-                                            <p className="text-sm text-gray-600">
+                                            <CardDescription>
                                                 Perbarui harga dan stok
-                                            </p>
+                                            </CardDescription>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid gap-6">
@@ -280,18 +278,32 @@ export default function EditProduct({ auth, product }) {
                                     <Card className="overflow-hidden">
                                         <CardHeader>
                                             <CardTitle>Foto Produk</CardTitle>
-                                            <p className="text-sm text-gray-600">
-                                                Format foto harus JPG, JPEG dan
+                                            <CardDescription>
+                                                Format foto harus JPG, JPEG, dan
                                                 PNG
-                                            </p>
+                                            </CardDescription>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid grid-cols-2 gap-2">
-                                                <div className="grid grid-cols-2 gap-2  p-5  h-[150px] border-gray-500  border-dashed border-2 rounded transition-colors duration-300 hover:border-green-600">
+                                                <label className="w-full flex flex-col items-center justify-center p-4 border-2 border-dashed rounded-lg cursor-pointer hover:border-green-600">
+                                                    <div className="flex flex-col items-center justify-center text-center">
+                                                        <Upload className="w-8 h-8 mb-4 text-gray-500 group-hover:text-green-600" />
+                                                        <p className="mb-2 text-sm text-gray-500">
+                                                            <span className="font-semibold">
+                                                                Klik untuk
+                                                                mengunggah
+                                                            </span>{" "}
+                                                            atau seret dan
+                                                            lepaskan
+                                                        </p>
+                                                        <p className="text-xs text-gray-500">
+                                                            JPG, JPEG, PNG
+                                                        </p>
+                                                    </div>
                                                     <Input
-                                                        className="w-[100px] h-[200px] opacity-0"
+                                                        className="hidden"
                                                         type="file"
-                                                        name="image"
+                                                        accept="image/*"
                                                         onChange={(e) =>
                                                             setData(
                                                                 "image",
@@ -300,13 +312,14 @@ export default function EditProduct({ auth, product }) {
                                                             )
                                                         }
                                                     />
-                                                    <Upload className="-ml-5 my-10 z-10 text-white"></Upload>
-                                                </div>
-                                                <img
-                                                    src={product.data.image}
-                                                    alt="Product Image"
-                                                    className=" w-[120px] my-auto -ml-[155px] rounded-md object-cover"
-                                                />
+                                                </label>
+                                                {product.data.image && (
+                                                    <img
+                                                        src={product.data.image}
+                                                        alt="Product Image"
+                                                        className="w-full h-32 object-cover rounded-lg"
+                                                    />
+                                                )}
                                             </div>
                                         </CardContent>
                                     </Card>
