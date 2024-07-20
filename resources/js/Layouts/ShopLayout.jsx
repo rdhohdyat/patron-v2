@@ -66,33 +66,37 @@ export default function ShopLayout({ user, children }) {
         calculateTotal();
     };
 
-    const handleSearch = () => {
-        return null;
-    };
-
-    const cartData = cart.map((item) => ({
+   const cartData = cart.map(item => ({
         product_id: item.id,
-        jumlah_barang: item.qty,
+       jumlah_barang: item.qty,
+        total_harga_satuan: item.price * item.qty,
     }));
 
 
-    const handleSubmit = () => {
-        router.post(route("order.storeCart"), {
-            item: cartData,
-            onSuccess: () => {
-                toast({
-                    title: "Berhasil Membuat Order",
-                    variant: "default",
-                });
-            },
-            onError: () => {
-                toast({
-                    title: "Gagal Membuat Order",
-                    variant: "destructive",
-                });
-            },
-        });
-    };
+   const handleSubmit = async () => {
+       try {
+           await router.post(route("order.storeCart"), {
+               item: {
+                   cart: cartData,
+                   data: {
+                       total_harga: total,
+                       store_id: cart[0].store.id,
+                   },
+               },
+           });
+           clearCart(),
+           toast({
+               title: "Berhasil Membuat Order",
+               variant: "default",
+           });
+       } catch (error) {
+           toast({
+               title: "Gagal Membuat Order",
+               variant: "destructive",
+           });
+       }
+   };
+
 
     return (
         <div className="min-h-screen bg-gray-50">
