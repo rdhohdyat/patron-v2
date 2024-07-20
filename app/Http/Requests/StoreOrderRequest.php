@@ -25,7 +25,8 @@ class StoreOrderRequest extends FormRequest
             'product_id' => 'required',
             'jumlah_barang' => 'required',
             'total_harga' => 'required',
-            'tanggal_pengiriman' => 'nullable'
+            'tanggal_pengiriman' => 'nullable',
+            'store_id' => 'required',
         ];
     }
 }
