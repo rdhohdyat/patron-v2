@@ -7,6 +7,7 @@ use App\Models\Store;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -47,6 +48,10 @@ class OrderController extends Controller
         Order::create($data);
 
         return to_route('shop');
+    }
+    public function storeCart(Request $request)
+    {
+        dd($request);
     }
 
     /**
