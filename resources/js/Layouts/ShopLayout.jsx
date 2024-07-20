@@ -27,10 +27,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
-import {
-    Search,
-    ShoppingBasket,
-} from "lucide-react";
+import { Search, ShoppingBasket } from "lucide-react";
 import useCartStore from "@/lib/zustand/cartStore";
 import { Toaster } from "@/Components/ui/toaster";
 import { formatRupiah } from "@/lib/convert";
@@ -47,8 +44,8 @@ export default function ShopLayout({ user, children }) {
         decreaseQty,
         removeFromCart,
         calculateTotal,
+        clearCart,
     } = useCartStore();
-
 
     const handleIncreaseQty = (productId) => {
         increaseQty(productId);
@@ -73,16 +70,15 @@ export default function ShopLayout({ user, children }) {
         return null;
     };
 
-    const cartData = cart.map(item => ({
+    const cartData = cart.map((item) => ({
         product_id: item.id,
-        jumlah_barang: item.qty
-        
+        jumlah_barang: item.qty,
     }));
+
 
     const handleSubmit = () => {
         router.post(route("order.storeCart"), {
             item: cartData,
-
             onSuccess: () => {
                 toast({
                     title: "Berhasil Membuat Order",
@@ -266,7 +262,9 @@ export default function ShopLayout({ user, children }) {
                                                 <Button
                                                     type="submit"
                                                     className="w-full mt-3"
-                                                    onClick={() => handleSubmit()}
+                                                    onClick={() =>
+                                                        handleSubmit()
+                                                    }
                                                 >
                                                     Checkout
                                                 </Button>
@@ -323,6 +321,9 @@ export default function ShopLayout({ user, children }) {
                                     <Link
                                         method="post"
                                         href={route("logout")}
+                                        onSuccess={() => {
+                                            clearCart();
+                                        }}
                                         className="w-full"
                                     >
                                         <Button

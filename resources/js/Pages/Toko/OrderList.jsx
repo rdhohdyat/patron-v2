@@ -54,6 +54,8 @@ export default function OrderList({
         setSelectedOrder(orders.data[0]);
     }, [orders.data]);
 
+    console.log(orders)
+
     const renderOrders = () => {
         return orders.data.map((order) => {
             const totalJumlahBarang = order.order_items.reduce(
@@ -202,11 +204,11 @@ export default function OrderList({
                                     <h1 className="font-semibold text-xl text-gray-800">
                                         Detail Pemesanan
                                     </h1>
-                                    <div className="flex justify-between mt-2 text-gray-600">
+                                    <div className="flex justify-between items-center mt-2 text-gray-600">
                                         <h2 className="font-medium">
                                             Tanggal Pemesanan
                                         </h2>
-                                        <p className="font-light">
+                                        <p className="text-sm">
                                             {selectedOrder?.created_at ||
                                                 "Pilih pesanan untuk melihat detail"}
                                         </p>

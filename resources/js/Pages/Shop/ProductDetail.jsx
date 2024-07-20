@@ -181,6 +181,8 @@ export default function ProductDetail({
                                         {product.stock}
                                     </span>
                                 </div>
+
+                                {console.log(product)}
                             </div>
                             <h1 className="flex justify-between  items-center mt-2 sm:mt-4">
                                 <div>Substotal : </div>
