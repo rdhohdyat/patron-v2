@@ -63,10 +63,10 @@ export default function ProductDetail({
     };
     const handleSubmit = (product_id) => {
         router.post(route("order.store", product_id), {
+            store_id: product.store.id,
             product_id: product_id,
             jumlah_barang: quantity,
             total_harga: subtotal,
-            store_id: product.store.id,
         });
     };
 
