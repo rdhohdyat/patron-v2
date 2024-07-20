@@ -72,7 +72,7 @@ export default function OrderList({
                     onClick={() => handleDetailClick(order)}
                 >
                     <TableCell>{order.user.name}</TableCell>
-                    <TableCell>
+                    <TableCell className="w-[200px]">
                         {order.order_items
                             .map((item) => item.product.name)
                             .join(", ")}

@@ -68,8 +68,6 @@ class OrderController extends Controller
         $order_items['total_harga_satuan'] = $order['total_harga'];
         unset($order['product_id'], $order['jumlah_barang']);
 
-        Order::create($order);
-
         $createdOrder = Order::create($order);
         $order_items['order_id'] = $createdOrder->id;
 
