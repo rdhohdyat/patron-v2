@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -49,6 +49,7 @@ export default function ShopLayout({ user, children }) {
         calculateTotal,
     } = useCartStore();
 
+
     const handleIncreaseQty = (productId) => {
         increaseQty(productId);
         calculateTotal();
@@ -68,12 +69,20 @@ export default function ShopLayout({ user, children }) {
         calculateTotal();
     };
 
+    const handleSearch = () => {
+        return null;
+    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        post(route("order.store"), {
-            data: formData,
+    const cartData = cart.map(item => ({
+        product_id: item.id,
+        jumlah_barang: item.qty
+        
+    }));
+
+    const handleSubmit = () => {
+        router.post(route("order.storeCart"), {
+            item: cartData,
+
             onSuccess: () => {
                 toast({
                     title: "Berhasil Membuat Order",
@@ -146,15 +155,6 @@ export default function ShopLayout({ user, children }) {
                                                 key={item.id}
                                                 className="flex justify-between border p-2 rounded"
                                             >
-                                                <input
-                                                    type="hidden"
-                                                    name="items[]"
-                                                    value={JSON.stringify({
-                                                        id: item.id,
-                                                        qty: item.qty,
-                                                        price: item.price,
-                                                    })}
-                                                />
                                                 <div className="flex items-center gap-3">
                                                     <img
                                                         src={item.image}
@@ -237,7 +237,9 @@ export default function ShopLayout({ user, children }) {
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Ongkos Kirim</td>
+                                                            <td>
+                                                                Ongkos Kirim
+                                                            </td>
                                                             <td className="w-5">
                                                                 :
                                                             </td>
@@ -246,7 +248,8 @@ export default function ShopLayout({ user, children }) {
                                                         <tr>
                                                             <td>
                                                                 <h1 className="font-semibold text-xl">
-                                                                    Total Pembayaran
+                                                                    Total
+                                                                    Pembayaran
                                                                 </h1>
                                                             </td>
                                                             <td className="w-5">
@@ -260,7 +263,11 @@ export default function ShopLayout({ user, children }) {
                                                         </tr>
                                                     </div>
                                                 </div>
-                                                <Button type="submit" className="w-full mt-3">
+                                                <Button
+                                                    type="submit"
+                                                    className="w-full mt-3"
+                                                    onClick={() => handleSubmit()}
+                                                >
                                                     Checkout
                                                 </Button>
                                             </div>
@@ -334,6 +341,9 @@ export default function ShopLayout({ user, children }) {
 
             <main className="sm:w-[80%] mx-auto  p-5">{children}</main>
             <footer className="text-center py-4 pb-12">
+                <h1 className="font-bold text-3xl text-green-600 mb-2">
+                    PATRON
+                </h1>
                 <h1 className="font-bold text-3xl text-green-600 mb-2">
                     PATRON
                 </h1>

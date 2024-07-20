@@ -8,12 +8,14 @@ use App\Models\Store;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         $orders = Order::query()->paginate(5);
@@ -49,6 +51,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $user = Auth::user();
         $data = $request->validated();
         $data['user_id'] = $user->id;
@@ -59,10 +62,14 @@ class OrderController extends Controller
         if ($data['user_id'] == $store->user_id) {
             return to_route('shop');
         }
-        $data['tanggal_pemesanan'] = now();
+        $data['tanggal_pemesanan'] = date('Y-m-d H:i:s');
         Order::create($data);
 
         return to_route('shop');
+    }
+    public function storeCart(Request $request)
+    {
+        dd($request);
     }
 
     /**
