@@ -110,9 +110,10 @@ class ShopController extends Controller
 
     public function market_detail(Market $market)
     {
-        $market->load('stores');
+        $market->load('stores.products');
 
-        $products = Product::query()->paginate(10);
+        $products = $market->stores->flatMap->products;
+        // $products = Product::query()->paginate(10);
         return inertia("Shop/MarketDetail", [
             "data" => new MarketResource($market),
             "products" => ProductResource::collection($products),
