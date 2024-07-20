@@ -18,6 +18,10 @@ class Order extends Model
     ];
     public function User()
     {
-        return $this->belongsTo(Store::class, 'user_id');
+        return $this->belongsTo(User::class);
+    }
+    public function Product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

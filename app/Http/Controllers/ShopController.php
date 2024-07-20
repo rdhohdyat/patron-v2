@@ -39,18 +39,56 @@ class ShopController extends Controller
         ]);
     }
 
-    public function search()
+    public function search(Request $request)
     {
-        $query = Product::query();
-        $products = $query->paginate(50);
-        return inertia("Shop/Search", [
-            "data" => ProductResource::collection($products),
+        $keyword = trim($request->input('search'));
+        $keywords = explode(' ', $keyword);
+
+        $products = Product::query()
+            ->where(function ($query) use ($keywords) {
+                foreach ($keywords as $word) {
+                    $query->where('name', 'like', '%' . $word . '%')
+                        ->orWhere('category', 'like', '%' . $word . '%');
+                }
+            })
+            ->paginate(10);
+
+        $stores = Store::query()
+            ->where(function ($query) use ($keywords) {
+                foreach ($keywords as $word) {
+                    $query->where('nama_store', 'like', '%' . $word . '%');
+                }
+            })
+            ->paginate(10);
+
+        $markets = Market::query()
+            ->where(function ($query) use ($keywords) {
+                foreach ($keywords as $word) {
+                    $query->where('nama_market', 'like', '%' . $word . '%');
+                }
+            })
+            ->paginate(10);
+
+        return inertia('Shop/Search', [
+            "product" => ProductResource::collection($products),
+            'stores' => StoreResource::collection($stores),
+            'markets' => MarketResource::collection($markets),
+            'keyword' => $keyword
         ]);
     }
 
+
     public function category($key)
     {
-        $products = Product::where('category', 'LIKE', '%' . $key . '%')->paginate(10);
+        $keys = explode(' ', $key);
+        $products = Product::query()
+            ->where(function ($query) use ($keys) {
+                foreach ($keys as $word) {
+                    $query->where('category', 'like', '%' . $word . '%');
+                }
+            })
+            ->paginate(10);
+
         return inertia("Shop/CategoryList", [
             "data" => ProductResource::collection($products),
             "category" => $key
@@ -70,7 +108,8 @@ class ShopController extends Controller
     }
 
 
-    public function market_detail(Market $market){
+    public function market_detail(Market $market)
+    {
         $market->load('stores');
 
         $products = Product::query()->paginate(10);

@@ -116,11 +116,11 @@ export default function ProductDetail({
                             {product.description}
                         </p>
 
-                        <Card className="flex items-start justify-between  mt-2  font-medium  p-3 py-5  shadow-none sm:w-[400px]">
+                        <Card className="flex items-start justify-between  mt-2  font-medium  p-3 py-5  sm:w-[400px]">
                             <div className="flex gap-2 items-center">
                                 <Avatar className="w-12 h-12">
                                     <AvatarImage
-                                        src="https://github.com/shadcn.png"
+                                        src={product.store.image}
                                         alt="@shadcn"
                                     />
                                     <AvatarFallback>CN</AvatarFallback>
@@ -147,43 +147,43 @@ export default function ProductDetail({
                     </div>
                 </div>
                 <div>
-                    <Card className="fixed rounded-none sm:static  bottom-0 z-10 left-0 border right-0 px-5 py-3 sm:rounded-lg">
-                        <div className="">
-                            <h1 className="font-semibold text-lg hidden sm:block">
+                    <Card className="fixed rounded-none sm:static  bottom-0 z-10 left-0 border right-0 px-5 pb-5 sm:rounded-lg">
+                        <div>
+                            <h1 className="font-semibold text-lg hidden sm:block text-center">
                                 Atur Jumlah
                             </h1>
                             <div className="flex justify-between items-center mt-5">
-                                <div className=" flex items-center gap-2">
+                                <div className="flex items-center gap-2">
                                     <button
-                                        className="px-3 py-1 border rounded bg-gray-200"
+                                        className="px-3 py-1 border rounded bg-gray-200 active:scale-95 transition-all ease-in-out"
                                         onClick={decreaseQuantity}
                                     >
                                         -
                                     </button>
                                     <input
-                                        type="number"
+                                       
                                         id="quantity"
                                         value={quantity}
                                         onChange={handleQuantityChange}
                                         min="1"
                                         max={product.stock}
-                                        className="border rounded text-center h-10 w-10"
+                                        className="border rounded w-10 h-10 text-xl text-center sm:h-14 sm:w-14"
                                     />
                                     <button
-                                        className="px-3 py-1 border rounded bg-gray-200"
+                                        className="px-3 py-1 border rounded bg-gray-200 active:scale-95 transition-all ease-in-out"
                                         onClick={increaseQuantity}
                                     >
                                         +
                                     </button>
                                 </div>
-                                <div className="mt-3">
+                                <div className="block sm:mt-3">
                                     Stok Total :{" "}
                                     <span className="font-bold">
                                         {product.stock}
                                     </span>
                                 </div>
                             </div>
-                            <h1 className="flex justify-between  items-center mt-4">
+                            <h1 className="flex justify-between  items-center mt-2 sm:mt-4">
                                 <div>Substotal : </div>
 
                                 <div className="font-bold text-xl">

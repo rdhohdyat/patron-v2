@@ -28,19 +28,8 @@ import {
     AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
 import {
-    Activity,
-    ArrowUpRight,
-    CircleUser,
-    CreditCard,
-    DollarSign,
-    Menu,
-    Package2,
     Search,
-    Users,
     ShoppingBasket,
-    CircleUserRound,
-    LogOut,
-    Store,
 } from "lucide-react";
 import useCartStore from "@/lib/zustand/cartStore";
 import { Toaster } from "@/Components/ui/toaster";
@@ -49,7 +38,7 @@ import EmptyCart from "@/Components/EmptyCart";
 import { useToast } from "@/Components/ui/use-toast";
 import { Input } from "@/Components/ui/input";
 
-export default function ShopLayout({ user, header, children }) {
+export default function ShopLayout({ user, children }) {
     const { toast } = useToast();
     const {
         cart,
@@ -58,8 +47,8 @@ export default function ShopLayout({ user, header, children }) {
         decreaseQty,
         removeFromCart,
         calculateTotal,
-        clearCart,
     } = useCartStore();
+
 
     const handleIncreaseQty = (productId) => {
         increaseQty(productId);
@@ -120,13 +109,14 @@ export default function ShopLayout({ user, header, children }) {
                         </div>
                     </Link>
 
-                    <form onSubmit={handleSearch}>
-                        <div className="hidden border-2 h-10 sm:flex sm:w-[700px] rounded-xl px-6  items-center gap-2">
-                            <Search className="text-gray-400"></Search>
+                    <form action="/shop/search">
+                        <div className="hidden border border-gray-300 h-10 sm:flex sm:w-[700px] rounded-xl px-4 items-center gap-2">
+                            <Search className="text-gray-600 h-5 w-5"></Search>
                             <input
-                                type="text"
-                                className="sm:w-full focus:outline-none text-sm"
-                                placeholder="Cari Product, Lapak dan Pasar"
+                                type="search"
+                                className="sm:w-full focus:outline-none text-sm placeholder:text-gray-600"
+                                placeholder="Cari Produk, Lapak dan Pasar"
+                                name="search"
                             />
                         </div>
                     </form>
@@ -135,7 +125,7 @@ export default function ShopLayout({ user, header, children }) {
                         <Link
                             href={route("shop.search")}
                             variant="link"
-                            className="sm:hidden "
+                            className="sm:hidden"
                         >
                             <Search />
                         </Link>
@@ -351,6 +341,9 @@ export default function ShopLayout({ user, header, children }) {
 
             <main className="sm:w-[80%] mx-auto  p-5">{children}</main>
             <footer className="text-center py-4 pb-12">
+                <h1 className="font-bold text-3xl text-green-600 mb-2">
+                    PATRON
+                </h1>
                 <h1 className="font-bold text-3xl text-green-600 mb-2">
                     PATRON
                 </h1>

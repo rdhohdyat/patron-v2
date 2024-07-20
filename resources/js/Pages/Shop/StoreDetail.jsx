@@ -78,7 +78,7 @@ export default function ProductDetail({
             </div>
 
             <div className="mt-3">
-                <h1 className="font-bold text-lg sm:text-xl mb-2 text-gray-600">
+                <h1 className="font-bold text-lg  mb-2 text-gray-600">
                     Produk Pada Toko Ini
                 </h1>
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
@@ -111,6 +111,7 @@ export default function ProductDetail({
                     links={otherProducts.meta.links}
                 ></PaginationComponent>
             </div>
+
         </ShopLayout>
     );
 }

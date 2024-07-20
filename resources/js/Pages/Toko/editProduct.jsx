@@ -34,7 +34,7 @@ export default function EditProduct({ auth, product }) {
         _method: "PUT",
     });
 
-    console.log(product.data.image);
+    console.log(product.data.category);
 
     const { toast } = useToast();
 
@@ -43,7 +43,7 @@ export default function EditProduct({ auth, product }) {
         "Buah",
         "Daging",
         "Ikan",
-        "Bumbu",
+        "Bumbu Dapur",
         "Beras",
         "Telur",
         "Minuman",
