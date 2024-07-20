@@ -77,7 +77,30 @@ class OrderController extends Controller
     }
     public function storeCart(Request $request)
     {
-        dd($request);
+        date_default_timezone_set('Asia/Jakarta');
+        $user = Auth::user();
+
+        //Ambil data dari request
+        $cartData = $request->input('item.cart');
+        $order = $request->input('item.data');
+
+        $order['user_id'] = $user->id;
+        $order['tanggal_pemesanan'] = date('Y-m-d H:i:s');
+
+        $createdOrder = Order::create($order);
+
+        //For-loop data di cart
+        foreach($cartData as $item)
+        {
+            $orders_item = [
+                'order_id' => $createdOrder->id,
+                'product_id' => $item['product_id'],
+                'jumlah_barang' => $item['jumlah_barang'],
+                'total_harga_satuan' => $item['total_harga_satuan'],
+            ];
+            Orders_item::create($orders_item);
+        }
+        return to_route('shop');
     }
 
     /**

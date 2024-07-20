@@ -47,6 +47,7 @@ export default function ShopLayout({ user, children }) {
         decreaseQty,
         removeFromCart,
         calculateTotal,
+        clearCart,
     } = useCartStore();
 
 
@@ -75,13 +76,19 @@ export default function ShopLayout({ user, children }) {
 
     const cartData = cart.map(item => ({
         product_id: item.id,
-        jumlah_barang: item.qty
-        
+        jumlah_barang: item.qty,
+        total_harga_satuan: item.price * item.qty,
     }));
 
     const handleSubmit = () => {
         router.post(route("order.storeCart"), {
-            item: cartData,
+            item: {
+                cart: cartData,
+                data: {
+                    total_harga: total,
+                    store_id: cart[0].store.id
+                }
+            },
 
             onSuccess: () => {
                 toast({
