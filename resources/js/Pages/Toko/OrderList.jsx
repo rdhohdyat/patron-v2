@@ -19,7 +19,15 @@ import {
 import { Badge } from "@/Components/ui/badge";
 import { useState, useEffect } from "react";
 import { formatRupiah } from "@/lib/convert";
-import { ShoppingCart, Package,MoreVertical, CheckCircle, XCircle, Clock, User } from "lucide-react";
+import {
+    ShoppingCart,
+    Package,
+    MoreVertical,
+    CheckCircle,
+    XCircle,
+    Clock,
+    User,
+} from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -47,52 +55,63 @@ export default function OrderList({
     }, [orders.data]);
 
     const renderOrders = () => {
-        return orders.data.map((order) => (
-            <TableRow
-                key={order.id}
-                className={`cursor-pointer ${
-                    selectedOrder.id === order.id
-                        ? "bg-gray-100"
-                        : "hover:bg-gray-50"
-                }`}
-                onClick={() => handleDetailClick(order)}
-            >
-                <TableCell>{order.user.name}</TableCell>
-                <TableCell>{order.product.name}</TableCell>
-                <TableCell className="hidden sm:table-cell">
-                    {order.jumlah_barang}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                    <Badge variant={order.status.toLowerCase()}>
-                        {order.status}
-                    </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                    {formatRupiah(order.total_harga)}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                    {order.tanggal_pemesanan}
-                </TableCell>
-                <TableCell>
-                    <button
-                        className="text-blue-500 hover:underline"
-                        onClick={() => handleDetailClick(order)}
-                    >
-                        Detail
-                    </button>
-                </TableCell>
-            </TableRow>
-        ));
+        return orders.data.map((order) => {
+            const totalJumlahBarang = order.order_items.reduce(
+                (total, item) => total + item.jumlah_barang,
+                0
+            );
+
+            return (
+                <TableRow
+                    key={order.id}
+                    className={`cursor-pointer ${
+                        selectedOrder.id === order.id
+                            ? "bg-gray-100"
+                            : "hover:bg-gray-50"
+                    }`}
+                    onClick={() => handleDetailClick(order)}
+                >
+                    <TableCell>{order.user.name}</TableCell>
+                    <TableCell>
+                        {order.order_items
+                            .map((item) => item.product.name)
+                            .join(", ")}
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell">
+                        {totalJumlahBarang}
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                        <Badge variant={order.status.toLowerCase()}>
+                            {order.status}
+                        </Badge>
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                        {formatRupiah(order.total_harga)}
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                        {order.tanggal_pemesanan}
+                    </TableCell>
+                    <TableCell>
+                        <button
+                            className="text-blue-500 hover:underline"
+                            onClick={() => handleDetailClick(order)}
+                        >
+                            Detail
+                        </button>
+                    </TableCell>
+                </TableRow>
+            );
+        });
     };
 
     return (
         <AuthenticatedLayout user={auth.user}>
             <div className="flex flex-col gap-4 py-4">
-                <div className="mx-auto px-3 sm:px-28 flex-1 auto-rows-max gap-4 w-full">
-                    <div className="sm:grid grid-cols-12 gap-5">
-                        <div className="grid col-span-9 gap-5">
-                            <div className="grid sm:grid-cols-4 grid-cols-1 gap-4">
-                                <Card className="border shadow-md">
+                <div className="mx-auto px-3 sm:px-28 flex-1 gap-4 w-full">
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-4 w-full">
+                            <div className="flex flex-wrap gap-4">
+                                <Card className="border shadow-md flex-1 min-h-[110px]">
                                     <CardHeader>
                                         <CardTitle className="flex items-center justify-center gap-2 text-yellow-600">
                                             <Clock className="h-5 w-5" />
@@ -103,7 +122,7 @@ export default function OrderList({
                                         {pendingCount} Orders
                                     </CardContent>
                                 </Card>
-                                <Card className="border shadow-md">
+                                <Card className="border shadow-md flex-1 min-h-[110px]">
                                     <CardHeader>
                                         <CardTitle className="flex items-center justify-center gap-2 text-blue-600">
                                             <Package className="h-5 w-5" />
@@ -114,23 +133,22 @@ export default function OrderList({
                                         {processingCount} Orders
                                     </CardContent>
                                 </Card>
-
-                                <Card className=" border shadow-md">
+                                <Card className="border shadow-md flex-1 min-h-[110px]">
                                     <CardHeader>
                                         <CardTitle className="flex items-center justify-center gap-2 text-green-600">
                                             <CheckCircle className="h-5 w-5" />
-                                            Selesai{" "}
+                                            Selesai
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="text-center text-xl font-bold">
                                         {completedCount} Orders
                                     </CardContent>
                                 </Card>
-                                <Card className="border shadow-md">
+                                <Card className="border shadow-md flex-1 min-h-[80px]">
                                     <CardHeader>
                                         <CardTitle className="flex items-center justify-center gap-2 text-red-600">
                                             <XCircle className="h-5 w-5" />
-                                            Batal{" "}
+                                            Batal
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="text-center text-xl font-bold">
@@ -178,7 +196,7 @@ export default function OrderList({
                                 </CardFooter>
                             </Card>
                         </div>
-                        <div className="col-span-3">
+                        <div>
                             <Card className="shadow-lg rounded-lg overflow-hidden border border-gray-200">
                                 <CardHeader className="bg-gray-100 p-4 rounded-t-lg">
                                     <h1 className="font-semibold text-xl text-gray-800">
@@ -196,32 +214,58 @@ export default function OrderList({
                                 </CardHeader>
                                 <CardContent className="p-4">
                                     {selectedOrder ? (
-                                        <div className="flex flex-col gap-4">
+                                        <div>
                                             <div className="border-b pb-4">
                                                 <h1 className="font-semibold text-lg text-gray-800">
                                                     Informasi Pesanan
                                                 </h1>
-                                                <div className="flex justify-between mt-2">
-                                                    <div>
-                                                        {
-                                                            selectedOrder
-                                                                .product.name
-                                                        }{" "}
-                                                        <span className="font-bold">
-                                                            x{" "}
-                                                            {selectedOrder.total_harga /
-                                                                selectedOrder
-                                                                    .product
-                                                                    .price}
-                                                        </span>
-                                                    </div>
-                                                    <div className="text-gray-800 font-semibold">
-                                                        {formatRupiah(
-                                                            selectedOrder
-                                                                .product.price
+                                                <Table className="mt-2">
+                                                    <TableHeader>
+                                                        <TableRow>
+                                                            <TableHead>
+                                                                Produk
+                                                            </TableHead>
+                                                            <TableHead>
+                                                                Jumlah
+                                                            </TableHead>
+                                                            <TableHead>
+                                                                Harga
+                                                            </TableHead>
+                                                        </TableRow>
+                                                    </TableHeader>
+                                                    <TableBody>
+                                                        {selectedOrder.order_items.map(
+                                                            (item) => (
+                                                                <TableRow
+                                                                    key={
+                                                                        item.id
+                                                                    }
+                                                                >
+                                                                    <TableCell>
+                                                                        {
+                                                                            item
+                                                                                .product
+                                                                                .name
+                                                                        }
+                                                                    </TableCell>
+                                                                    <TableCell className="font-bold">
+                                                                        x{" "}
+                                                                        {
+                                                                            item.jumlah_barang
+                                                                        }
+                                                                    </TableCell>
+                                                                    <TableCell>
+                                                                        {formatRupiah(
+                                                                            item
+                                                                                .product
+                                                                                .price
+                                                                        )}
+                                                                    </TableCell>
+                                                                </TableRow>
+                                                            )
                                                         )}
-                                                    </div>
-                                                </div>
+                                                    </TableBody>
+                                                </Table>
                                                 <div className="flex justify-between mt-2 font-semibold text-gray-800">
                                                     <div>Subtotal</div>
                                                     <div>
@@ -275,7 +319,6 @@ export default function OrderList({
                                             <DropdownMenuLabel>
                                                 Ubah Status
                                             </DropdownMenuLabel>
-                                           
                                             <DropdownMenuItem>
                                                 <Button
                                                     variant="outline"

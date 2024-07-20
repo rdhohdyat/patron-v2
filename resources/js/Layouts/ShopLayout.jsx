@@ -339,11 +339,8 @@ export default function ShopLayout({ user, children }) {
                 </div>
             </header>
 
-            <main className="sm:w-[80%] mx-auto  p-5">{children}</main>
+            <main className="sm:w-[80%] mx-auto p-5">{children}</main>
             <footer className="text-center py-4 pb-12">
-                <h1 className="font-bold text-3xl text-green-600 mb-2">
-                    PATRON
-                </h1>
                 <h1 className="font-bold text-3xl text-green-600 mb-2">
                     PATRON
                 </h1>

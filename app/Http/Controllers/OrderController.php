@@ -19,7 +19,6 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::query()->paginate(5);
-        $data = Order::query()->first();
 
         $pendingCount = Order::where('status', 'pending')->count();
         $processingCount = Order::where('status', 'processing')->count();
@@ -28,7 +27,6 @@ class OrderController extends Controller
 
         return inertia("Toko/OrderList", [
             "orders" => OrderResource::collection($orders),
-            "data" => new OrderResource($data),
             "pendingCount" => $pendingCount,
             "processingCount" => $processingCount,
             "completedCount" => $completedCount,
