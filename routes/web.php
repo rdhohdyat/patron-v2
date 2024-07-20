@@ -24,10 +24,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('/shop/detail_toko/{store}', [ShopController::class, 'store_detail'])->name('shop.store_detail');
 
+        Route::post("/order/checkout", [OrderController::class, 'storeCart'])->name('order.storeCart');
+
         Route::get("/store", [StoreController::class, 'index'])->name('store');
         Route::get("/store/register", [StoreController::class, 'create'])->name('store.create');
         Route::post("/store/register",[StoreController::class, 'store'])->name('store.store');
-
         Route::resource('product', ProductController::class);
     });
     // Route::get('/shop', [ShopController::class, 'index'])->name('shop');

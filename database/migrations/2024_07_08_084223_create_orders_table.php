@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->integer('jumlah_barang');
+            $table->foreignId('store_id')->constrained()->onDelete('cascade');
             $table->dateTime('tanggal_pemesanan');
             $table->dateTime('tanggal_pengiriman')->nullable();
             $table->decimal('total_harga', 8, 2);
