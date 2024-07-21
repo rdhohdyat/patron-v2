@@ -30,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get("/store/register", [StoreController::class, 'create'])->name('store.create');
         Route::post("/store/register", [StoreController::class, 'store'])->name('store.store');
         Route::post("/store/register",[StoreController::class, 'store'])->name('store.store');
+        Route::patch('/order/update-status/{order}', [OrderController::class, 'updateStatus'])->name('order.update_status');
         Route::resource('product', ProductController::class);
     });
     // Route::get('/shop', [ShopController::class, 'index'])->name('shop');

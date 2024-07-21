@@ -147,4 +147,16 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function updateStatus(Request $request, Order $order)
+    {
+        $request->validate([
+            'status' => 'required|string|in:processing,completed,cancelled',
+        ]);
+
+        $order->status = $request->status;
+        $order->save();
+
+        return to_route('order.index');
+    }
 }
