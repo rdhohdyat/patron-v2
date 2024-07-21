@@ -35,6 +35,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
+import { router } from "@inertiajs/react";
 
 export default function OrderList({
     auth,
@@ -51,6 +52,24 @@ export default function OrderList({
     };
     const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    };
+
+    const handleAccept = (orderId) => {
+        router.patch(route("order.update_status", orderId), {
+            status: "completed",
+        });
+    };
+
+    const handleReject = (orderId) => {
+        router.patch(route("order.update_status", orderId), {
+            status: "cancelled",
+        });
+    };
+
+    const handleProcess = (orderId) => {
+        router.patch(route("order.update_status", orderId), {
+            status: "processing",
+        });
     };
 
     useEffect(() => {
@@ -326,6 +345,7 @@ export default function OrderList({
                                                 <Button
                                                     variant="outline"
                                                     className="text-blue-600 hover:bg-blue-50"
+                                                    onClick={() => handleProcess(selectedOrder.id)}
                                                 >
                                                     Proses
                                                 </Button>
@@ -334,6 +354,7 @@ export default function OrderList({
                                                 <Button
                                                     variant="outline"
                                                     className="text-green-600 hover:bg-green-50"
+                                                    onClick={() => handleAccept(selectedOrder.id)}
                                                 >
                                                     Selesai
                                                 </Button>
@@ -342,6 +363,7 @@ export default function OrderList({
                                                 <Button
                                                     variant="outline"
                                                     className="text-red-600 hover:bg-red-50"
+                                                    onClick={() => handleReject(selectedOrder.id)}
                                                 >
                                                     Tolak
                                                 </Button>
