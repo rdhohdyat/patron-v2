@@ -1,4 +1,4 @@
-import { Store } from "lucide-react";
+import { ShoppingBag, Store } from "lucide-react";
 import { Link } from "@inertiajs/react";
 import {
     Carousel,
@@ -50,9 +50,12 @@ const ProductList = ({ data }) => {
                                             <p className="font-bold text-md mt-1">
                                                 {formatRupiah(product.price)}
                                             </p>
-                                            <p className="text-sm text-gray-600 mt-1 truncate w-[200px]">
-                                                {product.category}
-                                            </p>
+                                            <div className="flex items-center gap-2 mt-2">
+                                                <ShoppingBag size="16" />
+                                                <p className="text-sm text-gray-600 truncate w-[200px]">
+                                                    {product.category}
+                                                </p>
+                                            </div>
                                         </div>
                                     </Card>
                                 </Link>

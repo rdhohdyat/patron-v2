@@ -97,34 +97,42 @@ export default function ShopLayout({ user, children }) {
         }
     };
 
-    const handleToWhatsapp = () => {
-        const renderProduct = () => {
-            return cart
-                .map((product) => {
-                    return `*Nama Produk : * ${product.name}\n*Jumlah :* ${
-                        product.qty
-                    }\n*Harga Satuan : * ${formatRupiah(
-                        product.price
-                    )}\n*Subtotal : * ${formatRupiah(
-                        product.price * product.qty
-                    )}\n`;
-                })
-                .join("\n---------------------------------------\n");
-        };
-
-        const message =
-            `*Halo! ${cart[0].store.nama_store}*\n\n` +
-            `Saya ingin memesan produk berikut :\n\n` +
-            `${renderProduct()}\n` +
-            `*Total Harga :* ${formatRupiah(total)}\n\n` +
-            `Mohon konfirmasi pesanan ini. Terima kasih!\n\n` +
-            `Salam,\n${user.name}`;
-
-        const phoneNumber = "6282287498239";
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-        window.location.href = whatsappURL;
+const handleToWhatsapp = () => {
+    const renderProduct = () => {
+        return cart
+            .map((product) => {
+                const name = `Nama Produk : ${product.name.padEnd(30)}`;
+                const qty = `Jumlah      : ${product.qty.toString().padEnd(5)}`;
+                const price = `Satuan : ${formatRupiah(
+                    product.price
+                ).padEnd(15)}`;
+                const subtotal = `Subtotal    : ${formatRupiah(
+                    product.price * product.qty
+                ).padEnd(15)}`;
+                return `${name}\n${qty}\n${price}\n${subtotal}`;
+            })
+            .join("\n---------------------------------------\n");
     };
+
+    const totalItems = cart.reduce((acc, product) => acc + product.qty, 0);
+    const formattedTotal = formatRupiah(total);
+
+    const message =
+        `*Halo! ${cart[0].store.nama_store}*\n\n` +
+        `Saya ingin memesan produk berikut:\n\n` +
+        `${renderProduct()}\n` +
+        `---------------------------------------\n` +
+        `*Ringkasan Pesanan*\n` +
+        `Total Item  : ${totalItems}\n` +
+        `Total Harga : ${formattedTotal}\n\n` +
+        `Mohon konfirmasi pesanan ini. Terima kasih!\n\n` +
+        `Salam,\n${user.name}`;
+
+    const phoneNumber = "6282287498239";
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.location.href = whatsappURL;
+};
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -379,58 +387,6 @@ export default function ShopLayout({ user, children }) {
                 </h1>
                 <div className="text-gray-600 mb-4">
                     &copy; 2024 Patron. All rights reserved.
-                </div>
-                <div className="flex justify-center space-x-4 text-gray-500">
-                    <a
-                        href="/about"
-                        className="hover:text-green-600 transition-colors duration-300"
-                    >
-                        About Us
-                    </a>
-                    <a
-                        href="/contact"
-                        className="hover:text-green-600 transition-colors duration-300"
-                    >
-                        Contact
-                    </a>
-                    <a
-                        href="/terms"
-                        className="hover:text-green-600 transition-colors duration-300"
-                    >
-                        Terms of Service
-                    </a>
-                    <a
-                        href="/privacy"
-                        className="hover:text-green-600 transition-colors duration-300"
-                    >
-                        Privacy Policy
-                    </a>
-                </div>
-                <div className="flex justify-center space-x-4 mt-4 text-gray-500">
-                    <a
-                        href="https://facebook.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-green-600 transition-colors duration-300"
-                    >
-                        <i className="fab fa-facebook-f"></i>
-                    </a>
-                    <a
-                        href="https://twitter.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-green-600 transition-colors duration-300"
-                    >
-                        <i className="fab fa-twitter"></i>
-                    </a>
-                    <a
-                        href="https://instagram.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-green-600 transition-colors duration-300"
-                    >
-                        <i className="fab fa-instagram"></i>
-                    </a>
                 </div>
             </footer>
         </div>

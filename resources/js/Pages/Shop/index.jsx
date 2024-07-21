@@ -41,7 +41,7 @@ import { Card } from "@/Components/ui/card";
 
 export default function index({ auth, data, markets }) {
     const category = [
-        { name: "Sayur", icon: <LeafyGreen /> },
+        { name: "Sayur", icon: <LeafyGreen/> },
         { name: "Buah", icon: <Apple /> },
         { name: "Daging", icon: <Beef /> },
         { name: "Ikan", icon: <Fish /> },
@@ -112,12 +112,13 @@ export default function index({ auth, data, markets }) {
                     <h1 className="font-bold text-lg sm:text-xl text-gray-600">
                         Kategori
                     </h1>
-                    <Button
+                    <Link
+                        href={route("shop.search")}
                         variant="link"
-                        className="sm:text-md text-green-500"
+                        className="sm:text-md text-green-500 underline"
                     >
                         Lihat semua
-                    </Button>
+                    </Link>
                 </div>
                 <div>
                     <Carousel>

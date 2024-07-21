@@ -22,7 +22,7 @@ export default function Index({
 }) {
     return (
         <AdminLayout user={auth.user}>
-            <h1 className="text-3xl font-bold text-green-600 mb-6">
+            <h1 className="text-3xl font-bold text-green-600">
                 Dashboard
             </h1>
             <div className="flex flex-col gap-6">

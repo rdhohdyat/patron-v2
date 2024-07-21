@@ -89,7 +89,7 @@ export default function Edit({ auth, mustVerifyEmail, status, orders }) {
                 <div className="bg-white shadow-lg rounded-lg border border-gray-200">
                     <div className="p-6">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-                            Daftar Pesanan
+                            Daftar Pesanan Anda
                         </h2>
                         {orders.data.length === 0 ? (
                             <p className="text-center text-gray-600">

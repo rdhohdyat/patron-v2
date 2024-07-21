@@ -85,21 +85,21 @@ export default function ProductDetail({
        );
    };
 
-   const handleToWhatsapp = () => {
-       const message =
-           `*Halo! ${product.store.nama_store}*\n\n` +
-           `Saya ingin memesan produk berikut :\n\n` +
-           `*Nama Produk :* ${product.name}\n` +
-           `*Jumlah         :* ${quantity}\n` +
-           `*Total Harga :* ${formatRupiah(subtotal)}\n\n` +
-           `Mohon konfirmasi pesanan ini. Terima kasih!\n\n` +
-           `*Salam,*\n${auth.user.name}`;
+  const handleToWhatsapp = () => {
+      const message =
+          `*Halo! ${product.store.nama_store}*\n\n` +
+          `Saya ingin memesan produk berikut:\n\n` +
+          `*Nama Produk*: ${product.name}\n` +
+          `*Jumlah*: ${quantity}\n` +
+          `*Total Harga*: ${formatRupiah(subtotal)}\n\n` +
+          `Mohon konfirmasi pesanan ini. Terima kasih!\n\n` +
+          `Salam,\n${auth.user.name}`;
 
-       const phoneNumber = "6282287498239";
-       const encodedMessage = encodeURIComponent(message);
-       const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-       window.location.href = whatsappURL;
-   };
+      const phoneNumber = "6282287498239";
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+      window.location.href = whatsappURL;
+  };
 
 
 

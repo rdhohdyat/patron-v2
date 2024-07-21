@@ -17,7 +17,7 @@ export default function CategoryList({ auth, data, category }) {
     return (
         <ShopLayout user={auth.user}>
             <Head title={`Kategori ${category}`} />
-            <Breadcrumb className="mb-4 font-medium text-lg sm:text-xl">
+            <Breadcrumb className="mb-4 font-medium text-xl">
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/shop">Home</BreadcrumbLink>
@@ -28,7 +28,7 @@ export default function CategoryList({ auth, data, category }) {
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbLink href="/shop">{category}</BreadcrumbLink>
+                        <BreadcrumbLink href="/shop" className="capitalize">{category}</BreadcrumbLink>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
