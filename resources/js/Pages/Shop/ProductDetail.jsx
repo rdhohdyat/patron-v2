@@ -63,7 +63,7 @@ export default function ProductDetail({
     };
 
     const chat = () => {
-        const phoneNumber = "6282287498239";
+        const phoneNumber = "6282286848887";
         const whatsappURL = `https://wa.me/${phoneNumber}`;
         window.open(whatsappURL, "_blank");
     };
@@ -95,10 +95,11 @@ export default function ProductDetail({
            `Mohon konfirmasi pesanan ini. Terima kasih!\n\n` +
            `*Salam,*\n${auth.user.name}`;
 
-       const phoneNumber = "6282287498239";
+       const phoneNumber = "6282286848887";
        const encodedMessage = encodeURIComponent(message);
        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-       window.location.href = whatsappURL;
+    //    window.location.href = whatsappURL;
+        window.open(whatsappURL, '_blank');
    };
 
 
