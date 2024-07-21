@@ -45,6 +45,7 @@ import { Input } from "@/Components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/Components/ui/sheet";
 import { Link } from "@inertiajs/react";
 import { Children } from "react";
+import { Toaster } from "@/Components/ui/toaster";
 
 export default function AdminLayout({ user, children }) {
     return (
@@ -189,7 +190,11 @@ export default function AdminLayout({ user, children }) {
                                 <AlertDialogCancel className="w-full">
                                     Batal
                                 </AlertDialogCancel>
-                                <Link method="post" href={route("logout")} className="w-full">
+                                <Link
+                                    method="post"
+                                    href={route("logout")}
+                                    className="w-full"
+                                >
                                     <Button
                                         className="w-full"
                                         variant="destructive"
@@ -202,6 +207,7 @@ export default function AdminLayout({ user, children }) {
                     </AlertDialog>
                 </header>
                 <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+                    {/* <Toaster></Toaster> */}
                     {children}
                 </main>
             </div>

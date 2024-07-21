@@ -39,7 +39,7 @@ class MarketController extends Controller
         $data['image'] = $data['image']->store('market/' . Str::random(), 'public');
 
         Market::create($data);
-        return to_route('market.index');
+        return to_route('admin.market');
     }
 
     /**
@@ -78,7 +78,7 @@ class MarketController extends Controller
         }
 
         $market->update($data);
-        return redirect()->route('market.index');
+        return redirect()->route('admin.market');
     }
 
     /**
@@ -90,6 +90,6 @@ class MarketController extends Controller
         if ($market->image) {
             Storage::disk('public')->deleteDirectory(dirname($market->image));
         }
-        return to_route('market.index');
+        return to_route('admin.market');
     }
 }

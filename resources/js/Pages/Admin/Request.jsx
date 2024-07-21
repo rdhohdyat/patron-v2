@@ -6,6 +6,15 @@ import {
     CardFooter,
 } from "@/Components/ui/card";
 import { File, MoreHorizontal, PlusCircle } from "lucide-react";
+import {
+    AlertDialog,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/Components/ui/alert-dialog";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Button } from "@/Components/ui/button";
 import {
@@ -76,7 +85,9 @@ export default function Request({ auth, data }) {
     return (
         <AdminLayout user={auth.user}>
             <div>
-                <h1 className="font-semibold text-xl">Daftar Permintaan</h1>
+                <h1 className="text-3xl font-bold text-green-600">
+                    Daftar Permintaan
+                </h1>
             </div>
             <div className="flex flex-1 justify-center rounded-lg border-2 shadow-sm bg-white p-3">
                 {data.data.length !== 0 ? (

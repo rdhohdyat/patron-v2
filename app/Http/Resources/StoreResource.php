@@ -19,6 +19,7 @@ class StoreResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'status' => $this->status,
             'market_id' => new MarketResource($this->Market),
             'nama_store' => $this->nama_store,
             'user' => new UserResource($this->user),

@@ -7,7 +7,7 @@ import {
     CarouselPrevious,
 } from "@/Components/ui/carousel";
 import { Button } from "@/Components/ui/button";
-import { MapPin, Store } from "lucide-react";
+import { MapPin, ShoppingBag, Store } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -83,10 +83,6 @@ export default function index({ auth, data, markets }) {
                                         </Label>
                                         <Input placeholder="Masukan alamat anda"></Input>
                                     </div>
-                                    <SelectInput label="Provinsi"></SelectInput>
-                                    <SelectInput label="Kabupaten"></SelectInput>
-                                    <SelectInput label="Kecamatan"></SelectInput>
-                                    <SelectInput label="Kelurahan"></SelectInput>
                                 </div>
                             </DialogDescription>
                         </DialogHeader>
@@ -160,12 +156,13 @@ export default function index({ auth, data, markets }) {
                     <h1 className="font-bold text-lg sm:text-xl text-gray-600">
                         Produk terlaris
                     </h1>
-                    <Button
+                    <Link
+                        href={route("shop.search")}
                         variant="link"
-                        className="sm:text-md text-green-500"
+                        className="sm:text-md text-green-500 underline"
                     >
                         Lihat semua
-                    </Button>
+                    </Link>
                 </div>
 
                 {/* produk terlaris */}
@@ -187,7 +184,7 @@ export default function index({ auth, data, markets }) {
                                                 alt={product.name}
                                             />
                                             <div className="p-3">
-                                                <h1 className="w-[180px] truncate ...">
+                                                <h1 className="w-[130px] sm:w-[170px] truncate ...">
                                                     {product.name}
                                                 </h1>
                                                 <p className="font-bold text-md">
@@ -195,8 +192,11 @@ export default function index({ auth, data, markets }) {
                                                         product.price
                                                     )}
                                                 </p>
+                                                <p className="w-full text-sm sm:w-[180px] truncate ...">
+                                                    {product.description}
+                                                </p>
                                                 <div className="flex items-center gap-1 mt-2">
-                                                    <Store size="16" />
+                                                    <ShoppingBag size="16" />
                                                     <p className="text-sm">
                                                         {product.category}
                                                     </p>
@@ -214,14 +214,15 @@ export default function index({ auth, data, markets }) {
 
                 <div className="flex justify-between items-center mb-2">
                     <h1 className="font-bold text-lg sm:text-xl text-gray-600">
-                        Pasar terdekat
+                        Daftar Pasar
                     </h1>
-                    <Button
+                    <Link
+                        href={route("shop.search")}
                         variant="link"
-                        className="sm:text-md text-green-500"
+                        className="sm:text-md text-green-500 underline"
                     >
                         Lihat semua
-                    </Button>
+                    </Link>
                 </div>
 
                 <div>
@@ -232,7 +233,9 @@ export default function index({ auth, data, markets }) {
                                     key={market.id}
                                     className="basis-1/2 sm:basis-1/5 py-4"
                                 >
-                                    <Link href={route('shop.market', market.id)}>
+                                    <Link
+                                        href={route("shop.market", market.id)}
+                                    >
                                         <Card className="cursor-pointer">
                                             <img
                                                 src={market.image}
@@ -243,7 +246,7 @@ export default function index({ auth, data, markets }) {
                                                 <h1 className="font-semibold">
                                                     {market.nama_market}
                                                 </h1>
-                                                <p className="text-sm w-[180px] truncate ...">
+                                                <p className="text-sm sm:w-[180px] truncate ...">
                                                     {market.lokasi_market}
                                                 </p>
                                             </div>

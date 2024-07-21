@@ -33,7 +33,6 @@ import { Toaster } from "@/Components/ui/toaster";
 import { formatRupiah } from "@/lib/convert";
 import EmptyCart from "@/Components/EmptyCart";
 import { useToast } from "@/Components/ui/use-toast";
-import { Input } from "@/Components/ui/input";
 
 export default function ShopLayout({ user, children }) {
     const { toast } = useToast();
@@ -66,37 +65,66 @@ export default function ShopLayout({ user, children }) {
         calculateTotal();
     };
 
-   const cartData = cart.map(item => ({
+    const cartData = cart.map((item) => ({
         product_id: item.id,
-       jumlah_barang: item.qty,
+        jumlah_barang: item.qty,
         total_harga_satuan: item.price * item.qty,
     }));
 
+    const handleSubmit = async () => {
+        try {
+            await router.post(route("order.storeCart"), {
+                item: {
+                    cart: cartData,
+                    data: {
+                        total_harga: total,
+                        store_id: cart[0].store.id,
+                    },
+                },
+            });
 
-   const handleSubmit = async () => {
-       try {
-           await router.post(route("order.storeCart"), {
-               item: {
-                   cart: cartData,
-                   data: {
-                       total_harga: total,
-                       store_id: cart[0].store.id,
-                   },
-               },
-           });
-           clearCart(),
-           toast({
-               title: "Berhasil Membuat Order",
-               variant: "default",
-           });
-       } catch (error) {
-           toast({
-               title: "Gagal Membuat Order",
-               variant: "destructive",
-           });
-       }
-   };
+            clearCart();
+            toast({
+                title: "Berhasil Membuat Order",
+                variant: "default",
+            });
+            handleToWhatsapp();
+        } catch (error) {
+            toast({
+                title: "Gagal Membuat Order",
+                variant: "destructive",
+            });
+        }
+    };
 
+    const handleToWhatsapp = () => {
+        const renderProduct = () => {
+            return cart
+                .map((product) => {
+                    return `*Nama Produk : * ${product.name}\n*Jumlah :* ${
+                        product.qty
+                    }\n*Harga Satuan : * ${formatRupiah(
+                        product.price
+                    )}\n*Subtotal : * ${formatRupiah(
+                        product.price * product.qty
+                    )}\n`;
+                })
+                .join("\n---------------------------------------\n");
+        };
+
+        const message =
+            `*Halo! ${cart[0].store.nama_store}*\n\n` +
+            `Saya ingin memesan produk berikut :\n\n` +
+            `${renderProduct()}\n` +
+            `*Total Harga :* ${formatRupiah(total)}\n\n` +
+            `Mohon konfirmasi pesanan ini. Terima kasih!\n\n` +
+            `Salam,\n${user.name}`;
+
+        const phoneNumber = "6282287498239";
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+        window.location.href = whatsappURL;
+    };
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -345,11 +373,65 @@ export default function ShopLayout({ user, children }) {
             </header>
 
             <main className="sm:w-[80%] mx-auto p-5">{children}</main>
-            <footer className="text-center py-4 pb-12">
+            <footer className="bg-white text-center py-8 border-t border-gray-200">
                 <h1 className="font-bold text-3xl text-green-600 mb-2">
                     PATRON
                 </h1>
-                <div>&copy; 2024 Patron. All rights reserved.</div>
+                <div className="text-gray-600 mb-4">
+                    &copy; 2024 Patron. All rights reserved.
+                </div>
+                <div className="flex justify-center space-x-4 text-gray-500">
+                    <a
+                        href="/about"
+                        className="hover:text-green-600 transition-colors duration-300"
+                    >
+                        About Us
+                    </a>
+                    <a
+                        href="/contact"
+                        className="hover:text-green-600 transition-colors duration-300"
+                    >
+                        Contact
+                    </a>
+                    <a
+                        href="/terms"
+                        className="hover:text-green-600 transition-colors duration-300"
+                    >
+                        Terms of Service
+                    </a>
+                    <a
+                        href="/privacy"
+                        className="hover:text-green-600 transition-colors duration-300"
+                    >
+                        Privacy Policy
+                    </a>
+                </div>
+                <div className="flex justify-center space-x-4 mt-4 text-gray-500">
+                    <a
+                        href="https://facebook.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-green-600 transition-colors duration-300"
+                    >
+                        <i className="fab fa-facebook-f"></i>
+                    </a>
+                    <a
+                        href="https://twitter.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-green-600 transition-colors duration-300"
+                    >
+                        <i className="fab fa-twitter"></i>
+                    </a>
+                    <a
+                        href="https://instagram.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-green-600 transition-colors duration-300"
+                    >
+                        <i className="fab fa-instagram"></i>
+                    </a>
+                </div>
             </footer>
         </div>
     );

@@ -11,6 +11,14 @@ import {
     User,
     PieChart,
 } from "lucide-react";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/Components/ui/table";
 
 export default function Index({ auth }) {
     return (
@@ -21,7 +29,7 @@ export default function Index({ auth }) {
                     <div className="grid sm:grid-cols-4 gap-4">
                         <Card>
                             <CardHeader>
-                                <CardTitle className="flex items-center justify-center gap-2 text-blue-600">
+                                <CardTitle className="flex items-center justify-center gap-2 text-green-600">
                                     <ShoppingCart className="h-5 w-5" />
                                     Total Penjualan
                                 </CardTitle>
@@ -43,7 +51,7 @@ export default function Index({ auth }) {
                         </Card>
                         <Card>
                             <CardHeader>
-                                <CardTitle className="flex items-center justify-center gap-2 text-yellow-500">
+                                <CardTitle className="flex items-center justify-center gap-2 text-green-500">
                                     <DollarSign className="h-5 w-5" />
                                     Total Pendapatan
                                 </CardTitle>
@@ -54,7 +62,7 @@ export default function Index({ auth }) {
                         </Card>
                         <Card>
                             <CardHeader>
-                                <CardTitle className="flex items-center justify-center gap-2 text-red-600">
+                                <CardTitle className="flex items-center justify-center gap-2 text-green-600">
                                     <User className="h-5 w-5" />
                                     Jumlah Pesanan
                                 </CardTitle>

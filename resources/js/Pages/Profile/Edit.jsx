@@ -41,15 +41,22 @@ export default function Edit({ auth, mustVerifyEmail, status, orders }) {
                         selectedOrder?.id === order.id
                             ? "bg-gray-100"
                             : "hover:bg-gray-50"
-                    }`}
+                    } transition-colors duration-150 ease-in-out`}
                     onClick={() => handleDetailClick(order)}
                 >
-                    <TableCell className="w-[200px]">
+                    <TableCell className="w-[100px]">
+                        <img
+                            src={order.order_items[0].product.image}
+                            alt={order.order_items[0].product.name}
+                            className="w-20 h-20 object-cover rounded"
+                        />
+                    </TableCell>
+                    <TableCell className="w-[200px] text-gray-800 font-medium">
                         {order.order_items
                             .map((item) => item.product.name)
                             .join(", ")}
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-gray-600">
                         {totalJumlahBarang}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
@@ -57,15 +64,15 @@ export default function Edit({ auth, mustVerifyEmail, status, orders }) {
                             {order.status}
                         </Badge>
                     </TableCell>
-                    <TableCell className="hidden md:table-cell">
+                    <TableCell className="hidden md:table-cell text-gray-800">
                         {formatRupiah(order.total_harga)}
                     </TableCell>
-                    <TableCell className="hidden md:table-cell">
+                    <TableCell className="hidden md:table-cell text-gray-600">
                         {order.tanggal_pemesanan}
                     </TableCell>
                     <TableCell>
                         <button
-                            className="text-blue-500 hover:underline"
+                            className="text-blue-600 hover:underline transition-colors duration-150 ease-in-out"
                             onClick={() => handleDetailClick(order)}
                         >
                             Detail
@@ -78,56 +85,65 @@ export default function Edit({ auth, mustVerifyEmail, status, orders }) {
 
     return (
         <ShopLayout user={auth.user}>
-            <div className="sm:max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div className="p-4 sm:p-8 bg-white shadow-md rounded-lg">
-                    <h2 className="text-lg font-semibold mb-4">
-                        Daftar Pesanan
-                    </h2>
-                    {orders.data.length === 0 ? (
-                        <p className="text-center text-gray-600">
-                            Belum ada pesanan.
-                        </p>
-                    ) : (
-                        <div className="overflow-x-auto">
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Produk</TableHead>
-                                        <TableHead className="hidden sm:table-cell">
-                                            Jumlah Barang
-                                        </TableHead>
-                                        <TableHead className="hidden md:table-cell">
-                                            Status
-                                        </TableHead>
-                                        <TableHead className="hidden md:table-cell">
-                                            Total Harga
-                                        </TableHead>
-                                        <TableHead className="hidden md:table-cell">
-                                            Tanggal Pemesanan
-                                        </TableHead>
-                                        <TableHead>Aksi</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>{renderOrders()}</TableBody>
-                            </Table>
-                        </div>
-                    )}
+            <div className="container mx-auto px-4  space-y-6">
+                <div className="bg-white shadow-lg rounded-lg border border-gray-200">
+                    <div className="p-6">
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+                            Daftar Pesanan
+                        </h2>
+                        {orders.data.length === 0 ? (
+                            <p className="text-center text-gray-600">
+                                Belum ada pesanan.
+                            </p>
+                        ) : (
+                            <div className="overflow-x-auto">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Gambar</TableHead>
+                                            <TableHead>Produk</TableHead>
+                                            <TableHead className="hidden sm:table-cell">
+                                                Jumlah Barang
+                                            </TableHead>
+                                            <TableHead className="hidden md:table-cell">
+                                                Status
+                                            </TableHead>
+                                            <TableHead className="hidden md:table-cell">
+                                                Total Harga
+                                            </TableHead>
+                                            <TableHead className="hidden md:table-cell">
+                                                Tanggal Pemesanan
+                                            </TableHead>
+                                            <TableHead>Aksi</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>{renderOrders()}</TableBody>
+                                </Table>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
-                <div className="p-4 sm:p-8 bg-white shadow-md rounded-lg">
-                    <UpdateProfileInformationForm
-                        mustVerifyEmail={mustVerifyEmail}
-                        status={status}
-                        className="max-w-xl"
-                    />
+                <div className="bg-white shadow-lg rounded-lg border border-gray-200">
+                    <div className="p-6">
+                        <UpdateProfileInformationForm
+                            mustVerifyEmail={mustVerifyEmail}
+                            status={status}
+                            className="max-w-2xl"
+                        />
+                    </div>
                 </div>
 
-                <div className="p-4 sm:p-8 bg-white shadow-md rounded-lg">
-                    <UpdatePasswordForm className="max-w-xl" />
+                <div className="bg-white shadow-lg rounded-lg border border-gray-200">
+                    <div className="p-6">
+                        <UpdatePasswordForm className="max-w-2xl" />
+                    </div>
                 </div>
 
-                <div className="p-4 sm:p-8 bg-white shadow-md rounded-lg">
-                    <DeleteUserForm className="max-w-xl" />
+                <div className="bg-white shadow-lg rounded-lg border border-gray-200">
+                    <div className="p-6">
+                        <DeleteUserForm className="max-w-2xl" />
+                    </div>
                 </div>
             </div>
         </ShopLayout>

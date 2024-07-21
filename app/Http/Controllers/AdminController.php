@@ -14,13 +14,32 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return inertia("Admin/index");
+        $totalMarkets = Market::count();
+        $totalStores = Store::count();
+        $pendingStores = Store::where('status', 'pending')->count();
+
+        $recentMarkets = Market::latest()->take(5)->get();
+        $recentStores = Store::latest()->take(5)->get();
+
+        $markets = Market::latest()->get();
+
+        return inertia('Admin/index', [
+            'totalMarkets' => $totalMarkets,
+            'totalStores' => $totalStores,
+            'pendingStores' => $pendingStores,
+            'recentMarkets' => MarketResource::collection($recentMarkets),
+            'recentStores' => StoreResource::collection($recentStores),
+            'markets' => MarketResource::collection($markets),
+        ]);
     }
+
+
 
     public function market()
     {
         $query = Market::query();
         $market = $query->paginate(50);
+        $market->load('stores.products');
         return inertia("Admin/Market", [
             "data" => MarketResource::collection($market),
         ]);

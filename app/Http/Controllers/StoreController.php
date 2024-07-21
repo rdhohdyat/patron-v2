@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\MarketResource;
 use App\Models\Market;
+use App\Models\Order;
 use App\Models\Store;
 use App\Models\Product;
 use Illuminate\Support\Facades\Request;
@@ -22,19 +23,24 @@ class StoreController extends Controller
             return redirect()->route('store.not_registered');
         }
 
-        if ($user->store->status == 'pending') {
-            return redirect()->route('store.store_pending');
+        switch ($user->store->status) {
+            case 'pending':
+                return redirect()->route('store.store_pending');
+            case 'rejected':
+                return redirect()->route('store.not_registered');
+            default:
+                break;
         }
 
-        if ($user->store->status == 'rejected') {
-            return redirect()->route('store.not_registered');
-        }
+        $completedOrders = Order::where('status', 'completed')
+            ->with('orderItems.product') 
+            ->paginate(10);
 
-        $query = Product::query();
-        $products = $query->paginate(10);
+        $products = Product::paginate(10);
 
         return inertia("Toko/index", [
-            "data" => ProductResource::collection($products)
+            "completedOrders" => $completedOrders,
+            "products" => $products
         ]);
     }
 

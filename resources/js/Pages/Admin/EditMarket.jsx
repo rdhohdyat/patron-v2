@@ -6,19 +6,91 @@ import { Link, useForm } from "@inertiajs/react";
 import { Upload } from "lucide-react";
 import { Button } from "@/Components/ui/button";
 import { useToast } from "@/Components/ui/use-toast";
+import useLocation from "@/lib/zustand/locationStore";
+import { useState, useEffect } from "react";
+import { SelectInput } from "@/Components/SelectInput";
 
 export default function EditMarket({ auth, market }) {
+    const { kecamatanPekanbaru } = useLocation();
     const { toast } = useToast();
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, put, processing, errors } = useForm({
         nama_market: market.data.nama_market || "",
         lokasi_market: market.data.lokasi_market || "",
         image: null,
         _method: "PUT",
     });
 
+    const [alamat, setAlamat] = useState("");
+    const [selectedKecamatan, setSelectedKecamatan] = useState("");
+    const [kelurahanOptions, setKelurahanOptions] = useState([]);
+    const [selectedKelurahan, setSelectedKelurahan] = useState("");
+
+    // Effect untuk memecah lokasi_market dan mengupdate state
+    useEffect(() => {
+        const lokasiParts = market.data.lokasi_market
+            ? market.data.lokasi_market.split(", ")
+            : [];
+        const kota = lokasiParts[0] || "";
+        const kecamatan = lokasiParts[1] || "";
+        const kelurahan = lokasiParts[2] || "";
+        const alamat = lokasiParts[3] || "";
+
+        setAlamat(alamat);
+        setSelectedKecamatan(kecamatan);
+
+        if (kecamatan) {
+            const kecamatanData = kecamatanPekanbaru.find(
+                (kec) => kec.name === kecamatan
+            );
+            if (kecamatanData) {
+                setKelurahanOptions(kecamatanData.kelurahan);
+                setSelectedKelurahan(
+                    kecamatanData.kelurahan.includes(kelurahan) ? kelurahan : ""
+                );
+            } else {
+                setKelurahanOptions([]);
+                setSelectedKelurahan("");
+            }
+        } else {
+            setKelurahanOptions([]);
+            setSelectedKelurahan("");
+        }
+    }, [market.data, kecamatanPekanbaru]);
+
+    // Effect untuk mengupdate kelurahanOptions saat selectedKecamatan berubah
+    useEffect(() => {
+        if (selectedKecamatan) {
+            const kecamatanData = kecamatanPekanbaru.find(
+                (kec) => kec.name === selectedKecamatan
+            );
+            if (kecamatanData) {
+                setKelurahanOptions(kecamatanData.kelurahan);
+                if (!kelurahanOptions.includes(selectedKelurahan)) {
+                    setSelectedKelurahan("");
+                }
+            } else {
+                setKelurahanOptions([]);
+                setSelectedKelurahan("");
+            }
+        } else {
+            setKelurahanOptions([]);
+            setSelectedKelurahan("");
+        }
+    }, [selectedKecamatan, kecamatanPekanbaru, kelurahanOptions]);
+
+    // Effect untuk mengupdate lokasi_market
+    useEffect(() => {
+        const location = `Kota Pekanbaru${
+            selectedKecamatan ? `, ${selectedKecamatan}` : ""
+        }${selectedKelurahan ? `, ${selectedKelurahan}` : ""}${
+            alamat ? `, ${alamat}` : ""
+        }`;
+        setData("lokasi_market", location);
+    }, [selectedKecamatan, selectedKelurahan, alamat]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("market.update", { market: market.data.id }), {
+        put(route("market.update", { market: market.data.id }), {
             onSuccess: () => {
                 toast({
                     title: "Berhasil memperbarui pasar",
@@ -69,20 +141,66 @@ export default function EditMarket({ auth, market }) {
                                     )}
                                 </div>
                                 <div className="grid gap-3">
+                                    <Label htmlFor="alamat">Alamat</Label>
+                                    <Input
+                                        id="alamat"
+                                        type="text"
+                                        placeholder="Masukkan alamat lengkap"
+                                        value={alamat}
+                                        onChange={(e) =>
+                                            setAlamat(e.target.value)
+                                        }
+                                        className="w-full"
+                                    />
+                                    {errors.alamat && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.alamat}
+                                        </p>
+                                    )}
+                                </div>
+                                <SelectInput
+                                    label="Kecamatan"
+                                    data={kecamatanPekanbaru.map((kec) => ({
+                                        value: kec.name,
+                                        label: kec.name,
+                                    }))}
+                                    onChange={(value) =>
+                                        setSelectedKecamatan(value)
+                                    }
+                                    value={selectedKecamatan}
+                                />
+                                {errors.kecamatan && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.kecamatan}
+                                    </p>
+                                )}
+                                <SelectInput
+                                    label="Kelurahan"
+                                    data={kelurahanOptions.map((kel) => ({
+                                        value: kel,
+                                        label: kel,
+                                    }))}
+                                    onChange={(value) =>
+                                        setSelectedKelurahan(value)
+                                    }
+                                    value={selectedKelurahan}
+                                    disabled={!selectedKecamatan}
+                                />
+                                {errors.kelurahan && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.kelurahan}
+                                    </p>
+                                )}
+                                <div className="grid gap-3">
                                     <Label htmlFor="lokasi_market">
                                         Lokasi Pasar
                                     </Label>
                                     <Input
                                         id="lokasi_market"
                                         type="text"
-                                        placeholder="Contoh: Jl Riau"
+                                        placeholder="Lokasi otomatis terisi berdasarkan pilihan kecamatan, kelurahan, dan alamat"
                                         value={data.lokasi_market}
-                                        onChange={(e) =>
-                                            setData(
-                                                "lokasi_market",
-                                                e.target.value
-                                            )
-                                        }
+                                        readOnly
                                         className="w-full"
                                     />
                                     {errors.lokasi_market && (
@@ -133,7 +251,7 @@ export default function EditMarket({ auth, market }) {
                             <Button variant="outline">Batal</Button>
                         </Link>
                         <Button type="submit" disabled={processing}>
-                            {processing ? "Menyimpan..." : "Simpan Pasar"}
+                            {processing ? "Memproses..." : "Simpan"}
                         </Button>
                     </div>
                 </form>

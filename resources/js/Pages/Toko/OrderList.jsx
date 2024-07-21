@@ -183,7 +183,7 @@ export default function OrderList({
                                                     Total Harga
                                                 </TableHead>
                                                 <TableHead className="hidden md:table-cell">
-                                                    Tanggal Pemesanan
+                                                    Waktu Pemesanan
                                                 </TableHead>
                                                 <TableHead>Aksi</TableHead>
                                             </TableRow>

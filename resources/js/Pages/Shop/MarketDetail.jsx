@@ -55,6 +55,8 @@ export default function MarketDetail({ auth, data, products: dataProducts }) {
         "Roti dan kue",
     ];
 
+    console.log(data);
+
     return (
         <ShopLayout user={auth.user}>
             <Head title={`Detail ${market.nama_market}`} />

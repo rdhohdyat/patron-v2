@@ -33,8 +33,6 @@ import { useEffect } from "react";
 
 export default function InventoryProduct({ auth, data }) {
     const products = data.data;
-    // const products = [];
-
     const { toast } = useToast();
 
     const renderProducts = () => {
@@ -43,26 +41,28 @@ export default function InventoryProduct({ auth, data }) {
                 <TableCell>
                     <img
                         alt="Product img"
-                        className="aspect-square rounded-md object-cover"
+                        className="aspect-square rounded-lg border border-gray-200 object-cover"
                         height="64"
                         src={product.image}
                         width="64"
                     />
                 </TableCell>
-                <TableCell className="font-medium">{product.name}</TableCell>
-                <TableCell className="hidden sm:table-cell">
+                <TableCell className="font-medium text-gray-800">
+                    {product.name}
+                </TableCell>
+                <TableCell className="hidden sm:table-cell text-gray-600">
                     {formatRupiah(product.price)}
                 </TableCell>
-                <TableCell className="hidden sm:table-cell">
+                <TableCell className="hidden sm:table-cell text-gray-600">
                     {product.category}
                 </TableCell>
-                <TableCell className="hidden md:table-cell">
+                <TableCell className="hidden md:table-cell text-gray-600">
                     {product.stock}
                 </TableCell>
-                <TableCell className="hidden md:table-cell">
+                <TableCell className="hidden md:table-cell text-gray-600">
                     {product.created_at}
                 </TableCell>
-                <TableCell className="hidden md:table-cell">
+                <TableCell className="hidden md:table-cell text-gray-600">
                     {product.updated_at}
                 </TableCell>
                 <TableCell>
@@ -73,7 +73,7 @@ export default function InventoryProduct({ auth, data }) {
                                 size="icon"
                                 variant="ghost"
                             >
-                                <MoreHorizontal className="h-4 w-4" />
+                                <MoreHorizontal className="h-4 w-4 text-gray-600" />
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
@@ -96,7 +96,7 @@ export default function InventoryProduct({ auth, data }) {
                                     })
                                 }
                             >
-                                <DropdownMenuItem className="text-red-500 hover:!bg-red-100 active:!bg-red-300 hover:!text-red-600">
+                                <DropdownMenuItem className="text-red-500 hover:bg-red-100 active:bg-red-200 hover:text-red-600">
                                     Hapus
                                 </DropdownMenuItem>
                             </Link>
@@ -109,83 +109,76 @@ export default function InventoryProduct({ auth, data }) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Inventory Produk"></Head>
-            <div className="flex flex-col gap-2 mt-3">
-                <div className="flex flex-col sm:gap-4 sm:py-4 sm:px-20">
-                    <main className="grid flex-1 items-start gap-4 p-4 sm:px-6  sm:py-0 ">
-                        <div className="flex items-center">
-                            <h1 className="font-bold text-xl">
-                                Inventaris Produk
-                            </h1>
-                            <div className="ml-auto flex items-center gap-2">
-                                <Button variant="outline" className="gap-1">
-                                    <File className="h-3.5 w-3.5 text-gray-600" />
-                                    <span className="sr-only sm:not-sr-only text-gray-600  sm:whitespace-nowrap">
-                                        Export
+            <Head title="Inventory Produk" />
+            <div className="flex flex-col items-center gap-4 mt-4 px-4">
+                <div className="w-full max-w-7xl">
+                    <div className="flex items-center justify-between mb-4">
+                        <h1 className="text-2xl font-semibold text-gray-900">
+                            Inventaris Produk
+                        </h1>
+                        <div className="flex items-center gap-2">
+                            <Button
+                                variant="outline"
+                                className="gap-1 text-gray-600 border-gray-300"
+                            >
+                                <File className="h-4 w-4" />
+                                <span className="hidden sm:inline">Export</span>
+                            </Button>
+                            <Link href={route("product.create")}>
+                                <Button className="gap-1 bg-green-600 text-white hover:bg-green-700">
+                                    <PlusCircle className="h-4 w-4" />
+                                    <span className="hidden sm:inline">
+                                        Tambah Produk
                                     </span>
                                 </Button>
-                                <Link href={route("product.create")}>
-                                    <Button className="gap-1">
-                                        <PlusCircle className="h-3.5 w-3.5" />
-                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                            Tambah Produk
-                                        </span>
-                                    </Button>
-                                </Link>
-                            </div>
+                            </Link>
                         </div>
+                    </div>
 
-                        {products == null || products.length == 0 ? (
-                            <EmptyProduct></EmptyProduct>
-                        ) : (
-                            <Card x-chunk="dashboard-06-chunk-0">
-                                <CardHeader>
-                                    <CardTitle>Daftar Produk Anda</CardTitle>
-                                    <p className="text-sm text-gray-600">
-                                        Kelola produk yang ada di toko anda
-                                    </p>
-                                </CardHeader>
-                                <CardContent>
-                                    <Table>
-                                        <TableHeader>
-                                            <TableRow>
-                                                <TableHead className="w-[100px]">
-                                                    Foto
-                                                </TableHead>
-                                                <TableHead>
-                                                    Nama Produk
-                                                </TableHead>
-                                                <TableHead className="hidden sm:table-cell">
-                                                    Harga
-                                                </TableHead>
-                                                <TableHead className="hidden md:table-cell">
-                                                    Kategori
-                                                </TableHead>
-                                                <TableHead className="hidden md:table-cell">
-                                                    Stock
-                                                </TableHead>
-                                                <TableHead className="hidden md:table-cell">
-                                                    Tanggal Ditambahkan
-                                                </TableHead>
-                                                <TableHead className="hidden md:table-cell">
-                                                    Tanggal Diperbarui
-                                                </TableHead>
-                                                <TableHead>Aksi</TableHead>
-                                            </TableRow>
-                                        </TableHeader>
-                                        <TableBody>
-                                            {renderProducts()}
-                                        </TableBody>
-                                    </Table>
-                                </CardContent>
-                                <CardFooter className="border-t pt-3">
-                                    <PaginationComponent
-                                        links={data.meta.links}
-                                    ></PaginationComponent>
-                                </CardFooter>
-                            </Card>
-                        )}
-                    </main>
+                    {products.length === 0 ? (
+                        <EmptyProduct />
+                    ) : (
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Daftar Produk Anda</CardTitle>
+                                <p className="text-sm text-gray-600">
+                                    Kelola produk yang ada di toko Anda
+                                </p>
+                            </CardHeader>
+                            <CardContent>
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead className="w-[100px]">
+                                                Foto
+                                            </TableHead>
+                                            <TableHead>Nama Produk</TableHead>
+                                            <TableHead className="hidden sm:table-cell">
+                                                Harga
+                                            </TableHead>
+                                            <TableHead className="hidden md:table-cell">
+                                                Kategori
+                                            </TableHead>
+                                            <TableHead className="hidden md:table-cell">
+                                                Stock
+                                            </TableHead>
+                                            <TableHead className="hidden md:table-cell">
+                                                Tanggal Ditambahkan
+                                            </TableHead>
+                                            <TableHead className="hidden md:table-cell">
+                                                Tanggal Diperbarui
+                                            </TableHead>
+                                            <TableHead>Aksi</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>{renderProducts()}</TableBody>
+                                </Table>
+                            </CardContent>
+                            <CardFooter className="border-t pt-4">
+                                <PaginationComponent links={data.meta.links} />
+                            </CardFooter>
+                        </Card>
+                    )}
                 </div>
             </div>
         </AuthenticatedLayout>

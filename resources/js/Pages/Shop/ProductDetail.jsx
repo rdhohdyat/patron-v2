@@ -61,14 +61,47 @@ export default function ProductDetail({
             setQuantity(quantity - 1);
         }
     };
-    const handleSubmit = (product_id) => {
-        router.post(route("order.store", product_id), {
-            store_id: product.store.id,
-            product_id: product_id,
-            jumlah_barang: quantity,
-            total_harga: subtotal,
-        });
+
+    const chat = () => {
+        const phoneNumber = "6282287498239";
+        const whatsappURL = `https://wa.me/${phoneNumber}`;
+        window.open(whatsappURL, "_blank");
     };
+
+   const handleSubmit = (product_id) => {
+       router.post(
+           route("order.store", product_id),
+           {
+               store_id: product.store.id,
+               product_id: product_id,
+               jumlah_barang: quantity,
+               total_harga: subtotal,
+           },
+           toast({
+               title: "Berhasil Membuat Order",
+               variant: "default",
+           }),
+           handleToWhatsapp()
+       );
+   };
+
+   const handleToWhatsapp = () => {
+       const message =
+           `*Halo! ${product.store.nama_store}*\n\n` +
+           `Saya ingin memesan produk berikut :\n\n` +
+           `*Nama Produk :* ${product.name}\n` +
+           `*Jumlah         :* ${quantity}\n` +
+           `*Total Harga :* ${formatRupiah(subtotal)}\n\n` +
+           `Mohon konfirmasi pesanan ini. Terima kasih!\n\n` +
+           `*Salam,*\n${auth.user.name}`;
+
+       const phoneNumber = "6282287498239";
+       const encodedMessage = encodeURIComponent(message);
+       const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+       window.location.href = whatsappURL;
+   };
+
+
 
     const subtotal = product.price * quantity;
 
@@ -93,59 +126,60 @@ export default function ProductDetail({
                 </BreadcrumbList>
             </Breadcrumb>
             <div className="sm:flex sm:gap-6 justify-between">
-                <div className="sm:flex sm:gap-6">
-                    <div className="flex-shrink-0">
-                        <img
-                            src={product.image}
-                            className="w-full object-cover rounded-lg shadow-lg sm:w-[350px] h-[350px]"
-                            alt={product.name}
-                        />
+                <div>
+                    <div className="sm:flex sm:gap-6">
+                        <div className="flex-shrink-0">
+                            <img
+                                src={product.image}
+                                className="w-full object-cover rounded-lg shadow-lg sm:w-[350px] h-[350px]"
+                                alt={product.name}
+                            />
+                        </div>
+                        <div className="mt-4 sm:mt-0 sm:w-[300px]">
+                            <h1 className="text-2xl font-bold">
+                                {product.name}
+                            </h1>
+                            <p className="uppercase font-semibold text-gray-700 mt-2">
+                                {product.category}
+                            </p>
+                            <h2 className="text-4xl font-bold mt-2">
+                                {formatRupiah(product.price)}
+                            </h2>
+                            <p className="mt-2 font-semibold text-gray-800">
+                                Detail:
+                            </p>
+                            <p className="mt-2 text-gray-600 sm:w-[400px] sm:h-[120px]">
+                                {product.description}
+                            </p>
+                        </div>
                     </div>
-                    <div className="mt-4 sm:mt-0 sm:w-[300px]">
-                        <h1 className="text-2xl font-bold">{product.name}</h1>
-                        <p className="uppercase font-semibold text-gray-700 mt-2">
-                            {product.category}
-                        </p>
-                        <h2 className="text-4xl font-bold mt-2">
-                            {formatRupiah(product.price)}
-                        </h2>
-                        <p className="mt-2 font-semibold text-gray-800">
-                            Detail:
-                        </p>
-                        <p className="mt-2 text-gray-600 sm:w-[400px] sm:h-[120px]">
-                            {product.description}
-                        </p>
-
-                        <Card className="mt-4 p-4 shadow-md">
-                            <div className="flex items-center gap-4">
-                                <Avatar className="w-14 h-14">
-                                    <AvatarImage
-                                        src={product.store.image}
-                                        alt={product.store.nama_store}
-                                    />
-                                    <AvatarFallback>ST</AvatarFallback>
-                                </Avatar>
-                                <div>
-                                    <h3 className="font-semibold text-lg">
-                                        {product.store.nama_store}
-                                    </h3>
-                                    <p className="text-sm text-gray-500">
-                                        {product.store.nama_store}
-                                    </p>
-                                </div>
+                    <Card className="mt-4 p-4 shadow-md w-[350px]">
+                        <div className="flex items-center gap-4">
+                            <Avatar className="w-14 h-14">
+                                <AvatarImage
+                                    src={product.store.image}
+                                    alt={product.store.nama_store}
+                                />
+                                <AvatarFallback>ST</AvatarFallback>
+                            </Avatar>
+                            <div>
+                                <h3 className="font-semibold text-lg">
+                                    {product.store.nama_store}
+                                </h3>
+                                <p className="text-sm text-gray-500">
+                                    {product.store.nama_store}
+                                </p>
                             </div>
-                            <Link
-                                href={route(
-                                    "shop.store_detail",
-                                    product.store.id
-                                )}
-                                className="text-sm text-green-600 underline mt-2"
-                            >
-                                Lihat Toko
-                            </Link>
-                        </Card>
-                    </div>
+                        </div>
+                        <Link
+                            href={route("shop.store_detail", product.store.id)}
+                            className="text-sm text-green-600 underline mt-4"
+                        >
+                            Lihat Toko
+                        </Link>
+                    </Card>
                 </div>
+
                 <div>
                     <Card className="fixed rounded-none sm:static  bottom-0 z-10 left-0 border right-0 px-5 pb-5 sm:rounded-lg">
                         <div className="mt-5">
@@ -195,6 +229,7 @@ export default function ProductDetail({
                         <div className="sm:block flex gap-2">
                             <Button
                                 variant="outline"
+                                onClick={() => chat()}
                                 className="sm:w-full mt-3 text-green-500 hover:bg-green-50 hover:text-green-600 border-green-600"
                             >
                                 <div className="hidden sm:block">

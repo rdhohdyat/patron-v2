@@ -9,22 +9,22 @@ import {
 } from "@/Components/ui/select";
 import { Label } from "./ui/label";
 
-export function SelectInput({ label, data }) {
+export function SelectInput({ label, data, onChange, value }) {
     return (
         <div className="grid gap-3">
             <Label className="text-start">{label}</Label>
-            <Select>
+            <Select onValueChange={onChange} value={value}>
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder={`Pilih ${label}`} />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup>
                         <SelectLabel>{label}</SelectLabel>
-                        <SelectItem value="apple">Apple</SelectItem>
-                        <SelectItem value="banana">Banana</SelectItem>
-                        <SelectItem value="blueberry">Blueberry</SelectItem>
-                        <SelectItem value="grapes">Grapes</SelectItem>
-                        <SelectItem value="pineapple">Pineapple</SelectItem>
+                        {data.map((item) => (
+                            <SelectItem key={item.value} value={item.value}>
+                                {item.label}
+                            </SelectItem>
+                        ))}
                     </SelectGroup>
                 </SelectContent>
             </Select>

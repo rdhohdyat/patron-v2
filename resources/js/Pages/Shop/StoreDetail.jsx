@@ -1,6 +1,6 @@
 import ShopLayout from "@/Layouts/ShopLayout";
 import { Button } from "@/Components/ui/button";
-import { Store } from "lucide-react";
+import { ShoppingBag, Store } from "lucide-react";
 import { Separator } from "@/Components/ui/separator";
 import PaginationComponent from "@/Components/Pagination";
 import {
@@ -24,6 +24,12 @@ export default function ProductDetail({
 }) {
     const { toast } = useToast();
     const store = data.data;
+
+    const chat = () => {
+        const phoneNumber = "6282287498239";
+        const whatsappURL = `https://wa.me/${phoneNumber}`;
+        window.open(whatsappURL, "_blank");
+    };
 
     return (
         <ShopLayout user={auth.user}>
@@ -68,7 +74,11 @@ export default function ProductDetail({
                             {store.market.nama_market},{" "}
                             {store.market.lokasi_market}
                         </p>
-                        <Button variant="outline" className="mt-2">
+                        <Button
+                            variant="outline"
+                            onClick={() => chat()}
+                            className="mt-2"
+                        >
                             Hubungi Penjual
                         </Button>
                     </div>
@@ -99,7 +109,11 @@ export default function ProductDetail({
                                         <p className="text-md font-bold text-gray-800">
                                             {formatRupiah(product.price)}
                                         </p>
+                                        <p className="w-full text-sm sm:w-[180px] truncate ...">
+                                            {product.description}
+                                        </p>
                                         <div className="flex items-center gap-1 mt-2 text-gray-600">
+                                            <ShoppingBag size="16" />
                                             <p className="text-sm">
                                                 {product.category}
                                             </p>
