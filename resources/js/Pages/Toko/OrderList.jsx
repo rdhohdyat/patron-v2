@@ -318,6 +318,12 @@ export default function OrderList({
                                                         +{selectedOrder.user.no_hp}
                                                     </div>
                                                 </div>
+                                                <div className="flex  justify-between mt-2 text-gray-600">
+                                                    <div>Alamat</div>
+                                                    <div className="font-medium w-[50%] flex-wrap">
+                                                        {selectedOrder.user.alamat}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     ) : (

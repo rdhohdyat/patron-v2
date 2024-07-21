@@ -1,15 +1,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { Button } from "@/Components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import {
-    LineChart,
-    BarChart,
     ShoppingCart,
     DollarSign,
     Package,
     User,
-    PieChart,
 } from "lucide-react";
 import {
     Table,
@@ -19,11 +15,19 @@ import {
     TableHeader,
     TableRow,
 } from "@/Components/ui/table";
-
-export default function Index({ auth }) {
+import { formatRupiah } from "@/lib/convert";
+export default function Index({
+    auth,
+    products,
+    productCount,
+    completedOrderItems,
+    totalRevenue,
+    totalOrderCount,
+    completedOrders,
+}) {
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Dashboard Toko"></Head>
+            <Head title="Dashboard Toko" />
             <div className="flex flex-col gap-4 py-4">
                 <div className="mx-auto px-3 sm:px-28 flex-1 auto-rows-max gap-4 w-full">
                     <div className="grid sm:grid-cols-4 gap-4">
@@ -35,7 +39,7 @@ export default function Index({ auth }) {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="text-center text-xl font-bold">
-                                $4,500
+                                {completedOrderItems} Items
                             </CardContent>
                         </Card>
                         <Card>
@@ -46,7 +50,7 @@ export default function Index({ auth }) {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="text-center text-xl font-bold">
-                                120 Produk
+                                {productCount}
                             </CardContent>
                         </Card>
                         <Card>
@@ -57,7 +61,7 @@ export default function Index({ auth }) {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="text-center text-xl font-bold">
-                                Rp. 15,000
+                                {formatRupiah(totalRevenue)}
                             </CardContent>
                         </Card>
                         <Card>
@@ -68,22 +72,107 @@ export default function Index({ auth }) {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="text-center text-xl font-bold">
-                                85 Pesanan
+                                {totalOrderCount} Pesanan
                             </CardContent>
                         </Card>
                     </div>
                     <div className="sm:grid grid-cols-3 gap-4 mt-4">
-                        <Card className="col-span-2 h-[450px] ">
+                        <Card className="col-span-2">
                             <CardHeader>
                                 <CardTitle>Penjualan Terakhir</CardTitle>
                             </CardHeader>
-                            <CardContent></CardContent>
+                            <CardContent>
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Gambar Produk</TableHead>
+                                            <TableHead>Nama Produk</TableHead>
+                                            <TableHead>Jumlah</TableHead>
+                                            <TableHead>
+                                                Harga per Unit
+                                            </TableHead>
+                                            <TableHead>Total</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {completedOrders.data.map((order) =>
+                                            order.order_items.map((item) => (
+                                                <TableRow
+                                                    key={`${order.id}-${item.id}`}
+                                                >
+                                                    <TableCell className="flex items-center gap-3">
+                                                        <img
+                                                            src={
+                                                                item.product
+                                                                    .image
+                                                            }
+                                                            className="w-[70px]"
+                                                            alt={
+                                                                item.product
+                                                                    .name
+                                                            }
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {item.product.name}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {item.jumlah_barang}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {formatRupiah(
+                                                            item.total_harga_satuan
+                                                        )}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {formatRupiah(
+                                                            item.jumlah_barang *
+                                                                item.total_harga_satuan
+                                                        )}
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </CardContent>
                         </Card>
-                        <Card className="col-span-1 mt-4 sm:mt-0 h-[450px] ">
+                        <Card className="col-span-1 mt-4 sm:mt-0">
                             <CardHeader>
                                 <CardTitle>Produk Terlaris</CardTitle>
                             </CardHeader>
-                            <CardContent></CardContent>
+                            <CardContent>
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Produk</TableHead>
+                                            <TableHead>Jumlah</TableHead>
+                                            <TableHead>Harga</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {products.data.map((product) => (
+                                            <TableRow key={product.id}>
+                                                <TableCell>
+                                                    <img
+                                                        src={product.image}
+                                                        className="w-[50px]"
+                                                        alt=""
+                                                    />
+                                                </TableCell>
+                                                <TableCell>
+                                                    {product.name}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {formatRupiah(
+                                                        product.price
+                                                    )}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </CardContent>
                         </Card>
                     </div>
                 </div>
