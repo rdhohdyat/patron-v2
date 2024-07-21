@@ -1,3 +1,4 @@
+import { Toaster } from "@/Components/ui/toaster";
 export default function Guest({ children }) {
     return (
         <div className="min-h-screen sm:flex sm:flex-col justify-center pt-6 sm:pt-0 ">
@@ -23,6 +24,7 @@ export default function Guest({ children }) {
                     </div>
                 </div>
             </div>
+            <Toaster></Toaster>
         </div>
     );
 }

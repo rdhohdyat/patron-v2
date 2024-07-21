@@ -296,9 +296,7 @@ export default function OrderList({
                                                 <div className="flex justify-between mt-2 text-gray-600">
                                                     <div>No Hp</div>
                                                     <div className="font-medium">
-                                                        {selectedOrder.user
-                                                            .phone ||
-                                                            "08243243423"}
+                                                        +{selectedOrder.user.no_hp}
                                                     </div>
                                                 </div>
                                             </div>

@@ -31,21 +31,18 @@ import {
     HandPlatter,
     Croissant,
 } from "lucide-react";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import { formatRupiah } from "@/lib/convert";
-
-import { SelectInput } from "@/Components/SelectInput";
-import { Input } from "@/Components/ui/input";
-import { Label } from "@/Components/ui/label";
 import { Card } from "@/Components/ui/card";
+import UpdateAddress from "../Profile/UpdateAddres";
 
-export default function index({ auth, data, markets }) {
+export default function Index({ auth, data, markets }) {
     const category = [
-        { name: "Sayur", icon: <LeafyGreen/> },
+        { name: "Sayur", icon: <LeafyGreen /> },
         { name: "Buah", icon: <Apple /> },
         { name: "Daging", icon: <Beef /> },
         { name: "Ikan", icon: <Fish /> },
-        { name: "Bumbu Dapur ", icon: <ChefHat /> },
+        { name: "Bumbu Dapur", icon: <ChefHat /> },
         { name: "Beras", icon: <Wheat /> },
         { name: "Telur", icon: <Egg /> },
         { name: "Minuman", icon: <Coffee /> },
@@ -62,42 +59,45 @@ export default function index({ auth, data, markets }) {
             <div className="w-full">
                 <Dialog>
                     <DialogTrigger asChild>
-                        <div className=" bg-white border border-gray-200 rounded-xl p-3 flex items-center text-sm justify-between text-gray-600 hover:bg-white hover:border-gray-300">
+                        <div className="bg-white border border-gray-200 rounded-xl p-3 flex items-center text-sm justify-between text-gray-600 hover:bg-white hover:border-gray-300">
                             <div className="flex items-center gap-1">
-                                <MapPin className="w-5 h-5" />
+                                <MapPin className="w-4 h-4" />
                                 <p className="w-[200px] sm:w-full truncate">
-                                    Umban sari, Rumbai, Pekanbaru
+                                    {auth.user.alamat ||
+                                        "Anda Belum Mengatur Lokasi"}
                                 </p>
                             </div>
                             <p>Pilih Lokasi</p>
                         </div>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[500px]">
-                        <DialogHeader>
-                            <DialogTitle>Lokasi</DialogTitle>
-                            <DialogDescription>
-                                <div className="flex flex-col gap-3 mt-5">
-                                    <div className="grid gap-3">
-                                        <Label className="text-start">
-                                            Alamat
-                                        </Label>
-                                        <Input placeholder="Masukan alamat anda"></Input>
-                                    </div>
+                        {auth.user.alamat == null || auth.user.alamat.length == 0 ? (
+                            <UpdateAddress></UpdateAddress>
+                        ) : (
+                            <div>
+                                <h1 className="font-bold text-lg">
+                                    Lokasi Anda
+                                </h1>
+                                <div className="text-md">
+                                    {auth.user.alamat}
                                 </div>
-                            </DialogDescription>
-                        </DialogHeader>
-                        <DialogFooter>
-                            <Button type="submit">Pilih Lokasi</Button>
-                        </DialogFooter>
+
+                                <Link href={route("profile.edit")}>
+                                    <Button className="mt-3">
+                                        Perbarui Lokasi
+                                    </Button>
+                                </Link>
+                            </div>
+                        )}
                     </DialogContent>
                 </Dialog>
 
                 <div
-                    className="sm:p-12 p-6 z-10 sm:bg-none  bg-center rounded-xl mt-6"
+                    className="sm:p-12 p-6 z-10 sm:bg-none bg-center rounded-xl mt-6"
                     style={{ backgroundImage: "url(/sayurr.jpg)" }}
                 >
                     <div>
-                        <h1 className="font-semibold text-lg sm:text-2xl  text-white sm:w-[600px]">
+                        <h1 className="font-semibold text-lg sm:text-2xl text-white sm:w-[600px]">
                             Temukan Pasar Terdekat dan Berbagai Kebutuhan Rumah
                             Tangga Anda dengan Patron
                         </h1>
@@ -173,7 +173,7 @@ export default function index({ auth, data, markets }) {
                             {products.map((product) => (
                                 <CarouselItem
                                     key={product.id}
-                                    className="basis-1/2  lg:basis-1/5 py-4"
+                                    className="basis-1/2 lg:basis-1/5 py-4"
                                 >
                                     <Link
                                         href={route("shop.detail", product.id)}

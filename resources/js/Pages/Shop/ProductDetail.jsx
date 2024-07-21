@@ -63,44 +63,44 @@ export default function ProductDetail({
     };
 
     const chat = () => {
-        const phoneNumber = "6282286848887";
+        const phoneNumber = product.store.user.no_hp;
         const whatsappURL = `https://wa.me/${phoneNumber}`;
         window.open(whatsappURL, "_blank");
     };
 
-   const handleSubmit = (product_id) => {
-       router.post(
-           route("order.store", product_id),
-           {
-               store_id: product.store.id,
-               product_id: product_id,
-               jumlah_barang: quantity,
-               total_harga: subtotal,
-           },
-           toast({
-               title: "Berhasil Membuat Order",
-               variant: "default",
-           }),
-           handleToWhatsapp()
-       );
-   };
+    const handleSubmit = (product_id) => {
+        router.post(
+            route("order.store", product_id),
+            {
+                store_id: product.store.id,
+                product_id: product_id,
+                jumlah_barang: quantity,
+                total_harga: subtotal,
+            },
+            toast({
+                title: "Berhasil Membuat Order",
+                variant: "default",
+            }),
+            handleToWhatsapp()
+        );
+    };
 
-  const handleToWhatsapp = () => {
-      const message =
-          `*Halo! ${product.store.nama_store}*\n\n` +
-          `Saya ingin memesan produk berikut:\n\n` +
-          `*Nama Produk*: ${product.name}\n` +
-          `*Jumlah*: ${quantity}\n` +
-          `*Total Harga*: ${formatRupiah(subtotal)}\n\n` +
-          `Mohon konfirmasi pesanan ini. Terima kasih!\n\n` +
-          `Salam,\n${auth.user.name}`;
+    const handleToWhatsapp = () => {
+        const message =
+            `*Halo! ${product.store.nama_store}*\n\n` +
+            `Saya ingin memesan produk berikut:\n\n` +
+            `*Nama Produk*: ${product.name}\n` +
+            `*Jumlah*: ${quantity}\n` +
+            `*Total Harga*: ${formatRupiah(subtotal)}\n\n` +
+            `*Alamat Pengiriman*: ${auth.user.alamat}\n\n` + // Menambahkan alamat pengiriman
+            `Mohon konfirmasi pesanan ini. Terima kasih!\n\n` +
+            `Salam,\n${auth.user.name}`;
 
-       const phoneNumber = "6282286848887";
-       const encodedMessage = encodeURIComponent(message);
-       const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-        window.open(whatsappURL, '_blank');
-   };
-
+        const phoneNumber = product.store.user.no_hp;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+        window.open(whatsappURL, "_blank");
+    };
 
     const subtotal = product.price * quantity;
 

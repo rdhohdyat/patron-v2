@@ -1,24 +1,30 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage } from '@inertiajs/react';
-import { Transition } from '@headlessui/react';
-import { Input } from '@/Components/ui/input';
-import { Button } from '@/Components/ui/button';
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import { Link, useForm, usePage } from "@inertiajs/react";
+import { Transition } from "@headlessui/react";
+import { Input } from "@/Components/ui/input";
+import { Button } from "@/Components/ui/button";
 
-export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
+export default function UpdateProfileInformation({
+    mustVerifyEmail,
+    status,
+    className = "",
+}) {
     const user = usePage().props.auth.user;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        name: user.name,
-        email: user.email,
-    });
+    const { data, setData, patch, errors, processing, recentlySuccessful } =
+        useForm({
+            name: user.name,
+            email: user.email,
+            alamat: user.alamat || "", // Tambahkan alamat di sini
+        });
 
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('profile.update'));
+        patch(route("profile.update"));
     };
 
     return (
@@ -60,6 +66,19 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     />
 
                     <InputError className="mt-2" message={errors.email} />
+                </div>
+
+                <div>
+                    {" "}
+                    {/* Tambahkan div baru untuk alamat */}
+                    <InputLabel htmlFor="alamat" value="Alamat" />
+                    <Input
+                        id="alamat"
+                        className="mt-1 block w-full"
+                        value={data.alamat}
+                        onChange={(e) => setData("alamat", e.target.value)}
+                    />
+                    <InputError className="mt-2" message={errors.alamat} />
                 </div>
 
                 {mustVerifyEmail && user.email_verified_at === null && (

@@ -66,4 +66,22 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    // In your UserController.php
+
+    public function updateAddress(Request $request)
+    {
+        $user = auth()->user();
+
+        $validated = $request->validate([
+            'alamat' => 'required|string|max:255',
+        ]);
+
+        $user->update([
+            'alamat' => $validated['alamat'],
+        ]);
+
+        return to_route('shop');
+    }
+
 }

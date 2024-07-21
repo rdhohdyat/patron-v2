@@ -97,42 +97,46 @@ export default function ShopLayout({ user, children }) {
         }
     };
 
-const handleToWhatsapp = () => {
-    const renderProduct = () => {
-        return cart
-            .map((product) => {
-                const name = `Nama Produk : ${product.name.padEnd(30)}`;
-                const qty = `Jumlah      : ${product.qty.toString().padEnd(5)}`;
-                const price = `Satuan : ${formatRupiah(
-                    product.price
-                ).padEnd(15)}`;
-                const subtotal = `Subtotal    : ${formatRupiah(
-                    product.price * product.qty
-                ).padEnd(15)}`;
-                return `${name}\n${qty}\n${price}\n${subtotal}`;
-            })
-            .join("\n---------------------------------------\n");
+    const handleToWhatsapp = () => {
+        const renderProduct = () => {
+            return cart
+                .map((product) => {
+                    const name = `Nama Produk : ${product.name.padEnd(30)}`;
+                    const qty = `Jumlah      : ${product.qty
+                        .toString()
+                        .padEnd(5)}`;
+                    const price = `Satuan      : ${formatRupiah(
+                        product.price
+                    ).padEnd(15)}`;
+                    const subtotal = `Subtotal    : ${formatRupiah(
+                        product.price * product.qty
+                    ).padEnd(15)}`;
+                    return `${name}\n${qty}\n${price}\n${subtotal}`;
+                })
+                .join("\n---------------------------------------\n");
+        };
+
+        const totalItems = cart.reduce((acc, product) => acc + product.qty, 0);
+        const formattedTotal = formatRupiah(total);
+
+        const message =
+            `*Halo! ${cart[0].store.nama_store}*\n\n` +
+            `Saya ingin memesan produk berikut:\n\n` +
+            `${renderProduct()}\n` +
+            `---------------------------------------\n` +
+            `*Ringkasan Pesanan*\n` +
+            `Total Item  : ${totalItems}\n` +
+            `Total Harga : ${formattedTotal}\n\n` +
+            `*Alamat Pengiriman*: ${user.alamat}\n\n` + // Menambahkan alamat pengiriman
+            `Mohon konfirmasi pesanan ini. Terima kasih!\n\n` +
+            `Salam,\n${user.name}`;
+
+        const phoneNumber = cart[0].store.user.no_hp;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+        window.open(whatsappURL, "_blank");
     };
 
-    const totalItems = cart.reduce((acc, product) => acc + product.qty, 0);
-    const formattedTotal = formatRupiah(total);
-
-    const message =
-        `*Halo! ${cart[0].store.nama_store}*\n\n` +
-        `Saya ingin memesan produk berikut:\n\n` +
-        `${renderProduct()}\n` +
-        `---------------------------------------\n` +
-        `*Ringkasan Pesanan*\n` +
-        `Total Item  : ${totalItems}\n` +
-        `Total Harga : ${formattedTotal}\n\n` +
-        `Mohon konfirmasi pesanan ini. Terima kasih!\n\n` +
-        `Salam,\n${user.name}`;
-
-    const phoneNumber = "6282287498239";
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-     window.open(whatsappURL, "_blank");
-};
 
     return (
         <div className="min-h-screen bg-gray-50">
