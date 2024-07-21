@@ -19,12 +19,24 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::query()->paginate(5);
+        $user = auth()->user();
+        $store = $user->store;
+        
+        if ($store) {
+            $orders = $store->orders()->paginate(5);
+    
+            $pendingCount = $store->orders()->where('status', 'pending')->count();
+            $processingCount = $store->orders()->where('status', 'processing')->count();
+            $completedCount = $store->orders()->where('status', 'completed')->count();
+            $cancelCount = $store->orders()->where('status', 'cancelled')->count();
+        }
+        // $market->load('stores.products');
+        // $orders = Order::query()->paginate(5);
 
-        $pendingCount = Order::where('status', 'pending')->count();
-        $processingCount = Order::where('status', 'processing')->count();
-        $completedCount = Order::where('status', 'completed')->count();
-        $cancelCount = Order::where('status', 'cancelled')->count();
+        // $pendingCount = Order::where('status', 'pending')->count();
+        // $processingCount = Order::where('status', 'processing')->count();
+        // $completedCount = Order::where('status', 'completed')->count();
+        // $cancelCount = Order::where('status', 'cancelled')->count();
 
         return inertia("Toko/OrderList", [
             "orders" => OrderResource::collection($orders),

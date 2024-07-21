@@ -131,7 +131,7 @@ const handleToWhatsapp = () => {
     const phoneNumber = "6282287498239";
     const encodedMessage = encodeURIComponent(message);
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-    window.location.href = whatsappURL;
+     window.open(whatsappURL, "_blank");
 };
 
     return (

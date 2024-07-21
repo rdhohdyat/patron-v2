@@ -49,6 +49,9 @@ export default function OrderList({
     const handleDetailClick = (order) => {
         setSelectedOrder(order);
     };
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    };
 
     useEffect(() => {
         setSelectedOrder(orders.data[0]);
@@ -84,7 +87,7 @@ export default function OrderList({
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
                         <Badge variant={order.status.toLowerCase()}>
-                            {order.status}
+                            {capitalizeFirstLetter(order.status)}
                         </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
