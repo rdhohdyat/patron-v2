@@ -12,6 +12,7 @@ export default function Register() {
         name: "",
         email: "",
         password: "",
+        no_hp: "",
         password_confirmation: "",
     });
 
@@ -40,6 +41,16 @@ export default function Register() {
         });
     };
 
+    const handleNoHpChange = (e) => {
+        let value = e.target.value;
+
+        if (!value.startsWith("62")) {
+            value = "62" + value.replace(/^62/, "");
+        }
+
+        setData("no_hp", value);
+    };
+    
     return (
         <GuestLayout>
             <Head title="Daftar Akun"></Head>
@@ -82,6 +93,22 @@ export default function Register() {
                         />
 
                         <InputError message={errors.email} className="mt-2" />
+                    </div>
+                    <div className="mt-4">
+                        <InputLabel htmlFor="no_hp" value="Nomor WhatsApp" />
+
+                        <Input
+                            id="no_hp"
+                            type="number"
+                            name="no_hp"
+                            value={data.no_hp}
+                            className="mt-1 block w-full"
+                            placeholder="Masukan Nomor WhatsApp Anda"
+                            onChange={handleNoHpChange}
+                            required
+                        />
+
+                        <InputError message={errors.no_hp} className="mt-2" />
                     </div>
 
                     <div className="mt-4">
