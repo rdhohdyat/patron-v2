@@ -9,7 +9,8 @@ import {
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb";
 import { formatRupiah } from "@/lib/convert";
-import {Link} from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
+import PaginationComponent from "@/Components/Pagination";
 
 export default function CategoryList({ auth, data, category }) {
     const products = data.data;
@@ -24,16 +25,18 @@ export default function CategoryList({ auth, data, category }) {
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbLink href="/shop">Kategori</BreadcrumbLink>
+                        <BreadcrumbLink>Kategori</BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbLink href="/shop" className="capitalize">{category}</BreadcrumbLink>
+                        <BreadcrumbLink className="capitalize">
+                            {category}
+                        </BreadcrumbLink>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
 
-            <div className="py-6">
+            <div>
                 {products === null || products.length === 0 ? (
                     <div className="w-full flex flex-col items-center">
                         <img
@@ -79,6 +82,10 @@ export default function CategoryList({ auth, data, category }) {
                         ))}
                     </div>
                 )}
+            </div>
+
+            <div className="mt-10">
+                <PaginationComponent links={data.meta.links} />
             </div>
         </ShopLayout>
     );

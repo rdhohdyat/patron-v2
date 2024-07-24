@@ -162,9 +162,6 @@ export default function Register() {
                         <Button className="w-full" type="submit">
                             Buat Akun
                         </Button>
-                        <Button variant="outline" className="w-full">
-                            Daftar dengan Google
-                        </Button>
                     </div>
 
                     <div className="mt-4 text-center text-sm">

@@ -4,6 +4,13 @@ import DeleteUserForm from "./Partials/DeleteUserForm";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
 import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbSeparator,
+} from "@/Components/ui/breadcrumb";
+import {
     Table,
     TableBody,
     TableCell,
@@ -86,6 +93,17 @@ export default function Edit({ auth, mustVerifyEmail, status, orders }) {
     return (
         <ShopLayout user={auth.user}>
             <div className="container mx-auto px-4  space-y-6">
+                <Breadcrumb className="mb-4 font-medium text-lg">
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/shop">Home</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/profile">Profile</BreadcrumbLink>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
                 <div className="bg-white shadow-lg rounded-lg border border-gray-200">
                     <div className="p-6">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-800">

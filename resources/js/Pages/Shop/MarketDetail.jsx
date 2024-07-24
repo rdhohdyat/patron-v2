@@ -39,6 +39,7 @@ export default function MarketDetail({ auth, data, products: dataProducts }) {
         }
     };
 
+
     const category = [
         "Semua Kategori",
         "Sayur",
@@ -67,7 +68,7 @@ export default function MarketDetail({ auth, data, products: dataProducts }) {
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbLink href="/shop">Pasar</BreadcrumbLink>
+                        <BreadcrumbLink>Pasar</BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
@@ -126,7 +127,7 @@ export default function MarketDetail({ auth, data, products: dataProducts }) {
                 </div>
 
                 {/* Collapsible Categories Menu for mobile screens */}
-                <div className="lg:hidden mb-4">
+                <div className="lg:hidden mb-4 text-sm">
                     <button
                         className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md w-full text-left flex items-center justify-between"
                         onClick={() =>
@@ -153,7 +154,7 @@ export default function MarketDetail({ auth, data, products: dataProducts }) {
                     </button>
                     <div
                         id="mobile-category-menu"
-                        className="absolute top-16 left-0 w-full bg-white border border-gray-200 rounded-lg mt-1 hidden z-50"
+                        className="absolute top-14 left-0 w-full text-md bg-white border border-gray-200 rounded-lg mt-1 hidden z-50"
                     >
                         <div className="p-2">
                             {category.map((c) => (
@@ -213,7 +214,7 @@ export default function MarketDetail({ auth, data, products: dataProducts }) {
                                             <Card className="cursor-pointer bg-white shadow-md rounded-lg">
                                                 <img
                                                     src={product.image}
-                                                    className="rounded-t-lg w-full h-48 object-cover"
+                                                    className="rounded-t-lg w-full sm:h-[200px] h-[160px] object-cover"
                                                     alt={product.name}
                                                 />
                                                 <div className="p-3">
@@ -238,14 +239,6 @@ export default function MarketDetail({ auth, data, products: dataProducts }) {
                                 </div>
                             ) : (
                                 <ProductNotFound className="mx-auto" />
-                            )}
-
-                            {filterProducts.length > 10 && (
-                                <div className="mt-8">
-                                    <PaginationComponent
-                                        links={dataProducts.meta.links}
-                                    />
-                                </div>
                             )}
                         </TabsContent>
                         <TabsContent value="toko" className="mt-4">

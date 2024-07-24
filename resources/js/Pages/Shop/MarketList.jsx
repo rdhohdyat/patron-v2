@@ -15,13 +15,13 @@ const MarketList = ({ data }) => {
 
     return (
         <div className="my-6">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center">
                 <h1 className="font-bold text-lg sm:text-xl text-gray-700">
                     Pasar Lainnya
                 </h1>
                 <Link
-                    href="/all-markets" // Update this link as needed
-                    className="text-md sm:text-lg text-green-600 hover:text-green-800"
+                    href={route("shop")}
+                    className="text-md underline text-green-600 hover:text-green-800"
                 >
                     Lihat semua
                 </Link>

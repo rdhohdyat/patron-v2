@@ -117,7 +117,4 @@ class StoreController extends Controller
         $store->delete();
         return response()->json(null, 204);
     }
-
-
-
 }

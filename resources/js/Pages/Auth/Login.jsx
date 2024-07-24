@@ -123,9 +123,7 @@ export default function Login({ status, canResetPassword }) {
                             >
                                 Masuk
                             </Button>
-                            <Button variant="outline" className="w-full">
-                                Masuk dengan Google
-                            </Button>
+                      
                         </div>
                     </form>
 

@@ -19,12 +19,9 @@ const StoreList = ({ data }) => {
                 <h1 className="font-bold text-lg sm:text-xl text-gray-600">
                     Lihat toko lain
                 </h1>
-                <Button
-                    variant="link"
-                    className="text-md sm:text-lg text-green-500"
-                >
+                <Link href={route("shop")} className="text-md underline text-green-500">
                     Lihat semua
-                </Button>
+                </Link>
             </div>
 
             <div className="relative rounded-md">
@@ -36,14 +33,10 @@ const StoreList = ({ data }) => {
                                 className="basis-1/2  lg:basis-1/5 py-4"
                             >
                                 <Link
-                                    href={route(
-                                        "shop.store_detail",
-                                        store.id
-                                    )}
+                                    href={route("shop.store_detail", store.id)}
                                 >
                                     <Card className="cursor-pointer shadow-md">
                                         <img
-                                        
                                             src={store.image}
                                             className="rounded-t-lg w-[250px] h-[170px] sm:h-[200px] object-cover"
                                             alt={store.nama_store}

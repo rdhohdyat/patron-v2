@@ -30,7 +30,7 @@ export default function Index({
             <Head title="Dashboard Toko" />
             <div className="flex flex-col gap-4 py-4">
                 <div className="mx-auto px-3 sm:px-28 flex-1 auto-rows-max gap-4 w-full">
-                    <div className="grid sm:grid-cols-4 gap-4">
+                    <div className="grid sm:grid-cols-4 grid-cols-2 gap-4">
                         <Card>
                             <CardHeader>
                                 <CardTitle className="flex items-center justify-center gap-2 text-green-600">

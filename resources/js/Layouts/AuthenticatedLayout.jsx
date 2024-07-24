@@ -117,13 +117,13 @@ export default function AdminLayout({ user, children }) {
                     </SheetContent>
                 </Sheet>
                 <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-                    <form className="ml-auto flex-1 sm:flex-initial">
+                    <form className="sm:ml-auto flex-1 sm:flex-initial pl-3">
                         <div className="relative">
                             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                             <Input
                                 type="search"
                                 placeholder="Pencarian product..."
-                                className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                                className="pl-8 w-[200px]  sm:w-[300px] lg:w-[300px]"
                             />
                         </div>
                     </form>

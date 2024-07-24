@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, router } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -33,6 +33,7 @@ import { Toaster } from "@/Components/ui/toaster";
 import { formatRupiah } from "@/lib/convert";
 import EmptyCart from "@/Components/EmptyCart";
 import { useToast } from "@/Components/ui/use-toast";
+import { Separator } from "@radix-ui/react-dropdown-menu";
 
 export default function ShopLayout({ user, children }) {
     const { toast } = useToast();
@@ -137,10 +138,10 @@ export default function ShopLayout({ user, children }) {
         window.open(whatsappURL, "_blank");
     };
 
-
     return (
         <div className="min-h-screen bg-gray-50">
             <Toaster />
+            <Head title="Belanja"></Head>
             <header className="sticky shadow top-0 left-0 right-0 bg-white z-20">
                 <div className="h-16 flex justify-between px-5 sm:justify-around items-center">
                     <Link href={route("shop")}>
@@ -264,6 +265,11 @@ export default function ShopLayout({ user, children }) {
                                                     <h1 className="text-lg font-semibold">
                                                         Rincian pembayaran
                                                     </h1>
+                                                    <p className="font-medium text-gray-700 mb-3">
+                                                        Lakukan transaksi dengan
+                                                        penjual lewat WhatsApp
+                                                    </p>
+                                                    <Separator></Separator>
                                                     <div>
                                                         <tr>
                                                             <td>Sub-total</td>
@@ -275,15 +281,6 @@ export default function ShopLayout({ user, children }) {
                                                                     total
                                                                 )}
                                                             </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                Ongkos Kirim
-                                                            </td>
-                                                            <td className="w-5">
-                                                                :
-                                                            </td>
-                                                            <td>Rp.10.000</td>
                                                         </tr>
                                                         <tr>
                                                             <td>
@@ -310,7 +307,7 @@ export default function ShopLayout({ user, children }) {
                                                         handleSubmit()
                                                     }
                                                 >
-                                                    Checkout
+                                                    Lanjutkan Ke WhatsApp
                                                 </Button>
                                             </div>
                                         )}

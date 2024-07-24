@@ -72,7 +72,7 @@ export default function CreateStore({ auth, markets }) {
                             </p>
                         </header>
 
-                        <div className="w-[500px] mt-5">
+                        <div className="sm:w-[500px] mt-5">
                             <InputLabel
                                 htmlFor="nama_store"
                                 value="Nama Toko Anda"
@@ -93,7 +93,7 @@ export default function CreateStore({ auth, markets }) {
                                 </div>
                             )}
                         </div>
-                        <div className="w-[500px] mt-5">
+                        <div className="sm:w-[500px] mt-5">
                             <InputLabel
                                 htmlFor="lokasi_store"
                                 value="Lokasi Toko Anda"
@@ -114,7 +114,7 @@ export default function CreateStore({ auth, markets }) {
                                 </div>
                             )}
                         </div>
-                        <div className="w-[500px] mt-5">
+                        <div className="sm:w-[500px] mt-5">
                             <div className="grid gap-3">
                                 <Label className="text-start">Pasar</Label>
                                 <Select

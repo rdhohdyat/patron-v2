@@ -16,9 +16,11 @@ class ShopController extends Controller
     {
         $products = Product::query()->paginate(10);
         $markets = Market::query()->paginate(10);
+        $stores = Store::query()->paginate(10);
         return inertia("Shop/index", [
             "data" => ProductResource::collection($products),
             "markets" => MarketResource::collection($markets),
+            "stores" => StoreResource::collection($stores)
         ]);
     }
 
@@ -51,7 +53,7 @@ class ShopController extends Controller
                         ->orWhere('category', 'like', '%' . $word . '%');
                 }
             })
-            ->paginate(10);
+            ->paginate(100);
 
         $stores = Store::query()
             ->where(function ($query) use ($keywords) {
@@ -59,7 +61,7 @@ class ShopController extends Controller
                     $query->where('nama_store', 'like', '%' . $word . '%');
                 }
             })
-            ->paginate(10);
+            ->paginate(100);
 
         $markets = Market::query()
             ->where(function ($query) use ($keywords) {
@@ -99,11 +101,16 @@ class ShopController extends Controller
     public function store_detail(Store $store)
     {
         $store->load('products');
-        $products = $store->products()->paginate(5);
+        $products = $store->products()->paginate(10);
+
+        $stores = Store::query()->paginate(10);
+        $markets = Market::query()->paginate(10);
 
         return inertia("Shop/StoreDetail", [
             "data" => new StoreResource($store),
             "products" => ProductResource::collection($products),
+            "stores" => StoreResource::collection($stores),
+            "markets" => MarketResource::collection($markets),
         ]);
     }
 

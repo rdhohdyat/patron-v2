@@ -8,16 +8,23 @@ import {
     CardTitle,
     CardFooter,
 } from "@/Components/ui/card";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbSeparator,
+} from "@/Components/ui/breadcrumb";
 import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/Components/ui/tabs";
 import { formatRupiah } from "@/lib/convert";
 import { Separator } from "@/Components/ui/separator";
-import { Store, ShoppingBasket, MapPinned } from "lucide-react";
+import { Store, ShoppingBasket, MapPinned, Search } from "lucide-react";
 import PaginationComponent from "@/Components/Pagination";
 import ProductNotFound from "@/Components/ProductNotFound";
 import StoreNotFound from "@/Components/StoreNotFound";
 import MarketNotFound from "@/Components/MarketNotFound";
 
-export default function Search({
+export default function Searching({
     auth,
     product: dataProduct,
     stores,
@@ -25,18 +32,21 @@ export default function Search({
     keyword,
 }) {
     const products = dataProduct.data;
+    console.log(products);
     const [selectedCategory, setSelectedCategory] = useState("Semua Kategori");
     const [filterProducts, setFilterProducts] = useState(products);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
 
-        if (category === "Semua Kategori") {
+        if (category == "Semua Kategori") {
             setFilterProducts(products);
         } else {
             setFilterProducts(
-                products.filter((product) => product.category === category)
+                products.filter((product) => product.category == category)
             );
+
+            console.log(filterProducts);
         }
     };
 
@@ -58,7 +68,35 @@ export default function Search({
 
     return (
         <ShopLayout user={auth.user}>
-            <div className="container mx-auto px-4 sm:px-6 py-6">
+            <Breadcrumb className="mb-4 font-medium text-lg">
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/shop">Home</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbLink>Pencarian</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/shop">{keyword}</BreadcrumbLink>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
+            <div>
+                <form action="/shop/search">
+                    <div className="flex border border-gray-300 h-10 mb-3 sm:hidden rounded-xl px-4 items-center gap-2">
+                        <Search className="text-gray-600 h-5 w-5"></Search>
+                        <input
+                            type="search"
+                            className="w-full focus:outline-none text-sm placeholder:text-gray-600"
+                            placeholder={
+                                keyword || "Cari Produk, Lapak dan Pasar"
+                            }
+                            name="search"
+                        />
+                    </div>
+                </form>
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     <div className="lg:col-span-2 hidden lg:block">
                         <Card className="p-4 border rounded-lg shadow-sm">
@@ -66,7 +104,7 @@ export default function Search({
                                 Kategori
                             </h1>
                             <Separator />
-                            <div className="mt-2 flex flex-col">
+                            <div className="mt-2 flex flex-col text-sm">
                                 {categoryList.map((c) => (
                                     <div
                                         key={c}
@@ -86,7 +124,7 @@ export default function Search({
                     </div>
 
                     <div className="lg:col-span-10">
-                        <div className="lg:hidden mb-4">
+                        <div className="lg:hidden mb-4 text-sm">
                             <div className="relative">
                                 <button
                                     className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md w-full text-left flex items-center justify-between"
@@ -190,7 +228,7 @@ export default function Search({
                                                 <Card className="cursor-pointer border rounded-lg shadow-md">
                                                     <img
                                                         src={product.image}
-                                                        className="rounded-t-lg w-full h-[200px] object-cover"
+                                                        className="rounded-t-lg w-full h-[160px] sm:h-[200px] object-cover"
                                                         alt={product.name}
                                                     />
                                                     <CardContent className="p-3">
@@ -220,13 +258,6 @@ export default function Search({
                                         <ProductNotFound className="mx-auto" />
                                     </div>
                                 )}
-                                {filterProducts.length > 10 && (
-                                    <div className="mt-10">
-                                        <PaginationComponent
-                                            links={dataProduct.meta.links}
-                                        />
-                                    </div>
-                                )}
                             </TabsContent>
 
                             <TabsContent value="stores" className="mt-4">
@@ -243,7 +274,7 @@ export default function Search({
                                                 <Card className="cursor-pointer border rounded-lg shadow-md">
                                                     <img
                                                         src={store.image}
-                                                        className="rounded-t-lg w-full h-[200px] object-cover"
+                                                        className="rounded-t-lg w-full h-[160px]  sm:h-[200px] object-cover"
                                                         alt={store.nama_store}
                                                     />
                                                     <CardContent className="p-3">
@@ -291,7 +322,7 @@ export default function Search({
                                                 <Card className="cursor-pointer border rounded-lg shadow-md">
                                                     <img
                                                         src={market.image}
-                                                        className="rounded-t-lg w-full h-[200px] object-cover"
+                                                        className="rounded-t-lg w-full h-[160px] sm:h-[200px] object-cover"
                                                         alt=""
                                                     />
                                                     <CardContent className="p-3">

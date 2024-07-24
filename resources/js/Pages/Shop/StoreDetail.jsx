@@ -3,6 +3,7 @@ import { Button } from "@/Components/ui/button";
 import { ShoppingBag, Store } from "lucide-react";
 import { Separator } from "@/Components/ui/separator";
 import PaginationComponent from "@/Components/Pagination";
+import MarketList from "./MarketList";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -15,12 +16,14 @@ import { useToast } from "@/Components/ui/use-toast";
 import { formatRupiah } from "@/lib/convert";
 import { Card } from "@/Components/ui/card";
 import ProductNotFound from "@/Components/ProductNotFound";
+import StoreList from "./StoreList";
 
 export default function ProductDetail({
     auth,
     data,
     products: otherProducts,
     stores: otherStores,
+    markets,
 }) {
     const { toast } = useToast();
     const store = data.data;
@@ -132,6 +135,14 @@ export default function ProductDetail({
                         <PaginationComponent links={otherProducts.meta.links} />
                     </div>
                 )}
+            </div>
+
+            <div className="mt-6">
+                <StoreList data={otherStores}></StoreList>
+            </div>
+
+            <div className="mt-6">
+                <MarketList data={markets}></MarketList>
             </div>
         </ShopLayout>
     );

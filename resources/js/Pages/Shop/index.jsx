@@ -35,8 +35,9 @@ import { Link, useForm } from "@inertiajs/react";
 import { formatRupiah } from "@/lib/convert";
 import { Card } from "@/Components/ui/card";
 import UpdateAddress from "../Profile/UpdateAddres";
+import StoreList from "./StoreList";
 
-export default function Index({ auth, data, markets }) {
+export default function Index({ auth, data, markets , stores}) {
     const category = [
         { name: "Sayur", icon: <LeafyGreen /> },
         { name: "Buah", icon: <Apple /> },
@@ -181,7 +182,7 @@ export default function Index({ auth, data, markets }) {
                                         <Card className="cursor-pointer">
                                             <img
                                                 src={product.image}
-                                                className="rounded-t-lg w-full h-[170px] sm:h-[200px] object-cover"
+                                                className="rounded-t-lg w-full h-[160px] sm:h-[200px] object-cover"
                                                 alt={product.name}
                                             />
                                             <div className="p-3">
@@ -240,7 +241,7 @@ export default function Index({ auth, data, markets }) {
                                         <Card className="cursor-pointer">
                                             <img
                                                 src={market.image}
-                                                className="rounded-t-lg w-full h-[170px] sm:h-[200px] object-cover"
+                                                className="rounded-t-lg w-full h-[160px] sm:h-[200px] object-cover"
                                                 alt=""
                                             />
                                             <div className="p-3">
@@ -260,6 +261,8 @@ export default function Index({ auth, data, markets }) {
                         <CarouselNext className="hidden sm:flex absolute right-0 top-[40%] transform -translate-y-1/2" />
                     </Carousel>
                 </div>
+
+                <StoreList data={stores}></StoreList>
             </div>
         </ShopLayout>
     );

@@ -114,11 +114,11 @@ export default function ProductDetail({
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbLink href="/shop">Detail</BreadcrumbLink>
+                        <BreadcrumbLink>Detail</BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbLink href="/shop">
+                        <BreadcrumbLink>
                             {product.name}
                         </BreadcrumbLink>
                     </BreadcrumbItem>
@@ -147,7 +147,7 @@ export default function ProductDetail({
                             <p className="mt-2 font-semibold text-gray-800">
                                 Detail:
                             </p>
-                            <p className="mt-2 text-gray-600 sm:w-[400px] sm:h-[120px]">
+                            <p className="mt-2 text-gray-600 lg:w-[400px] text-justify sm:h-[120px]">
                                 {product.description}
                             </p>
                         </div>

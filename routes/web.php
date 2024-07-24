@@ -33,16 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/order/update-status/{order}', [OrderController::class, 'updateStatus'])->name('order.update_status');
         Route::resource('product', ProductController::class);
     });
-    // Route::get('/shop', [ShopController::class, 'index'])->name('shop');
-    // Route::get('/shop/detail/{product}', [ShopController::class, 'product_detail'])->name('shop.detail');
-    // Route::get('/shop/search', [ShopController::class, 'search'])->name('shop.search');
-    // Route::get('/shop/category/{key}', [ShopController::class, 'category'])->name('shop.category');
 
-    // Route::get('/shop/detail_toko/{store}', [ShopController::class, 'store_detail'])->name('shop.store_detail');
-
-    // Route::get("/store", [StoreController::class, 'index'])->name('store');
-
-    // Route::resource('product', ProductController::class);
     Route::resource('order', OrderController::class);
     Route::resource('stores', StoreController::class);
 
