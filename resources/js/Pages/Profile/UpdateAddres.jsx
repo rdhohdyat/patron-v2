@@ -4,8 +4,9 @@ import useLocation from "@/lib/zustand/locationStore";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import { useToast } from "@/Components/ui/use-toast";
-import { SelectInput } from "@/Components/SelectInput"; 
+import { SelectInput } from "@/Components/SelectInput";
 import { Button } from "@/Components/ui/button";
+import { CircleAlert } from "lucide-react";
 
 export default function UpdateAddress() {
     const user = usePage().props.auth.user;
@@ -72,12 +73,22 @@ export default function UpdateAddress() {
         <div className="w-full max-w-lg mx-auto">
             <form onSubmit={handleSubmit}>
                 <div className="grid gap-6">
+                    <div className="border border-red-600 text-red-500 rounded p-3 mt-5">
+                        <div className="flex gap-1 items-center mb-2">
+                            <CircleAlert className="h-5 w-5"/>
+                            <h1 className="font-semibold ml-1">Penting! </h1>
+                        </div>
+                        <p className="text-sm ml-7">
+                            Lokasi ini digunakan sebagai alamat pengiriman oleh
+                            penjual nantinya, mohon mengisinya dengan benar!
+                        </p>
+                    </div>
                     <div className="grid gap-3">
                         <Label htmlFor="alamat">Alamat Lengkap</Label>
                         <Input
                             id="alamat"
                             type="text"
-                            placeholder="Masukkan alamat lengkap"
+                            placeholder="contoh : Jl. Manchester No. 12, RT. 01 RW. 03"
                             value={alamat}
                             onChange={(e) => setAlamat(e.target.value)}
                             className="w-full"

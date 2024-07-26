@@ -61,7 +61,7 @@ class StoreController extends Controller
         $completedOrders = Order::where('store_id', $store->id)
             ->where('status', 'completed')
             ->with('orderItems.product')
-            ->paginate(10);
+            ->paginate(5);
 
         $products = Product::where('store_id', $store->id)->paginate(5);
         $productCount = Product::where('store_id', $store->id)->count();

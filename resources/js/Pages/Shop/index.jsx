@@ -8,6 +8,7 @@ import {
 } from "@/Components/ui/carousel";
 import { Button } from "@/Components/ui/button";
 import { MapPin, ShoppingBag, Store } from "lucide-react";
+import Banner from "@/Components/Banner";
 import {
     Dialog,
     DialogContent,
@@ -37,7 +38,12 @@ import { Card } from "@/Components/ui/card";
 import UpdateAddress from "../Profile/UpdateAddres";
 import StoreList from "./StoreList";
 
-export default function Index({ auth, data, markets , stores}) {
+export default function Index({ auth, data, markets, stores }) {
+    function hapusPekanbaruAwal(lokasi) {
+        return lokasi.replace(/^Pekanbaru,\s*/, "");
+    }
+
+    console.log(data);
     const category = [
         { name: "Sayur", icon: <LeafyGreen /> },
         { name: "Buah", icon: <Apple /> },
@@ -62,17 +68,18 @@ export default function Index({ auth, data, markets , stores}) {
                     <DialogTrigger asChild>
                         <div className="bg-white border border-gray-200 rounded-xl p-3 flex items-center text-sm justify-between text-gray-600 hover:bg-white hover:border-gray-300">
                             <div className="flex items-center gap-1">
-                                <MapPin className="w-4 h-4" />
+                                <MapPin className="w-4 h-4 text-red-600" />
                                 <p className="w-[200px] sm:w-full truncate">
                                     {auth.user.alamat ||
                                         "Anda Belum Mengatur Lokasi"}
                                 </p>
                             </div>
-                            <p>Pilih Lokasi</p>
+                            <p>{auth.user.alamat ? "Lihat Lokasi" : "Pilih Lokasi"}</p>
                         </div>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[500px]">
-                        {auth.user.alamat == null || auth.user.alamat.length == 0 ? (
+                        {auth.user.alamat == null ||
+                        auth.user.alamat.length == 0 ? (
                             <UpdateAddress></UpdateAddress>
                         ) : (
                             <div>
@@ -93,21 +100,7 @@ export default function Index({ auth, data, markets , stores}) {
                     </DialogContent>
                 </Dialog>
 
-                <div
-                    className="sm:p-12 p-6 z-10 sm:bg-none bg-center rounded-xl mt-6"
-                    style={{ backgroundImage: "url(/sayurr.jpg)" }}
-                >
-                    <div>
-                        <h1 className="font-semibold text-lg sm:text-2xl text-white sm:w-[600px]">
-                            Temukan Pasar Terdekat dan Berbagai Kebutuhan Rumah
-                            Tangga Anda dengan Patron
-                        </h1>
-                        <p className="text-white mt-3 sm:text-lg">
-                            Jelajahi pasar terdekat dengan Anda dan mulai
-                            berbelanja.
-                        </p>
-                    </div>
-                </div>
+                <Banner></Banner>
                 {/* categori */}
                 <div className="flex justify-between items-center mt-3">
                     <h1 className="font-bold text-lg sm:text-xl text-gray-600">
@@ -116,7 +109,7 @@ export default function Index({ auth, data, markets , stores}) {
                     <Link
                         href={route("shop.search")}
                         variant="link"
-                        className="sm:text-md text-green-500 underline"
+                        className="sm:text-md text-sm text-green-500 underline"
                     >
                         Lihat semua
                     </Link>
@@ -161,7 +154,7 @@ export default function Index({ auth, data, markets , stores}) {
                     <Link
                         href={route("shop.search")}
                         variant="link"
-                        className="sm:text-md text-green-500 underline"
+                        className="sm:text-md text-sm text-green-500 underline"
                     >
                         Lihat semua
                     </Link>
@@ -221,7 +214,7 @@ export default function Index({ auth, data, markets , stores}) {
                     <Link
                         href={route("shop.search")}
                         variant="link"
-                        className="sm:text-md text-green-500 underline"
+                        className="sm:text-md text-sm text-green-500 underline"
                     >
                         Lihat semua
                     </Link>
@@ -248,9 +241,14 @@ export default function Index({ auth, data, markets , stores}) {
                                                 <h1 className="font-semibold">
                                                     {market.nama_market}
                                                 </h1>
-                                                <p className="text-sm sm:w-[180px] truncate ...">
-                                                    {market.lokasi_market}
-                                                </p>
+                                                <div className="flex items-center gap-1 mt-2">
+                                                    <MapPin className="h-6 w-6 text-red-600" />
+                                                    <p className="text-sm truncate ...">
+                                                        {hapusPekanbaruAwal(
+                                                            market.lokasi_market
+                                                        )}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </Card>
                                     </Link>

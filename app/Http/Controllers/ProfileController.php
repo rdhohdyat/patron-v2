@@ -21,7 +21,7 @@ class ProfileController extends Controller
     public function edit(Request $request): Response
     {
 
-        $orders = Order::where('user_id', $request->user()->id)->get();
+        $orders = Order::where('user_id', $request->user()->id)->paginate(5);
 
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,

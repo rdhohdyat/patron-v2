@@ -10,6 +10,7 @@ import {
     BreadcrumbList,
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb";
+import PaginationComponent from "@/Components/Pagination";
 import {
     Table,
     TableBody,
@@ -20,9 +21,11 @@ import {
 } from "@/Components/ui/table";
 import { Badge } from "@/Components/ui/badge";
 import { formatRupiah } from "@/lib/convert";
+import { Button } from "@/Components/ui/button";
+import { Link } from "@inertiajs/react";
 
 export default function Edit({ auth, mustVerifyEmail, status, orders }) {
-    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [selectedOrder, setSelectedOrder] = useState(orders.data[0]);
 
     useEffect(() => {
         if (orders.data.length > 0) {
@@ -35,7 +38,7 @@ export default function Edit({ auth, mustVerifyEmail, status, orders }) {
     };
 
     const renderOrders = () => {
-        return orders.data.map((order) => {
+        return orders.data?.map((order) => {
             const totalJumlahBarang = order.order_items.reduce(
                 (total, item) => total + item.jumlah_barang,
                 0
@@ -51,13 +54,6 @@ export default function Edit({ auth, mustVerifyEmail, status, orders }) {
                     } transition-colors duration-150 ease-in-out`}
                     onClick={() => handleDetailClick(order)}
                 >
-                    <TableCell className="w-[100px]">
-                        <img
-                            src={order.order_items[0].product.image}
-                            alt={order.order_items[0].product.name}
-                            className="w-20 h-20 object-cover rounded"
-                        />
-                    </TableCell>
                     <TableCell className="w-[200px] text-gray-800 font-medium">
                         {order.order_items
                             .map((item) => item.product.name)
@@ -72,7 +68,7 @@ export default function Edit({ auth, mustVerifyEmail, status, orders }) {
                         </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell text-gray-800">
-                        {formatRupiah(order.total_harga)}
+                        {formatRupiah(order?.total_harga)}
                     </TableCell>
                     <TableCell className="hidden md:table-cell text-gray-600">
                         {order.tanggal_pemesanan}
@@ -92,7 +88,7 @@ export default function Edit({ auth, mustVerifyEmail, status, orders }) {
 
     return (
         <ShopLayout user={auth.user}>
-            <div className="container mx-auto px-4  space-y-6">
+            <div className="mx-auto space-y-6">
                 <Breadcrumb className="mb-4 font-medium text-lg">
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -100,47 +96,119 @@ export default function Edit({ auth, mustVerifyEmail, status, orders }) {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="/profile">Profile</BreadcrumbLink>
+                            <BreadcrumbLink href="/profile">
+                                Profile
+                            </BreadcrumbLink>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
-                <div className="bg-white shadow-lg rounded-lg border border-gray-200">
-                    <div className="p-6">
-                        <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-                            Daftar Pesanan Anda
-                        </h2>
-                        {orders.data.length === 0 ? (
-                            <p className="text-center text-gray-600">
-                                Belum ada pesanan.
-                            </p>
-                        ) : (
-                            <div className="overflow-x-auto">
-                                <Table>
+
+                {orders.data.length != 0 ? (
+                    <div className="bg-white sm:flex shadow-lg rounded-lg border border-gray-200">
+                        <div className="p-6">
+                            <h2 className="text-lg font-medium text-gray-90">
+                                Daftar Pesanan Anda
+                            </h2>
+                            {orders.data.length == 0 ? (
+                                <p className="text-center text-gray-600">
+                                    Belum ada pesanan.
+                                </p>
+                            ) : (
+                                <div className="overflow-x-auto">
+                                    <Table>
+                                        <TableHeader>
+                                            <TableRow>
+                                                <TableHead>Produk</TableHead>
+                                                <TableHead className="hidden sm:table-cell">
+                                                    Jumlah
+                                                </TableHead>
+                                                <TableHead className="hidden md:table-cell">
+                                                    Status
+                                                </TableHead>
+                                                <TableHead className="hidden md:table-cell">
+                                                    Total Harga
+                                                </TableHead>
+                                                <TableHead className="hidden md:table-cell">
+                                                    Waktu
+                                                </TableHead>
+                                                <TableHead>Aksi</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>{renderOrders()}</TableBody>
+                                    </Table>
+                                    <div className="border-t pt-5">
+                                        <PaginationComponent
+                                            links={orders.meta.links}
+                                        ></PaginationComponent>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="border-l-2 p-6 font-medium flex flex-col justify-between">
+                            <div>
+                                <h1>Detail Pesanan</h1>
+                                <Table className="mt-2">
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead>Gambar</TableHead>
                                             <TableHead>Produk</TableHead>
-                                            <TableHead className="hidden sm:table-cell">
-                                                Jumlah Barang
-                                            </TableHead>
-                                            <TableHead className="hidden md:table-cell">
-                                                Status
-                                            </TableHead>
-                                            <TableHead className="hidden md:table-cell">
-                                                Total Harga
-                                            </TableHead>
-                                            <TableHead className="hidden md:table-cell">
-                                                Tanggal Pemesanan
-                                            </TableHead>
-                                            <TableHead>Aksi</TableHead>
+                                            <TableHead>Jumlah</TableHead>
+                                            <TableHead>Harga</TableHead>
                                         </TableRow>
                                     </TableHeader>
-                                    <TableBody>{renderOrders()}</TableBody>
+
+                                    <TableBody>
+                                        {selectedOrder.order_items.map(
+                                            (item) => (
+                                                <TableRow key={item.id}>
+                                                    <TableCell className="flex items-center gap-2">
+                                                        <img
+                                                            src={
+                                                                item.product
+                                                                    .image
+                                                            }
+                                                            className="w-[60px]"
+                                                        />
+                                                        <h1 className="w-24 flex-wrap">
+                                                            {item.product.name}
+                                                        </h1>
+                                                    </TableCell>
+                                                    <TableCell className="font-bold">
+                                                        x {item.jumlah_barang}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {formatRupiah(
+                                                            item.product.price
+                                                        )}
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        )}
+                                    </TableBody>
                                 </Table>
                             </div>
-                        )}
+
+                            <div className="flex justify-between font-semibold text-gray-800">
+                                <div>Subtotal</div>
+                                <div>
+                                    {formatRupiah(selectedOrder?.total_harga)}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <div className=" p-5 w-full ">
+                        <div className="mx-auto w-[300px] text-center">
+                            <img src="/buy_now.png" className="" alt="" />
+                            <h1 className="font-semibold text-xl text-gray-600 mb-5">
+                                Belum ada pesanan...
+                            </h1>
+                            <Link href={route("shop.search")}>
+                                <Button>Mulai Belanja</Button>
+                            </Link>
+                        </div>
+                    </div>
+                )}
 
                 <div className="bg-white shadow-lg rounded-lg border border-gray-200">
                     <div className="p-6">

@@ -118,9 +118,7 @@ export default function ProductDetail({
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbLink>
-                            {product.name}
-                        </BreadcrumbLink>
+                        <BreadcrumbLink>{product.name}</BreadcrumbLink>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
@@ -214,8 +212,6 @@ export default function ProductDetail({
                                         {product.stock}
                                     </span>
                                 </div>
-
-                                {console.log(product)}
                             </div>
                             <h1 className="flex justify-between  items-center mt-2 sm:mt-4">
                                 <div>Substotal : </div>
@@ -225,7 +221,7 @@ export default function ProductDetail({
                                 </div>
                             </h1>
                         </div>
-                        <div className="sm:block flex gap-2">
+                        <div className="sm:block flex gap-1 justify-center px-2">
                             <Button
                                 variant="outline"
                                 onClick={() => chat()}
@@ -238,13 +234,13 @@ export default function ProductDetail({
                             </Button>
                             <Button
                                 variant="outline"
-                                className="w-full mt-3 text-green-500 hover:bg-green-50 hover:text-green-600 border-green-600"
+                                className="mt-3 w-full text-green-500 hover:bg-green-50 hover:text-green-600 border-green-600"
                                 onClick={() => handleSubmit(product.id)}
                             >
                                 Beli Langsung
                             </Button>
                             <Button
-                                className="w-full mt-3 sm:w-[300px] block"
+                                className="mt-3 sm:w-full block"
                                 onClick={() => handleAddToCart(product)}
                             >
                                 Tambah Keranjang

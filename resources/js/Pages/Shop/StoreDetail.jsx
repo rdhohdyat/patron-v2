@@ -1,6 +1,6 @@
 import ShopLayout from "@/Layouts/ShopLayout";
 import { Button } from "@/Components/ui/button";
-import { ShoppingBag, Store } from "lucide-react";
+import { MapPin, ShoppingBag, Store } from "lucide-react";
 import { Separator } from "@/Components/ui/separator";
 import PaginationComponent from "@/Components/Pagination";
 import MarketList from "./MarketList";
@@ -73,10 +73,13 @@ export default function ProductDetail({
                         <h2 className="text-lg font-semibold text-gray-600 mb-2">
                             {store.user.name}
                         </h2>
-                        <p className="text-sm text-gray-500 mb-2">
+                        <div className="flex items-center gap-1">
+                        <MapPin className="text-red-600 sm:h-5 sm:w-5 h-10 w-10"></MapPin>
+                        <p className="text-sm text-gray-500">
                             {store.market.nama_market},{" "}
                             {store.market.lokasi_market}
                         </p>
+                        </div>
                         <Button
                             variant="outline"
                             onClick={() => chat()}
@@ -89,11 +92,11 @@ export default function ProductDetail({
             </Card>
 
             <div className="mt-6">
-                <h1 className="text-xl font-bold text-gray-700 mb-4">
+                <h1 className="text-xl font-bold text-gray-600 mb-4">
                     Produk Pada Toko Ini
                 </h1>
                 {otherProducts.data.length > 0 ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
                         {otherProducts.data.map((product) => (
                             <Link
                                 key={product.id}
@@ -116,7 +119,7 @@ export default function ProductDetail({
                                             {product.description}
                                         </p>
                                         <div className="flex items-center gap-1 mt-2 text-gray-600">
-                                            <ShoppingBag size="16" />
+                                            <ShoppingBag size="16" className="text-green-600" />
                                             <p className="text-sm">
                                                 {product.category}
                                             </p>

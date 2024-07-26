@@ -40,6 +40,4 @@ class Store extends Model
     {
         return $this->hasMany(Order::class);
     }
-
-   
 }

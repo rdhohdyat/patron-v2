@@ -194,7 +194,7 @@ export default function ShopLayout({ user, children }) {
                                         {cart.map((item) => (
                                             <div
                                                 key={item.id}
-                                                className="flex justify-between border p-2 rounded"
+                                                className="flex justify-between  border p-2 rounded"
                                             >
                                                 <div className="flex items-center gap-3">
                                                     <img
@@ -249,7 +249,7 @@ export default function ShopLayout({ user, children }) {
                                                                 item.id
                                                             )
                                                         }
-                                                        className="mt-3 w-full h-8"
+                                                        className="w-full h-8"
                                                     >
                                                         Hapus
                                                     </Button>

@@ -77,7 +77,7 @@ export default function Searching({
                     <BreadcrumbItem>
                         <BreadcrumbLink>Pencarian</BreadcrumbLink>
                     </BreadcrumbItem>
-                    <BreadcrumbSeparator />
+                
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/shop">{keyword}</BreadcrumbLink>
                     </BreadcrumbItem>

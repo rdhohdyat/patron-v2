@@ -11,9 +11,9 @@ import { Button } from "@/Components/ui/button";
 import { formatRupiah } from "@/lib/convert";
 import { Card } from "@/Components/ui/card";
 
-const ProductList = ({ data }) => {
+const ProductList = ({ data}) => {
     const products = data.data;
-
+  
     return (
         <div className="my-6">
             <div className="flex justify-between items-center mb-4">
@@ -21,8 +21,8 @@ const ProductList = ({ data }) => {
                     Lainnya di toko ini
                 </h1>
                 <Link
-                    href="/all-products" // Update this link as needed
-                    className="text-md sm:text-lg text-green-600 hover:text-green-800"
+                    href={route("shop.store_detail", products[0].store.id)}
+                    className="text-md underline text-green-500"
                 >
                     Lihat semua
                 </Link>

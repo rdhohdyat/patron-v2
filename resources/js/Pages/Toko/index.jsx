@@ -1,12 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
-import {
-    ShoppingCart,
-    DollarSign,
-    Package,
-    User,
-} from "lucide-react";
+import { ShoppingCart, DollarSign, Package, User } from "lucide-react";
 import {
     Table,
     TableBody,
@@ -16,6 +11,7 @@ import {
     TableRow,
 } from "@/Components/ui/table";
 import { formatRupiah } from "@/lib/convert";
+
 export default function Index({
     auth,
     products,
@@ -89,50 +85,78 @@ export default function Index({
                                             <TableHead>Nama Produk</TableHead>
                                             <TableHead>Jumlah</TableHead>
                                             <TableHead>
-                                                Harga per Unit
+                                                Total
                                             </TableHead>
-                                            <TableHead>Total</TableHead>
+                                           
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {completedOrders.data.map((order) =>
-                                            order.order_items.map((item) => (
+                                        {completedOrders.data.map((order) => {
+                                            const totalJumlahBarang =
+                                                order.order_items.reduce(
+                                                    (total, item) =>
+                                                        total +
+                                                        item.jumlah_barang,
+                                                    0
+                                                );
+
+                                            return (
                                                 <TableRow
-                                                    key={`${order.id}-${item.id}`}
+                                                    key={order.id}
+                                                    className="cursor-pointer hover:bg-gray-50"
                                                 >
-                                                    <TableCell className="flex items-center gap-3">
-                                                        <img
-                                                            src={
-                                                                item.product
-                                                                    .image
-                                                            }
-                                                            className="w-[70px]"
-                                                            alt={
-                                                                item.product
-                                                                    .name
-                                                            }
-                                                        />
-                                                    </TableCell>
                                                     <TableCell>
-                                                        {item.product.name}
+                                                        <div className="flex space-x-2 overflow-x-auto">
+                                                            {order.order_items.map(
+                                                                (
+                                                                    item,
+                                                                    index
+                                                                ) => (
+                                                                    <img
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        src={
+                                                                            item
+                                                                                .product
+                                                                                .image
+                                                                        }
+                                                                        alt={
+                                                                            item
+                                                                                .product
+                                                                                .name
+                                                                        }
+                                                                        className="w-20 h-20 object-cover rounded"
+                                                                    />
+                                                                )
+                                                            )}
+                                                        </div>
                                                     </TableCell>
-                                                    <TableCell>
-                                                        {item.jumlah_barang}
+                                                    <TableCell className="w-[200px]">
+                                                        {order.order_items
+                                                            .map(
+                                                                (item) =>
+                                                                    item.product
+                                                                        .name
+                                                            )
+                                                            .join(", ")}
                                                     </TableCell>
-                                                    <TableCell>
+                                                    <TableCell className="hidden sm:table-cell">
+                                                        {totalJumlahBarang}
+                                                    </TableCell>
+                                                    <TableCell className="hidden md:table-cell">
                                                         {formatRupiah(
-                                                            item.total_harga_satuan
+                                                            order.total_harga
                                                         )}
                                                     </TableCell>
                                                     <TableCell>
-                                                        {formatRupiah(
-                                                            item.jumlah_barang *
-                                                                item.total_harga_satuan
-                                                        )}
+                                                        <button className="text-blue-500 hover:underline">
+                                                            Detail
+                                                        </button>
                                                     </TableCell>
                                                 </TableRow>
-                                            ))
-                                        )}
+                                            );
+                                        })}
                                     </TableBody>
                                 </Table>
                             </CardContent>
@@ -157,7 +181,7 @@ export default function Index({
                                                     <img
                                                         src={product.image}
                                                         className="w-[50px]"
-                                                        alt=""
+                                                        alt={product.name}
                                                     />
                                                 </TableCell>
                                                 <TableCell>

@@ -10,6 +10,7 @@ import {
 } from "@/Components/ui/carousel";
 import { Button } from "@/Components/ui/button";
 import { formatRupiah } from "@/lib/convert";
+import { MapPin } from "lucide-react";
 
 const StoreList = ({ data }) => {
     const stores = data.data;
@@ -19,7 +20,10 @@ const StoreList = ({ data }) => {
                 <h1 className="font-bold text-lg sm:text-xl text-gray-600">
                     Lihat toko lain
                 </h1>
-                <Link href={route("shop")} className="text-md underline text-green-500">
+                <Link
+                    href={route("shop")}
+                    className="sm:text-md text-sm underline text-green-500"
+                >
                     Lihat semua
                 </Link>
             </div>
@@ -44,13 +48,16 @@ const StoreList = ({ data }) => {
                                         <div className="p-3">
                                             <div className="flex items-center gap-1 mt-2">
                                                 <Store size="16" />
-                                                <h1 className="w-[180px] truncate ...">
+                                                <h1 className="w-[180px] font-semibold truncate ...">
                                                     {store.nama_store}
                                                 </h1>
                                             </div>
-                                            <p className="text-sm">
-                                                {store.lokasi_store}
-                                            </p>
+                                            <div className="flex items-center gap-1 mt-2">
+                                                <MapPin className="h-4 w-4 text-red-600"/>
+                                                <p className="text-sm">
+                                                    {store.lokasi_store}
+                                                </p>
+                                            </div>
                                         </div>
                                     </Card>
                                 </Link>
