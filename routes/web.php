@@ -44,7 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/request', [AdminController::class, 'request'])->name('admin.request');
         Route::patch('/admin/update-status/{store}', [AdminController::class, 'updateStatus'])->name('admin.update_status');
 
-        Route::resource('market', MarketController::class);
+
     });
 });
 
